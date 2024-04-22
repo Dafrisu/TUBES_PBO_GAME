@@ -11,29 +11,31 @@ import W6.*;
 public class PBO_W6 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        Player castP;
-        Player dafa = new Player("dafa",0,0, 100, 100, 100, 100);
-        ChildPlayer Haikal = new ChildPlayer("Haikal",0,0, 100, 100, 100, 100);
-        GC_Player Darryl = new GC_Player("darryl",0,0, 100, 100, 100, 100);
-        castP = dafa;
-        System.out.println(castP.ToString());
-        castP = Haikal;
-        System.out.println(castP.ToString());
-        castP = Darryl;
-        System.out.println(castP.ToString());
-        System.out.println(Haikal.metodChild());
-        
-        Player Raphael = new ChildPlayer("Raphael",0,0, 100, 100, 100, 100);
-        ChildPlayer Mahesa = (ChildPlayer) Raphael;
-        System.out.println(Mahesa.metodChild());
-        
-        
-        if(Raphael instanceof Player){
-            System.out.println("Raphael pro player");
-        }else if(Haikal instanceof Player){
-            System.out.println("Raphael Noob");
-        }
+//        System.out.println("Hello World!");
+//        Player castP;
+        Player dafa = new Player("dafa",100, 100, 100);
+        Enemy Haikal = new Enemy("Haikal",100, 100, 100);
+        System.out.println(dafa.persepective(dafa));
+        System.out.println(Haikal.persepective(Haikal));
+//        GC_Player Darryl = new GC_Player("darryl",0,0, 100, 100, 100, 100);
+//        castP = dafa;
+//        System.out.println(castP.ToString());
+//        castP = Haikal;
+//        System.out.println(castP.ToString());
+//        castP = Darryl;
+//        System.out.println(castP.ToString());
+//        System.out.println(Haikal.metodChild());
+//        
+//        Player Raphael = new ChildPlayer("Raphael",0,0, 100, 100, 100, 100);
+//        ChildPlayer Mahesa = (ChildPlayer) Raphael;
+//        System.out.println(Mahesa.metodChild());
+//        
+//        
+//        if(Raphael instanceof Player){
+//            System.out.println("Raphael pro player");
+//        }else if(Haikal instanceof Player){
+//            System.out.println("Raphael Noob");
+//        }
 //        dafa.tipeClass();
 //        dafa.Skillset();
 //        System.out.println(dafa.getNama() + "'s Class is " + dafa.dapatkanClass() + ", " + dafa.getNama()+
@@ -42,12 +44,12 @@ public class PBO_W6 {
         
         
         // Contoh Narrow cast
-        double c = 125.35;
-        long b = (long)c;
-        int a = (int)b;
-        System.out.println("double: " + c);
-        System.out.println("long: " + b);
-        System.out.println("int: " + a);
+//        double c = 125.35;
+//        long b = (long)c;
+//        int a = (int)b;
+//        System.out.println("double: " + c);
+//        System.out.println("long: " + b);
+//        System.out.println("int: " + a);
         
         
     }

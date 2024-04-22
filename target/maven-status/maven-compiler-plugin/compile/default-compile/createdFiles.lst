@@ -1,9 +1,7 @@
 W6\Class.class
-W6\Slime.class
 W6\Entity.class
 W6\Player.class
 W6\Enemy.class
-W6\GC_Player.class
-W6\ChildPlayer.class
 W6\Koordinat.class
 com\mycompany\pbo_w6\PBO_W6.class
+W6\Actions.class

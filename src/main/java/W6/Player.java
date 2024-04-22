@@ -9,13 +9,13 @@ package W6;
  * @author haika
  */
 import java.util.Scanner;
-public class Player extends Entity implements Class{
+public class Player extends Entity implements Class, Actions{
     private String nama;
     private String skills;
     private String Class;
     
-    public Player(String nama,int x, int y,int HP, int def, int speed, int att ){
-        super(x,y,HP,def,speed,att);
+    public Player(String nama,int HP, int def, int att ){
+        super(HP,def,att);
         this.nama = nama;
     }
 
@@ -25,11 +25,6 @@ public class Player extends Entity implements Class{
 
     public void setNama(String nama) {
         this.nama = nama;
-    }
-
-    @Override
-    public void move(int x, int y) {
-        super.setX(super.getX() + 10);
     }
 
     @Override
@@ -89,5 +84,14 @@ public class Player extends Entity implements Class{
     }
     public String ToString(){
         return "Ini Player";
+    }
+    @Override
+    public void attack() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void run_nibba_run() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
