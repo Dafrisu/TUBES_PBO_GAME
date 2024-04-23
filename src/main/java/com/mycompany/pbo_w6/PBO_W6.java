@@ -19,45 +19,10 @@ public class PBO_W6 {
         NPC udin = new NPC("udin", 100, 100, 100);
         System.out.println(dafa.persepective(dafa));
         System.out.println(Haikal.persepective(Haikal));
-        dafa.attack(dafa);
-        System.out.println(dafa.getHP());
-        udin.SetType();
-        udin.DialogueOut();
-        udin.PrintDiag();
-//        GC_Player Darryl = new GC_Player("darryl",0,0, 100, 100, 100, 100);
-//        castP = dafa;
-//        System.out.println(castP.ToString());
-//        castP = Haikal;
-//        System.out.println(castP.ToString());
-//        castP = Darryl;
-//        System.out.println(castP.ToString());
-//        System.out.println(Haikal.metodChild());
-//        
-//        Player Raphael = new ChildPlayer("Raphael",0,0, 100, 100, 100, 100);
-//        ChildPlayer Mahesa = (ChildPlayer) Raphael;
-//        System.out.println(Mahesa.metodChild());
-//        
-//        
-//        if(Raphael instanceof Player){
-//            System.out.println("Raphael pro player");
-//        }else if(Haikal instanceof Player){
-//            System.out.println("Raphael Noob");
-//        }
-//        dafa.tipeClass();
-//        dafa.Skillset();
-//        System.out.println(dafa.getNama() + "'s Class is " + dafa.dapatkanClass() + ", " + dafa.getNama()+
-//                " mendapatkan " + dafa.getSkills());
-//        
-        
-        
-        // Contoh Narrow cast
-//        double c = 125.35;
-//        long b = (long)c;
-//        int a = (int)b;
-//        System.out.println("double: " + c);
-//        System.out.println("long: " + b);
-//        System.out.println("int: " + a);
-        
-        
+        dafa.tipeClass();
+        System.out.println(dafa.dapatkanClass());
+        Equipment wear = new Equipment(0,0,0);
+        wear.EquipmentsetforClass(dafa);
+        System.out.println(dafa.getAttack_point()+" " + dafa.getHP()+ " " + dafa.getDefense());
     }
 }

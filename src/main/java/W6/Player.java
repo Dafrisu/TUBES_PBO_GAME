@@ -13,12 +13,15 @@ public class Player extends Entity implements Class, Actions{
     private String nama;
     private String skills;
     private String Class;
+    private Equipment wear = new Equipment(0,0,0);
     
     public Player(String nama,int HP, int def, int att ){
         super(HP,def,att);
         this.nama = nama;
     }
-
+    
+   
+    
     public String getNama() {
         return nama;
     }
@@ -29,7 +32,7 @@ public class Player extends Entity implements Class, Actions{
 
     @Override
     public void tipeClass() {
-        System.out.println("1.assassin");
+        System.out.println("1.Assassin");
         System.out.println("2.Guardian");
         System.out.println("3.Necromancer");
         System.out.println("4.Archer"); 
@@ -92,12 +95,19 @@ public class Player extends Entity implements Class, Actions{
         }
         if (a instanceof Enemy){
             Enemy B = (Enemy) a;
-            System.out.println( B.getName() + " Terkena serangan dari "+ this.getAttack_point() +" damage dari " + this.getNama());
+            System.out.println( B.getName() + " Terkena serangan dari "+ this.getAttack_point() +" damage dari " + this.getNama() + 
+                    ", HP " + B.getName() + ": " + B.getHP());
+            if (B.getHP() == 0){
+                System.out.println(B.getName() + " Tewas");
+            }
         }else if (a instanceof Player){
             Player B = (Player) a;
             System.out.println(B.getNama() + " Terkena serangan dari "+ this.getAttack_point() +" damage dari " + this.getNama() +
                     ", HP " + B.getNama() + ": " + B.getHP());
-        }
+            if (B.getHP() == 0){
+                System.out.println(B.getNama() + " Tewas");
+            }
+        }  
     }
 
     @Override
