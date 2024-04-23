@@ -20,10 +20,11 @@ public class PBO_W6 {
         System.out.println(dafa.persepective(dafa));
         System.out.println(Haikal.persepective(Haikal));
         dafa.attack(dafa);
-        System.out.println(dafa.getHP());
         udin.SetType();
         udin.DialogueOut();
         udin.PrintDiag();
+        Haikal.attack(dafa);
+        System.out.println(dafa.getHP());
 //        GC_Player Darryl = new GC_Player("darryl",0,0, 100, 100, 100, 100);
 //        castP = dafa;
 //        System.out.println(castP.ToString());

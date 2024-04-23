@@ -10,6 +10,7 @@ package W6;
  */
 public class Enemy extends Entity implements Actions{
     private String nama;
+    //private String[] monsters = {"Goblin", "Orc", "Dragon"};
     
     public Enemy(String nama,int HP, int def,int att){
         super(HP,def,att);
@@ -25,12 +26,16 @@ public class Enemy extends Entity implements Actions{
     }
 
     @Override
-    public void attack(Entity a) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void attack(Entity tod) {
+        if (super.persepective(this) == false) {
+            tod.setHP(tod.getHP() - super.getAttack_point());
+        }
     }
 
     @Override
     public void run_nibba_run() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("Dem bro");
+        System.out.println("Enemy too strong (emot klarifikasi trevis skut)");
+        System.out.println("Adios");
     }
 }
