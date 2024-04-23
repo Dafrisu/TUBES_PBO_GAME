@@ -86,7 +86,7 @@ public class Player extends Entity implements Class, Actions{
         return "Ini Player";
     }
     @Override
-    public void attack() {
+    public void attack(Entity a) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
