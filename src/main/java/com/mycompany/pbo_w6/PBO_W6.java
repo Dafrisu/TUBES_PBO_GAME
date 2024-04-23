@@ -17,6 +17,8 @@ public class PBO_W6 {
         Enemy Haikal = new Enemy("Haikal",100, 100, 100);
         System.out.println(dafa.persepective(dafa));
         System.out.println(Haikal.persepective(Haikal));
+        Haikal.attack(dafa);
+        System.out.println(dafa.getHP());
 //        GC_Player Darryl = new GC_Player("darryl",0,0, 100, 100, 100, 100);
 //        castP = dafa;
 //        System.out.println(castP.ToString());
