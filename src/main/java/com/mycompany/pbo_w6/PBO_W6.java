@@ -8,6 +8,7 @@ import W6.*;
  *
  * @author haika
  */
+
 public class PBO_W6 {
 
     public static void main(String[] args) {
@@ -15,8 +16,14 @@ public class PBO_W6 {
 //        Player castP;
         Player dafa = new Player("dafa",100, 100, 100);
         Enemy Haikal = new Enemy("Haikal",100, 100, 100);
+        NPC udin = new NPC("udin", 100, 100, 100);
         System.out.println(dafa.persepective(dafa));
         System.out.println(Haikal.persepective(Haikal));
+        dafa.attack(dafa);
+        System.out.println(dafa.getHP());
+        udin.SetType();
+        udin.DialogueOut();
+        udin.PrintDiag();
 //        GC_Player Darryl = new GC_Player("darryl",0,0, 100, 100, 100, 100);
 //        castP = dafa;
 //        System.out.println(castP.ToString());

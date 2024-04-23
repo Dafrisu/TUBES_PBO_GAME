@@ -25,7 +25,7 @@ public class Enemy extends Entity implements Actions{
     }
 
     @Override
-    public void attack() {
+    public void attack(Entity a) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
