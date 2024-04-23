@@ -88,7 +88,17 @@ public class Player extends Entity implements Class, Actions{
     }
     @Override
     public void attack(Entity a) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (super.persepective(this) == true){
+            a.setHP(a.getHP() - this.getAttack_point());
+        }
+        if (a instanceof Enemy){
+            Enemy B = (Enemy) a;
+            System.out.println( B.getName() + " Terkena serangan dari "+ this.getAttack_point() +" damage dari " + this.getNama());
+        }else if (a instanceof Player){
+            Player B = (Player) a;
+            System.out.println(B.getNama() + " Terkena serangan dari "+ this.getAttack_point() +" damage dari " + this.getNama() +
+                    ", HP " + B.getNama() + ": " + B.getHP());
+        }
     }
 
     @Override
