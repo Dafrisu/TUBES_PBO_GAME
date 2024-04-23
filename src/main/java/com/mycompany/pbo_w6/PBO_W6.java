@@ -19,10 +19,12 @@ public class PBO_W6 {
         NPC udin = new NPC("udin", 100, 100, 100);
         System.out.println(dafa.persepective(dafa));
         System.out.println(Haikal.persepective(Haikal));
+
         dafa.tipeClass();
         System.out.println(dafa.dapatkanClass());
         Equipment wear = new Equipment(0,0,0);
         wear.EquipmentsetforClass(dafa);
         System.out.println(dafa.getAttack_point()+" " + dafa.getHP()+ " " + dafa.getDefense());
+
     }
 }

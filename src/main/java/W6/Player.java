@@ -9,6 +9,7 @@ package W6;
  * @author haika
  */
 import java.util.Scanner;
+
 public class Player extends Entity implements Class, Actions{
     private String nama;
     private String skills;
