@@ -16,8 +16,8 @@ public class NPC extends Entity{
     private String[] dialogue = new String[10];
     private String npctype;
     private Random intrandom = new Random();
-    private int n = intrandom.nextInt(1,3);
-    private Equipment reward = new Equipment();
+    private int n = 2;
+    public Equipment reward = new Equipment();
     public NPC(String nama,int HP, int def, int att) {
         super(HP, def, att);
         this.nama = nama;
@@ -41,7 +41,7 @@ public class NPC extends Entity{
         }
     }
 
-    public void PrintDiag() {
+    public void SetDiag() {
         switch (this.npctype) {
             case "Merchant":
                 this.dialogue[0] = "Selamat datang petualang, Kamu orang yang beruntung menemukan tokoku";
@@ -88,7 +88,18 @@ public class NPC extends Entity{
             }
         }else if (this.npctype.equals("Pemberi Hadiah")){
             System.out.println("Apakah kamu akan menggunakan item ini petualang?");
-
+            int n1;
+            n1 = intrandom.nextInt(0,3);
+            System.out.println(this.reward.arrEquipment[n1].getNama());
+            System.out.println("1. Iyadong maszeh");
+            System.out.println("2. gaah males mau beli truk");
+            Scanner input = new Scanner(System.in);
+            System.out.println("Masukkan Input");
+            int choose = input.nextInt();
+            if (choose == 1){
+                this.reward = this.reward.arrEquipment[n1];
+                a.wear.changeEquipment(a, reward);
+            }
         }
     }
     public void pilih (Player a){
@@ -111,32 +122,11 @@ public class NPC extends Entity{
             this.npctype = "Informan";
         }
     }
-    
 
-    public void tipeReward(){
-        
-        if (this.npctype.equals("Merchant")){
-            System.out.println("Pilih salah satu item ini petualang!");
-            
-        }else if (this.npctype.equals("Pemberi Hadiah")){
-            System.out.println("Apakah kamu akan menggunakan item ini petualang?");
-            
-        }
-    }
-    public void pilih (){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Masukkan Input");
-        int choose = input.nextInt();
-        if(choose == 1){
-            this.tipeReward();
-        }else if (choose == 2){
-            //next Interaction
-        }
-    }
     public void Dialogue(Player a){
         this.SetType();
+        this.SetDiag();
         this.DialogueOut();
-        this.PrintDiag();
         this.pilih(a);
     }
 }
