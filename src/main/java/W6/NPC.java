@@ -9,12 +9,14 @@ package W6;
  * @author daffa
  */
 import java.util.Random;
+import java.util.Scanner;
 public class NPC extends Entity{
     private String nama;
     private String[] dialogue = new String[10];
     private String npctype;
     private Random intrandom = new Random();
-    private int n = intrandom.nextInt(1,3);
+    private int n = 1;
+    public Equipment reward = new Equipment();
     public NPC(String nama,int HP, int def, int att) {
         super(HP, def, att);
         this.nama = nama;
@@ -64,7 +66,40 @@ public class NPC extends Entity{
         }
         
     }
-    
+    public void tipeReward(Player a){
+
+        if (this.npctype.equals("Merchant")){
+            System.out.println("Pilih salah satu item ini petualang!");
+            int n1, n2;
+            n1 = intrandom.nextInt(0,3);
+            n2 = intrandom.nextInt(0,3);
+            System.out.println("1. " + this.reward.arrEquipment[n1].getNama());
+            System.out.println("2. " + this.reward.arrEquipment[n2].getNama());
+            Scanner input = new Scanner(System.in);
+            System.out.println("Masukkan Input");
+            int choose = input.nextInt();
+            if (choose == 1){
+                this.reward = this.reward.arrEquipment[n1];
+                a.wear.changeEquipment(a, reward);
+            }else if(choose ==2){
+                this.reward = this.reward.arrEquipment[n2];
+                a.wear.changeEquipment(a, reward);
+            }
+        }else if (this.npctype.equals("Pemberi Hadiah")){
+            System.out.println("Apakah kamu akan menggunakan item ini petualang?");
+
+        }
+    }
+    public void pilih (Player a){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Masukkan Input");
+        int choose = input.nextInt();
+        if(choose == 1){
+            this.tipeReward(a);
+        }else if (choose == 2){
+            //next Interaction
+        }
+    }
     public void SetType(){
         n = this.n;
         if (n == 1){
@@ -74,5 +109,12 @@ public class NPC extends Entity{
         }else if (n == 3){
             this.npctype = "Informan";
         }
+    }
+    
+    public void Dialogue(Player a){
+        this.SetType();
+        this.DialogueOut();
+        this.PrintDiag();
+        this.pilih(a);
     }
 }
