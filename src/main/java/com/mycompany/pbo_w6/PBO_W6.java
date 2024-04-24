@@ -4,6 +4,7 @@
 
 package com.mycompany.pbo_w6;
 import W6.*;
+import java.util.Random;
 /**
  *
  * @author haika
@@ -19,12 +20,20 @@ public class PBO_W6 {
         NPC udin = new NPC("udin", 100, 100, 100);
         System.out.println(dafa.persepective(dafa));
         System.out.println(Haikal.persepective(Haikal));
-
+        Random intrandom = new Random();
+        int n1 = intrandom.nextInt(0,3);
+        System.out.println(n1);
         dafa.tipeClass();
         System.out.println(dafa.dapatkanClass());
-        Equipment wear = new Equipment(0,0,0);
+        Equipment wear = new Equipment();
+        wear.EquipmentInit(dafa);
+        udin.reward.EquipmentInit(dafa);
+        System.out.println(wear.arrEquipment[n1].getNama());
+        
         wear.EquipmentsetforClass(dafa);
-        System.out.println(dafa.getAttack_point()+" " + dafa.getHP()+ " " + dafa.getDefense());
+        udin.Dialogue(dafa);
+        dafa.CheckStats();
+        dafa.checkEquipment();
 
     }
 }

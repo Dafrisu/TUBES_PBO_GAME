@@ -14,7 +14,7 @@ public class Player extends Entity implements Class, Actions{
     private String nama;
     private String skills;
     private String Class;
-    private Equipment wear = new Equipment(0,0,0);
+    public Equipment wear = new Equipment();
     
     public Player(String nama,int HP, int def, int att ){
         super(HP,def,att);
@@ -82,12 +82,17 @@ public class Player extends Entity implements Class, Actions{
     public void setClass(String Class) {
         this.Class = Class;
     }
-    
-    public String metodPlayer(){
-        return "Metod Player";
+    public void CheckStats(){
+        System.out.println("HP\t:" + this.getHP());
+        System.out.println("Def\t:" + this.getDefense());
+        System.out.println("Attack\t:" + this.getAttack_point());
     }
-    public String ToString(){
-        return "Ini Player";
+    public void checkEquipment(){
+        System.out.println("Tipe Equipment\t:" + this.wear.getTipe());
+        System.out.println("Nama Set\t\t:" + this.wear.getNama());
+        System.out.println("HP\t\t:" + this.wear.getEquipment_HP());
+        System.out.println("Def\t\t:" + this.wear.getEquipment_def());
+        System.out.println("Attack\t\t:" + this.wear.getEquipment_att());
     }
     @Override
     public void attack(Entity a) {
