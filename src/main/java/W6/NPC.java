@@ -9,15 +9,21 @@ package W6;
  * @author daffa
  */
 import java.util.Random;
+import java.util.Scanner;
+
 public class NPC extends Entity{
     private String nama;
     private String[] dialogue = new String[10];
     private String npctype;
     private Random intrandom = new Random();
     private int n = intrandom.nextInt(1,3);
+    private Equipment reward;
     public NPC(String nama,int HP, int def, int att) {
         super(HP, def, att);
         this.nama = nama;
+        this.SetType();
+        this.SetDialogue();
+        this.outDiag();
     }
 
 
@@ -30,7 +36,7 @@ public class NPC extends Entity{
         this.nama = nama;
     }
     
-    public void PrintDiag(){
+    public void outDiag(){
         for(int i =0; i<dialogue.length; i++){
             if ( dialogue[i] != null){
                 System.out.println(dialogue[i]);
@@ -38,7 +44,7 @@ public class NPC extends Entity{
         }
     }
 
-    public void DialogueOut() {
+    public void SetDialogue() {
         switch (this.npctype) {
             case "Merchant":
                 this.dialogue[0] = "Selamat datang petualang, Kamu orang yang beruntung menemukan tokoku";
@@ -73,6 +79,27 @@ public class NPC extends Entity{
             this.npctype = "Pemberi Hadiah";
         }else if (n == 3){
             this.npctype = "Informan";
+        }
+    }
+    
+    public void tipeReward(){
+        
+        if (this.npctype.equals("Merchant")){
+            System.out.println("Pilih salah satu item ini petualang!");
+            
+        }else if (this.npctype.equals("Pemberi Hadiah")){
+            System.out.println("Apakah kamu akan menggunakan item ini petualang?");
+            
+        }
+    }
+    public void pilih (){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Masukkan Input");
+        int choose = input.nextInt();
+        if(choose == 1){
+            this.tipeReward();
+        }else if (choose == 2){
+            //next Interaction
         }
     }
 }
