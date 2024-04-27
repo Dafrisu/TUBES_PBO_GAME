@@ -11,11 +11,16 @@ import javax.swing.JLabel;
  */
 public class GUI extends javax.swing.JFrame {
     Player dafa;
+    Enemy slime;
+    boolean battle = false;
     NPC udin = new NPC(10,10,10);
     
     public GUI() {
         initComponents();
         NamaPlayer.setVisible(false);
+        Attack_button.setVisible(false);
+        udin.SetType();
+        udin.SetDiag();
         
     }
 
@@ -36,15 +41,22 @@ public class GUI extends javax.swing.JFrame {
         ValueHP = new javax.swing.JLabel();
         ValueAtk = new javax.swing.JLabel();
         ValueDef = new javax.swing.JLabel();
+        Attack_button = new javax.swing.JButton();
         Stage = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Okbutton = new javax.swing.JButton();
         GetNamePlayer = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        Player = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(720, 480));
@@ -67,6 +79,13 @@ public class GUI extends javax.swing.JFrame {
 
         ValueDef.setText("ValueDef");
 
+        Attack_button.setText("Attack");
+        Attack_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Attack_buttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -75,19 +94,21 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelHP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ValueHP))
-                    .addComponent(NamaPlayer)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(labelAtk)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ValueAtk))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(labelDef)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ValueDef)))
-                .addGap(616, 616, 616))
+                        .addComponent(ValueDef))
+                    .addComponent(NamaPlayer)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelHP)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ValueHP)
+                        .addGap(185, 185, 185)
+                        .addComponent(Attack_button)))
+                .addGap(361, 361, 361))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,8 +118,9 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelHP)
-                    .addComponent(ValueHP))
-                .addGap(18, 18, 18)
+                    .addComponent(ValueHP)
+                    .addComponent(Attack_button))
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelDef)
                     .addComponent(ValueDef))
@@ -108,6 +130,14 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(ValueAtk))
                 .addGap(70, 70, 70))
         );
+
+        Attack_button.getAccessibleContext().setAccessibleName("Attack");
+
+        Stage.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                StageStateChanged(evt);
+            }
+        });
 
         jLabel1.setText("Masukan Nama Petualang:");
 
@@ -145,52 +175,122 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(GetNamePlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(Okbutton))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         Stage.addTab("tab1", jPanel2);
 
-        jLabel2.setText("Enemy");
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
 
-        jLabel3.setText("Player");
+        jLabel2.setText("HALO HALO BANDUNG");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jLabel2)
+                .addContainerGap(536, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel2)
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(69, 69, 69))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(jLabel3)
-                .addContainerGap(597, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(45, 45, 45))
+                .addGap(82, 82, 82)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         Stage.addTab("tab2", jPanel3);
+
+        jProgressBar1.setForeground(new java.awt.Color(102, 255, 102));
+        jProgressBar1.setToolTipText("");
+        jProgressBar1.setValue(100);
+
+        Player.setText("Player");
+
+        jLabel3.setText("Enemy");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(Player)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(511, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(119, 119, 119))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 237, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addComponent(Player)
+                .addGap(49, 49, 49))
         );
 
         Stage.addTab("tab3", jPanel4);
+
+        jButton1.setText("jButton1");
+
+        jButton2.setText("jButton2");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(175, 175, 175)
+                .addComponent(jButton1)
+                .addGap(76, 76, 76)
+                .addComponent(jButton2)
+                .addContainerGap(319, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(121, Short.MAX_VALUE))
+        );
+
+        Stage.addTab("tab4", jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,7 +318,7 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!GetNamePlayer.getText().equals("")){
             String nama = GetNamePlayer.getText();
-            dafa = new Player(nama, 100,100,100);
+            dafa = new Player(nama, 200,100,100);
             NamaPlayer.setText(dafa.getNama());
             NamaPlayer.setVisible(true);
             ValueHP.setText(dafa.getHP() +"");
@@ -229,6 +329,37 @@ public class GUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_OkbuttonActionPerformed
 
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        // TODO add your handling code here:
+        Stage.setSelectedIndex(2);
+    }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void Attack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Attack_buttonActionPerformed
+        dafa.attack(slime);
+        slime.attack(dafa);
+        ChangeHP();
+        if (slime.getHP() == 0){
+            battle = false;
+            Stage.setSelectedIndex(Stage.getSelectedIndex() + 1);
+        }
+    }//GEN-LAST:event_Attack_buttonActionPerformed
+
+    private void StageStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_StageStateChanged
+        // TODO add your handling code here:
+        if (Stage.getSelectedIndex() == 2){
+            battle = true;
+        }
+        if (battle == true){
+            Attack_button.setVisible(true);
+        }else{
+            Attack_button.setVisible(false);
+        }
+        slime = new Enemy("Slime", 100, 100, 100);
+        
+    }//GEN-LAST:event_StageStateChanged
+    public void ChangeHP(){
+        ValueHP.setText(dafa.getHP() + "");
+    }
     /**
      * @param args the command line arguments
      */
@@ -265,16 +396,22 @@ public class GUI extends javax.swing.JFrame {
                 new GUI().setVisible(true);
             }
         });
+        
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Attack_button;
     private javax.swing.JTextField GetNamePlayer;
     private javax.swing.JLabel NamaPlayer;
     private javax.swing.JButton Okbutton;
+    private javax.swing.JLabel Player;
     private javax.swing.JTabbedPane Stage;
     private javax.swing.JLabel ValueAtk;
     private javax.swing.JLabel ValueDef;
     private javax.swing.JLabel ValueHP;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -282,6 +419,9 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JLabel labelAtk;
     private javax.swing.JLabel labelDef;
     private javax.swing.JLabel labelHP;
