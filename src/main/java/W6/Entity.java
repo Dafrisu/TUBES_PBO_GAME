@@ -14,7 +14,11 @@ public abstract class Entity{
     private int attack_point;
     
     public Entity(int HP, int def, int att){
-        this.HP = HP;
+        if (HP < 0 || this.HP < 0){
+            this.HP = 0;
+        }else{
+            this.HP = HP;
+        }
         this.defense = def;
         this.attack_point = att;
     }

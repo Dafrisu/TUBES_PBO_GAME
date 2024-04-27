@@ -9,9 +9,9 @@ package W6;
  * @author haika
  */
 public class Equipment{
-    private int Equipment_att;
-    private int Equipment_HP;
-    private int Equipment_def;
+    private int Equipment_att =0;
+    private int Equipment_HP =0;
+    private int Equipment_def =0;
     private String tipe;
     private String nama;
     public Equipment[] arrEquipment = new Equipment[10];
