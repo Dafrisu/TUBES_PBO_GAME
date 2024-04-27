@@ -10,7 +10,7 @@ package W6;
  */
 public abstract interface Class {
     
-    public abstract void tipeClass();
+    public abstract void tipeClass(int n);
     
     public abstract void Skillset();
 }
