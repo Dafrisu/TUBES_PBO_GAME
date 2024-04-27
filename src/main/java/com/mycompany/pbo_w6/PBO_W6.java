@@ -22,18 +22,7 @@ public class PBO_W6 {
         System.out.println(Haikal.persepective(Haikal));
         Random intrandom = new Random();
         int n1 = intrandom.nextInt(0,3);
-        System.out.println(n1);
-        dafa.tipeClass();
-        System.out.println(dafa.dapatkanClass());
-        Equipment wear = new Equipment();
-        wear.EquipmentInit(dafa);
-        udin.reward.EquipmentInit(dafa);
-        System.out.println(wear.arrEquipment[n1].getNama());
         
-        wear.EquipmentsetforClass(dafa);
-        udin.Dialogue(dafa);
-        dafa.CheckStats();
-        dafa.checkEquipment();
-
+        System.out.println("");
     }
 }

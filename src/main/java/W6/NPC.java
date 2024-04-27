@@ -22,6 +22,10 @@ public class NPC extends Entity{
         super(HP, def, att);
         this.nama = nama;
     }
+    
+    public NPC(int HP, int def, int att){
+        super(HP,def,att);
+    }
 
 
     public String getNama() {
