@@ -10,7 +10,7 @@ import java.util.Random;
  * @author Mahesa
  */
 public class Stage {
-    private int MAX_INTERACTIONS;
+    private int MAX_INTERACTIONS =5;
     private int currentInteraction = 0;
     private boolean battle;
 
@@ -42,7 +42,7 @@ public class Stage {
         Random random = new Random(); // Create a Random object
 
         while (currentInteraction < MAX_INTERACTIONS) {
-            int encounterType = random.nextInt(2) + 1; // Generate random number (1 or 2)
+            int encounterType = random.nextInt(1, 2); // Generate random number (1 or 2)
 
             if (encounterType == 1) {
                 System.out.println("Bertemu musuh! Bersiap untuk bertempur!");
@@ -54,7 +54,7 @@ public class Stage {
                 npc.SetType();
                 npc.SetDiag();
             }
-            currentInteraction++;
+            
         }
         
         if (currentInteraction > MAX_INTERACTIONS){
