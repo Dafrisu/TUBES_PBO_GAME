@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package W6;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 /**
  *
  * @author haika
@@ -14,6 +15,8 @@ public class GUI extends javax.swing.JFrame {
     Enemy slime;
     boolean battle = false;
     boolean chooseClass = false;
+    int classN;
+    Stage alur = new Stage();
     Equipment equipment = new Equipment();
     NPC udin = new NPC(10,10,10);
     
@@ -23,7 +26,8 @@ public class GUI extends javax.swing.JFrame {
         Attack_button.setVisible(false);
         udin.SetType();
         udin.SetDiag();
-        
+        winorlose.setVisible(false);
+        gifatk.setVisible(false);
     }
 
     /**
@@ -58,31 +62,52 @@ public class GUI extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         HPMusuh = new javax.swing.JProgressBar();
         Player = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        EnemyLabel = new javax.swing.JLabel();
+        winorlose = new javax.swing.JPanel();
+        afterbattle = new javax.swing.JLabel();
+        gifatk = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        ClassQ = new javax.swing.JLabel();
+        ChoosenClass = new javax.swing.JLabel();
+        Yesclass = new javax.swing.JButton();
+        Noclass = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        boxdialog1 = new javax.swing.JPanel();
+        labelbox = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(720, 480));
         setPreferredSize(new java.awt.Dimension(720, 480));
         setResizable(false);
         setSize(new java.awt.Dimension(720, 480));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setPreferredSize(new java.awt.Dimension(720, 206));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelHP.setText("HP      : ");
+        jPanel1.add(labelHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 47, -1, -1));
 
         labelAtk.setText("Attack : ");
+        jPanel1.add(labelAtk, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 119, -1, -1));
 
         labelDef.setText("Def     : ");
+        jPanel1.add(labelDef, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 82, -1, -1));
 
         NamaPlayer.setText("Nama Petualang");
+        jPanel1.add(NamaPlayer, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 10, -1, -1));
 
         ValueHP.setText("ValueHP");
+        jPanel1.add(ValueHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 47, -1, -1));
 
         ValueAtk.setText("ValueAtk");
+        jPanel1.add(ValueAtk, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 119, -1, -1));
 
         ValueDef.setText("ValueDef");
+        jPanel1.add(ValueDef, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 82, -1, -1));
 
         Attack_button.setText("Attack");
         Attack_button.addActionListener(new java.awt.event.ActionListener() {
@@ -90,53 +115,9 @@ public class GUI extends javax.swing.JFrame {
                 Attack_buttonActionPerformed(evt);
             }
         });
+        jPanel1.add(Attack_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(283, 44, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelAtk)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ValueAtk))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelDef)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ValueDef))
-                    .addComponent(NamaPlayer)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelHP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ValueHP)
-                        .addGap(185, 185, 185)
-                        .addComponent(Attack_button)))
-                .addGap(361, 361, 361))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(NamaPlayer)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelHP)
-                    .addComponent(ValueHP)
-                    .addComponent(Attack_button))
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelDef)
-                    .addComponent(ValueDef))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelAtk)
-                    .addComponent(ValueAtk))
-                .addGap(70, 70, 70))
-        );
-
-        Attack_button.getAccessibleContext().setAccessibleName("Attack");
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 720, 200));
 
         Stage.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -170,7 +151,7 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(GetNamePlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Okbutton)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,7 +161,7 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(GetNamePlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(Okbutton))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         Stage.addTab("tab1", jPanel2);
@@ -221,7 +202,7 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(button_assasin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(button_necromancer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(button_archer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(304, Short.MAX_VALUE))
+                .addContainerGap(317, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,98 +217,154 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(button_necromancer)
                 .addGap(18, 18, 18)
                 .addComponent(button_archer)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         Stage.addTab("tab2", jPanel3);
 
-        HPMusuh.setForeground(new java.awt.Color(102, 255, 102));
+        jPanel4.setMaximumSize(new java.awt.Dimension(720, 250));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        HPMusuh.setFont(new java.awt.Font("Segoe Print", 0, 10)); // NOI18N
         HPMusuh.setMaximum(200);
         HPMusuh.setToolTipText("");
         HPMusuh.setValue(200);
+        HPMusuh.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(51, 51, 51), new java.awt.Color(51, 51, 51)));
         HPMusuh.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 HPMusuhStateChanged(evt);
             }
         });
+        jPanel4.add(HPMusuh, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 57, -1, 10));
 
         Player.setText("Player");
+        jPanel4.add(Player, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 168, -1, -1));
 
-        jLabel3.setText("Enemy");
+        EnemyLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        EnemyLabel.setText("Enemy");
+        jPanel4.add(EnemyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(515, 73, 146, -1));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(Player)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(511, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(HPMusuh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(119, 119, 119))))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(HPMusuh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addComponent(Player)
-                .addGap(49, 49, 49))
-        );
+        winorlose.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                winorloseMouseClicked(evt);
+            }
+        });
+        winorlose.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        afterbattle.setText("|");
+        winorlose.add(afterbattle, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, -1));
+
+        jPanel4.add(winorlose, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 450, 30));
+
+        gifatk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/W6/Image/Slash front remake.gif"))); // NOI18N
+        jPanel4.add(gifatk, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
 
         Stage.addTab("tab3", jPanel4);
-
-        jButton1.setText("jButton1");
-
-        jButton2.setText("jButton2");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(175, 175, 175)
-                .addComponent(jButton1)
-                .addGap(76, 76, 76)
-                .addComponent(jButton2)
-                .addContainerGap(319, Short.MAX_VALUE))
+            .addGap(0, 733, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(121, Short.MAX_VALUE))
+            .addGap(0, 262, Short.MAX_VALUE)
         );
 
         Stage.addTab("tab4", jPanel6);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Stage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        ClassQ.setFont(new java.awt.Font("OCR A Extended", 0, 14)); // NOI18N
+        ClassQ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ClassQ.setText("APAKAH ANDA YAKIN AKAN MEMILIH CLASS");
+        ClassQ.setMaximumSize(new java.awt.Dimension(200, 200));
+
+        ChoosenClass.setFont(new java.awt.Font("OCR A Extended", 0, 14)); // NOI18N
+        ChoosenClass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ChoosenClass.setText("class");
+
+        Yesclass.setFont(new java.awt.Font("OCR A Extended", 0, 12)); // NOI18N
+        Yesclass.setText("YA");
+        Yesclass.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 255, 51)));
+        Yesclass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesclassActionPerformed(evt);
+            }
+        });
+
+        Noclass.setFont(new java.awt.Font("OCR A Extended", 0, 12)); // NOI18N
+        Noclass.setText("Tidak");
+        Noclass.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)));
+        Noclass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NoclassActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("OCR A Extended", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("(Class Tidak akan bisa berubah Di lain waktu)");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(155, 155, 155)
+                .addComponent(ClassQ, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(194, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(229, 229, 229)
+                .addComponent(Yesclass, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(85, 85, 85)
+                .addComponent(Noclass, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(258, 258, 258)
+                .addComponent(ChoosenClass, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Stage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(ClassQ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ChoosenClass)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Noclass)
+                    .addComponent(Yesclass))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
+
+        Stage.addTab("tab5", jPanel5);
+
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        boxdialog1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boxdialog1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                boxdialog1MouseClicked(evt);
+            }
+        });
+        boxdialog1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        labelbox.setText("|");
+        boxdialog1.add(labelbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 7, -1, -1));
+
+        jPanel7.add(boxdialog1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 650, 100));
+
+        Stage.addTab("tab6", jPanel7);
+
+        getContentPane().add(Stage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -353,14 +390,26 @@ public class GUI extends javax.swing.JFrame {
 
     private void Attack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Attack_buttonActionPerformed
         dafa.attack(slime);
+        gifatk.setVisible(true);
         HPMusuh.setValue(slime.getHP());
         slime.attack(dafa);
         ChangeHP();
         if (slime.getHP() < 0){
-            battle = false;
+            alur.setBattle(false);
             dafa.setHP(dafa.getMaxHP());
             ChangeHP();
-            Stage.setSelectedIndex(Stage.getSelectedIndex() + 1);
+            Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
+            public void actionPerformed(ActionEvent e) {
+                // Proses yang akan dilakukan setelah delay
+                winorlose.setVisible(true);
+                winorlose.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                afterbattle.setText("Anda Berhasil Mengalahkan Musuh");
+            }
+        });
+        timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
+        timer.start(); // Memulai timer
+            
+//            Stage.setSelectedIndex(Stage.getSelectedIndex() + 1);
         }
     }//GEN-LAST:event_Attack_buttonActionPerformed
 
@@ -369,10 +418,10 @@ public class GUI extends javax.swing.JFrame {
         if (Stage.getSelectedIndex() == 1){
             chooseClass = true;
         }
-        if (Stage.getSelectedIndex() == 2){
-            battle = true;
+        if(Stage.getSelectedIndex() == 2){
+            alur.setBattle(true);
         }
-        if (battle == true){
+        if (alur.isBattle() == true){
             Attack_button.setVisible(true);
             slime = new Enemy("Slime", 200, 100, 100);
             HPMusuh.setMaximum(slime.getHP());
@@ -386,30 +435,79 @@ public class GUI extends javax.swing.JFrame {
 
     private void button_assasinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_assasinActionPerformed
         // TODO add your handling code here:
-        dafa.tipeClass(1);
-        equipment.EquipmentInit(dafa);
-        equipment.EquipmentsetforClass(dafa);
-        ChangeHP();
-        dafa.setMaxHP();
-        this.Stage.setSelectedIndex(this.Stage.getSelectedIndex() + 1);
+        classN =1;
+        dafa.tipeClass(classN);
+        ChoosenClass.setText(dafa.dapatkanClass());
+        this.Stage.setSelectedIndex(4);
     }//GEN-LAST:event_button_assasinActionPerformed
 
     private void button_guardianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_guardianActionPerformed
         // TODO add your handling code here:
-        dafa.tipeClass(2);
-        equipment.EquipmentInit(dafa);
-        equipment.EquipmentsetforClass(dafa);
-        ChangeHP();
-        dafa.setMaxHP();
-        this.Stage.setSelectedIndex(this.Stage.getSelectedIndex() + 1);
+        classN = 2;
+        dafa.tipeClass(classN);
+        ChoosenClass.setText(dafa.dapatkanClass());
+        this.Stage.setSelectedIndex(4);
     }//GEN-LAST:event_button_guardianActionPerformed
 
     private void HPMusuhStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_HPMusuhStateChanged
         // TODO add your handling code here:
         HPMusuh.setValue(slime.getHP());
     }//GEN-LAST:event_HPMusuhStateChanged
+
+    private void YesclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesclassActionPerformed
+        // TODO add your handling code here:
+        equipment.EquipmentInit(dafa);
+        equipment.EquipmentsetforClass(dafa);
+        ChangeAttr();
+        dafa.setMaxHP();
+        Stage.setSelectedIndex(5);
+    }//GEN-LAST:event_YesclassActionPerformed
+
+    private void NoclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoclassActionPerformed
+        Stage.setSelectedIndex(1);
+    }//GEN-LAST:event_NoclassActionPerformed
+
+    private void boxdialog1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boxdialog1MouseClicked
+        // TODO add your handling code here:
+        labelbox.setText("Proses selanjutnya...");
+        Timer timer = new Timer(3000, new ActionListener() { // Delay 3 detik (3000 milidetik)
+            public void actionPerformed(ActionEvent e) {
+                // Proses yang akan dilakukan setelah delay
+                Stage.setSelectedIndex(2);
+                alur.setBattle(true);
+                winorlose.setVisible(false);
+                labelbox.setText("|");
+            }
+        });
+        timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
+        timer.start(); // Memulai timer
+    }//GEN-LAST:event_boxdialog1MouseClicked
+
+    private void winorloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_winorloseMouseClicked
+        // TODO add your handling code here:
+        Timer timer = new Timer(3000, new ActionListener() { // Delay 3 detik (3000 milidetik)
+            public void actionPerformed(ActionEvent e) {
+                // Proses yang akan dilakukan setelah delay
+                Stage.setSelectedIndex(5);
+            }
+        });
+        timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
+        timer.start(); // Memulai timer
+    }//GEN-LAST:event_winorloseMouseClicked
+    public void ChangeAttr(){
+        ChangeHP();
+        ChangeDef();
+        ChangeAtk();
+    }
     public void ChangeHP(){
         ValueHP.setText(dafa.getHP() + "");
+    }
+    public void ChangeDef(){
+        ValueDef.setText(dafa.getDefense() +"");
+    }
+    
+    public void ChangeAtk(){
+        ValueAtk.setText(dafa.getAttack_point() + "");
     }
     /**
      * @param args the command line arguments
@@ -453,31 +551,41 @@ public class GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Attack_button;
+    private javax.swing.JLabel ChoosenClass;
+    private javax.swing.JLabel ClassQ;
+    private javax.swing.JLabel EnemyLabel;
     private javax.swing.JTextField GetNamePlayer;
     private javax.swing.JProgressBar HPMusuh;
     private javax.swing.JLabel NamaPlayer;
+    private javax.swing.JButton Noclass;
     private javax.swing.JButton Okbutton;
     private javax.swing.JLabel Player;
     private javax.swing.JTabbedPane Stage;
     private javax.swing.JLabel ValueAtk;
     private javax.swing.JLabel ValueDef;
     private javax.swing.JLabel ValueHP;
+    private javax.swing.JButton Yesclass;
+    private javax.swing.JLabel afterbattle;
+    private javax.swing.JPanel boxdialog1;
     private javax.swing.JButton button_archer;
     private javax.swing.JButton button_assasin;
     private javax.swing.JButton button_guardian;
     private javax.swing.JButton button_necromancer;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel gifatk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel labelAtk;
     private javax.swing.JLabel labelDef;
     private javax.swing.JLabel labelHP;
+    private javax.swing.JLabel labelbox;
+    private javax.swing.JPanel winorlose;
     // End of variables declaration//GEN-END:variables
 }
