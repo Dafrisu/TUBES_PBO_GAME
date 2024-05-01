@@ -27,7 +27,7 @@ public class GUI extends javax.swing.JFrame {
         udin.SetType();
         udin.SetDiag();
         winorlose.setVisible(false);
-        gifatk.setVisible(false);
+        
     }
 
     /**
@@ -65,8 +65,8 @@ public class GUI extends javax.swing.JFrame {
         EnemyLabel = new javax.swing.JLabel();
         winorlose = new javax.swing.JPanel();
         afterbattle = new javax.swing.JLabel();
-        gifatk = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         ClassQ = new javax.swing.JLabel();
         ChoosenClass = new javax.swing.JLabel();
@@ -151,7 +151,7 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(GetNamePlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Okbutton)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(229, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +161,7 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(GetNamePlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(Okbutton))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         Stage.addTab("tab1", jPanel2);
@@ -183,8 +183,18 @@ public class GUI extends javax.swing.JFrame {
         });
 
         button_necromancer.setText("Necromancer");
+        button_necromancer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_necromancerActionPerformed(evt);
+            }
+        });
 
         button_archer.setText("Archer");
+        button_archer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_archerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -202,7 +212,7 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(button_assasin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(button_necromancer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(button_archer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(317, Short.MAX_VALUE))
+                .addContainerGap(383, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,7 +227,7 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(button_necromancer)
                 .addGap(18, 18, 18)
                 .addComponent(button_archer)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         Stage.addTab("tab2", jPanel3);
@@ -256,20 +266,26 @@ public class GUI extends javax.swing.JFrame {
 
         jPanel4.add(winorlose, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 450, 30));
 
-        gifatk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/W6/Image/Slash front remake.gif"))); // NOI18N
-        jPanel4.add(gifatk, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
-
         Stage.addTab("tab3", jPanel4);
+
+        jLabel3.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
+        jLabel3.setText("MENANG ");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 733, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(284, 284, 284)
+                .addComponent(jLabel3)
+                .addContainerGap(412, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 262, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(jLabel3)
+                .addContainerGap(163, Short.MAX_VALUE))
         );
 
         Stage.addTab("tab4", jPanel6);
@@ -313,7 +329,7 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(155, 155, 155)
                 .addComponent(ClassQ, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addContainerGap(260, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -342,7 +358,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Noclass)
                     .addComponent(Yesclass))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
 
         Stage.addTab("tab5", jPanel5);
@@ -390,12 +406,12 @@ public class GUI extends javax.swing.JFrame {
 
     private void Attack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Attack_buttonActionPerformed
         dafa.attack(slime);
-        gifatk.setVisible(true);
+        
         HPMusuh.setValue(slime.getHP());
         slime.attack(dafa);
         ChangeHP();
         if (slime.getHP() < 0){
-            alur.setBattle(false);
+            
             dafa.setHP(dafa.getMaxHP());
             ChangeHP();
             Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
@@ -415,12 +431,8 @@ public class GUI extends javax.swing.JFrame {
 
     private void StageStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_StageStateChanged
         // TODO add your handling code here:
-        if (Stage.getSelectedIndex() == 1){
-            chooseClass = true;
-        }
-        if(Stage.getSelectedIndex() == 2){
-            alur.setBattle(true);
-        }
+        
+        
         if (alur.isBattle() == true){
             Attack_button.setVisible(true);
             slime = new Enemy("Slime", 200, 100, 100);
@@ -429,7 +441,7 @@ public class GUI extends javax.swing.JFrame {
         }else{
             Attack_button.setVisible(false);
         }
-        
+        // error still
         
     }//GEN-LAST:event_StageStateChanged
 
@@ -460,7 +472,15 @@ public class GUI extends javax.swing.JFrame {
         equipment.EquipmentsetforClass(dafa);
         ChangeAttr();
         dafa.setMaxHP();
-        Stage.setSelectedIndex(5);
+        
+        alur.run();
+        if (alur.isBattle() == true){
+            Stage.setSelectedIndex(2);
+        }else{
+            Stage.setSelectedIndex(5);
+        }
+        alur.setCurrentInteraction(alur.getCurrentInteraction() + 1);
+         // error still
     }//GEN-LAST:event_YesclassActionPerformed
 
     private void NoclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoclassActionPerformed
@@ -473,7 +493,19 @@ public class GUI extends javax.swing.JFrame {
         Timer timer = new Timer(3000, new ActionListener() { // Delay 3 detik (3000 milidetik)
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
-                Stage.setSelectedIndex(2);
+                alur.run();
+            if (alur.getCurrentInteraction() < alur.getMAX_INTERACTIONS() ){
+                if (alur.isBattle() == true){
+                    Stage.setSelectedIndex(3);
+                    Stage.setSelectedIndex(2);
+                }else{
+                    Stage.setSelectedIndex(3);
+                    Stage.setSelectedIndex(5);
+                }
+            }else{
+                Stage.setSelectedIndex(3);
+            }
+            alur.setCurrentInteraction(alur.getCurrentInteraction() + 1);
                 alur.setBattle(true);
                 winorlose.setVisible(false);
                 labelbox.setText("|");
@@ -481,6 +513,7 @@ public class GUI extends javax.swing.JFrame {
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
         timer.start(); // Memulai timer
+         // error still
     }//GEN-LAST:event_boxdialog1MouseClicked
 
     private void winorloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_winorloseMouseClicked
@@ -488,12 +521,43 @@ public class GUI extends javax.swing.JFrame {
         Timer timer = new Timer(3000, new ActionListener() { // Delay 3 detik (3000 milidetik)
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
-                Stage.setSelectedIndex(5);
+                winorlose.setVisible(false);
+                 alur.run();
+            if (alur.getCurrentInteraction() < alur.getMAX_INTERACTIONS() ){
+                if (alur.isBattle() == true){
+                    Stage.setSelectedIndex(3);
+                    Stage.setSelectedIndex(2);
+                }else{
+                    Stage.setSelectedIndex(3);
+                    Stage.setSelectedIndex(5);
+                }
+            }else{
+                Stage.setSelectedIndex(3);
+            }
+            alur.setCurrentInteraction(alur.getCurrentInteraction() + 1);
             }
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
         timer.start(); // Memulai timer
+         // error still
+           
     }//GEN-LAST:event_winorloseMouseClicked
+
+    private void button_necromancerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_necromancerActionPerformed
+        // TODO add your handling code here:
+        classN = 3; 
+        dafa.tipeClass(classN);
+        ChoosenClass.setText(dafa.dapatkanClass());
+        this.Stage.setSelectedIndex(4);
+    }//GEN-LAST:event_button_necromancerActionPerformed
+
+    private void button_archerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_archerActionPerformed
+        // TODO add your handling code here:
+        classN = 4;
+        dafa.tipeClass(classN);
+        ChoosenClass.setText(dafa.dapatkanClass());
+        this.Stage.setSelectedIndex(4);
+    }//GEN-LAST:event_button_archerActionPerformed
     public void ChangeAttr(){
         ChangeHP();
         ChangeDef();
@@ -571,9 +635,9 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton button_assasin;
     private javax.swing.JButton button_guardian;
     private javax.swing.JButton button_necromancer;
-    private javax.swing.JLabel gifatk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

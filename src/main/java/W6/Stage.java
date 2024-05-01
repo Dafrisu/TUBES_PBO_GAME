@@ -13,7 +13,8 @@ public class Stage {
     private int MAX_INTERACTIONS =5;
     private int currentInteraction = 0;
     private boolean battle;
-
+    Random random = new Random(); // Create a Random object
+    
     public int getMAX_INTERACTIONS() {
         return MAX_INTERACTIONS;
     }
@@ -39,26 +40,21 @@ public class Stage {
     }
 
     public void run() {
-        Random random = new Random(); // Create a Random object
-
-        while (currentInteraction < MAX_INTERACTIONS) {
-            int encounterType = random.nextInt(1, 2); // Generate random number (1 or 2)
-
-            if (encounterType == 1) {
-                System.out.println("Bertemu musuh! Bersiap untuk bertempur!");
-                setBattle(true);
-            } else if (encounterType == 2){
-                System.out.println("Bertemu NPC! Mari kita lihat apa yang akan dia katakan.");
-                setBattle(false);
-                NPC npc = new NPC("NPC Name", 100, 10, 5);
-                npc.SetType();
-                npc.SetDiag();
-            }
+        int encounterType = random.nextInt(2)+1; // Generate random number (1 or 2)
+        System.out.println(encounterType);
+        if ( currentInteraction < MAX_INTERACTIONS){
             
+            if (encounterType == 1){
+                setBattle(true);
+            }
+            else if (encounterType == 2){
+                setBattle(false);
+            }
+        }else{
+            System.out.println("Udah habis");
         }
         
-        if (currentInteraction > MAX_INTERACTIONS){
-            
-        }
+        
+
     }
 }

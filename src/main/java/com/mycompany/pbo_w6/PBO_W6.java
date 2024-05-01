@@ -22,7 +22,15 @@ public class PBO_W6 {
         System.out.println(Haikal.persepective(Haikal));
         Random intrandom = new Random();
         int n1 = intrandom.nextInt(0,3);
-        
+        Stage alur = new Stage();
+        alur.run();
+        System.out.println(alur.isBattle());
+        alur.run();
+        System.out.println(alur.isBattle());
+        alur.run();
+        System.out.println(alur.isBattle());
+        alur.run();
+        System.out.println(alur.isBattle());
         System.out.println("");
     }
 }
