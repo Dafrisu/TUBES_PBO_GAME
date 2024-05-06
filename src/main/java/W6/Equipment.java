@@ -30,6 +30,7 @@ public class Equipment{
     
     public void EquipmentInit(Player a){
          if (a.dapatkanClass().equals("Assassin")){
+            this.setTipe("Dagger and Assasin's robe");
             arrEquipment[0] = new Equipment("Dagger and Assasin's robe", "Set1", 10, 20, 30);
             arrEquipment[1] = new Equipment("Dagger and Assasin's robe", "Set2", 40, 60, 70);
             arrEquipment[2] = new Equipment("Dagger and Assasin's robe", "Set3", 100,120,130);
@@ -42,10 +43,16 @@ public class Equipment{
             arrEquipment[3] = new Equipment("Shield and Guardians Armor", "Set4", 300,200,230);
         }else if(a.dapatkanClass().equals("Necromancer")){
             this.setTipe("Staff and robe");
-//            
+            arrEquipment[0] = new Equipment("Staff and robe", "Set1", 10, 20, 30);
+            arrEquipment[1] = new Equipment("Staff and robe", "Set2", 40, 60, 70);
+            arrEquipment[2] = new Equipment("Staff and robe", "Set3", 100,120,130);
+            arrEquipment[3] = new Equipment("Staff and robe", "Set4", 300,200,230);
         }else if(a.dapatkanClass().equals("Archer")){
             this.setTipe("Bow and robe");
-//           
+            arrEquipment[0] = new Equipment("Bow and robe", "Set1", 10, 20, 30);
+            arrEquipment[1] = new Equipment("Bow and robe", "Set2", 40, 60, 70);
+            arrEquipment[2] = new Equipment("Bow and robe", "Set3", 100,120,130);
+            arrEquipment[3] = new Equipment("Bow and robe", "Set4", 300,200,230);
         }else{
             System.out.println("Player belum memiliki class");
         }
