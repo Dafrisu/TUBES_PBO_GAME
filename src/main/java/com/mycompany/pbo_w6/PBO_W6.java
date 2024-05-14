@@ -13,6 +13,7 @@ import java.util.Random;
 public class PBO_W6 {
 
     public static void main(String[] args) {
+        
 //        System.out.println("Hello World!");
 //        Player castP;
         Player dafa = new Player("dafa",100, 100, 100);
@@ -32,5 +33,14 @@ public class PBO_W6 {
         alur.run();
         System.out.println(alur.isBattle());
         System.out.println("");
+        dafa.tipeClass(1);
+        dafa.wear.EquipmentInit(dafa);
+        dafa.wear.EquipmentsetforClass(dafa);
+        dafa.CheckStats();
+        dafa.checkEquipment();
+        udin.reward.EquipmentInit(dafa);
+        udin.Dialogue(dafa);
+        dafa.CheckStats();
+        dafa.checkEquipment();
     }
 }

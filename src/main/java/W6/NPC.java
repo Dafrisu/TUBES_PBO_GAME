@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class NPC extends Entity{
     private String nama;
-    private String[] dialogue = new String[10];
+    private String[] dialogue = new String [10];
     private String npctype;
     private Random intrandom = new Random();
     private int n = 2;
@@ -48,6 +48,7 @@ public class NPC extends Entity{
     public void SetDiag() {
         switch (this.npctype) {
             case "Merchant":
+//                this.dialogue = new String[]{"Selamat datang petualang, Kamu orang yang beruntung menemukan tokoku","Tertarik untuk melihat lihat?" };
                 this.dialogue[0] = "Selamat datang petualang, Kamu orang yang beruntung menemukan tokoku";
                 this.dialogue[1] = "Tertarik untuk melihat lihat?";
                 this.dialogue[2] = "1. menarik.... biarkan aku melihat lihat";
