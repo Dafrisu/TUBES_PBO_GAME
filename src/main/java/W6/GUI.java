@@ -19,7 +19,7 @@ public class GUI extends javax.swing.JFrame {
     Stage alur = new Stage();
     Equipment equipment = new Equipment();
     NPC udin = new NPC(10,10,10);
-    
+    int idxDialogue = 0;
     public GUI() {
         initComponents();
         NamaPlayer.setVisible(false);
@@ -76,6 +76,8 @@ public class GUI extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         boxdialog1 = new javax.swing.JPanel();
         labelbox = new javax.swing.JLabel();
+        Opsi1 = new javax.swing.JButton();
+        Opsi2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(720, 480));
@@ -378,13 +380,54 @@ public class GUI extends javax.swing.JFrame {
 
         jPanel7.add(boxdialog1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 650, 100));
 
+        Opsi1.setText("Opsi1");
+        Opsi1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Opsi1ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(Opsi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
+
+        Opsi2.setText("Opsi2");
+        Opsi2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Opsi2ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(Opsi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, -1, -1));
+
         Stage.addTab("tab6", jPanel7);
 
         getContentPane().add(Stage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void Timer(){
+        Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
+            public void actionPerformed(ActionEvent e) {
+                // Proses yang akan dilakukan setelah delay
+                alur.run();
+            if (alur.getCurrentInteraction() < alur.getMAX_INTERACTIONS() ){
+                if (alur.isBattle() == true){
+                    Stage.setSelectedIndex(3);
+                    Stage.setSelectedIndex(2);
+                }else{
+                    Stage.setSelectedIndex(3);
+                    Stage.setSelectedIndex(5);
+                }
+            }else{
+                Stage.setSelectedIndex(3);
+            }
+            alur.setCurrentInteraction(alur.getCurrentInteraction() + 1);
+                alur.setBattle(true);
+                winorlose.setVisible(false);
+                labelbox.setText("|");
+            }
+        });
+        timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
+        timer.start(); // Memulai timer
+         // error still
+    }
     private void GetNamePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GetNamePlayerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_GetNamePlayerActionPerformed
@@ -400,6 +443,7 @@ public class GUI extends javax.swing.JFrame {
             ValueDef.setText(dafa.getDefense() + "");
             ValueAtk.setText(dafa.getAttack_point() + "");
             Stage.setSelectedIndex(1);
+            
         }
         
     }//GEN-LAST:event_OkbuttonActionPerformed
@@ -471,8 +515,12 @@ public class GUI extends javax.swing.JFrame {
         equipment.EquipmentInit(dafa);
         equipment.EquipmentsetforClass(dafa);
         ChangeAttr();
-        dafa.setMaxHP();
         
+        dafa.setMaxHP();
+
+        udin.reward1.EquipmentInit(dafa);
+        udin.reward2.EquipmentInit(dafa);
+        udin.setReward();
         alur.run();
         if (alur.isBattle() == true){
             Stage.setSelectedIndex(2);
@@ -489,36 +537,28 @@ public class GUI extends javax.swing.JFrame {
 
     private void boxdialog1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boxdialog1MouseClicked
         // TODO add your handling code here:
-        labelbox.setText("Proses selanjutnya...");
-        Timer timer = new Timer(3000, new ActionListener() { // Delay 3 detik (3000 milidetik)
-            public void actionPerformed(ActionEvent e) {
-                // Proses yang akan dilakukan setelah delay
-                alur.run();
-            if (alur.getCurrentInteraction() < alur.getMAX_INTERACTIONS() ){
-                if (alur.isBattle() == true){
-                    Stage.setSelectedIndex(3);
-                    Stage.setSelectedIndex(2);
-                }else{
-                    Stage.setSelectedIndex(3);
-                    Stage.setSelectedIndex(5);
+        String[] textNPC = new String[5];
+        System.out.println(textNPC.length);
+        textNPC = udin.getDialogue();
+        try {
+            if (idxDialogue == textNPC.length -1) {
+                throw new Exception("Sudah max idx");
+            }
+            if (idxDialogue<textNPC.length){
+                labelbox.setText(textNPC[idxDialogue]);
+                idxDialogue++;
+                if(textNPC[idxDialogue]==null && idxDialogue < textNPC.length){
+                    idxDialogue++;
                 }
-            }else{
-                Stage.setSelectedIndex(3);
             }
-            alur.setCurrentInteraction(alur.getCurrentInteraction() + 1);
-                alur.setBattle(true);
-                winorlose.setVisible(false);
-                labelbox.setText("|");
-            }
-        });
-        timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
-        timer.start(); // Memulai timer
-         // error still
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_boxdialog1MouseClicked
 
     private void winorloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_winorloseMouseClicked
         // TODO add your handling code here:
-        Timer timer = new Timer(3000, new ActionListener() { // Delay 3 detik (3000 milidetik)
+        /*Timer timer = new Timer(3000, new ActionListener() { // Delay 3 detik (3000 milidetik)
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
                 winorlose.setVisible(false);
@@ -540,7 +580,8 @@ public class GUI extends javax.swing.JFrame {
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
         timer.start(); // Memulai timer
          // error still
-           
+           */
+        Timer();
     }//GEN-LAST:event_winorloseMouseClicked
 
     private void button_necromancerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_necromancerActionPerformed
@@ -558,6 +599,20 @@ public class GUI extends javax.swing.JFrame {
         ChoosenClass.setText(dafa.dapatkanClass());
         this.Stage.setSelectedIndex(4);
     }//GEN-LAST:event_button_archerActionPerformed
+
+    private void Opsi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi1ActionPerformed
+        int pilih;
+        pilih = 1;
+        udin.pilihReward(dafa, pilih);
+        Timer();
+    }//GEN-LAST:event_Opsi1ActionPerformed
+
+    private void Opsi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi2ActionPerformed
+        int pilih;
+        pilih = 2;
+        udin.pilihReward(dafa, pilih);
+        Timer();
+    }//GEN-LAST:event_Opsi2ActionPerformed
     public void ChangeAttr(){
         ChangeHP();
         ChangeDef();
@@ -623,6 +678,8 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel NamaPlayer;
     private javax.swing.JButton Noclass;
     private javax.swing.JButton Okbutton;
+    private javax.swing.JButton Opsi1;
+    private javax.swing.JButton Opsi2;
     private javax.swing.JLabel Player;
     private javax.swing.JTabbedPane Stage;
     private javax.swing.JLabel ValueAtk;

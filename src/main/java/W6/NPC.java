@@ -15,9 +15,11 @@ public class NPC extends Entity{
     private String nama;
     private String[] dialogue = new String[10];
     private String npctype;
+    private int idxDialogue;
     private Random intrandom = new Random();
     private int n = 2;
-    public Equipment reward = new Equipment();
+    public Equipment reward1 = new Equipment();
+    public Equipment reward2 = new Equipment();
     public NPC(String nama,int HP, int def, int att) {
         super(HP, def, att);
         this.nama = nama;
@@ -38,9 +40,9 @@ public class NPC extends Entity{
     }
     
     public void DialogueOut(){
-        for(int i =0; i<dialogue.length; i++){
-            if ( dialogue[i] != null){
-                System.out.println(dialogue[i]);
+        for(int i =0; i<getDialogue().length; i++){
+            if ( getDialogue()[i] != null){
+                System.out.println(getDialogue()[i]);
             }
         }
     }
@@ -50,14 +52,15 @@ public class NPC extends Entity{
             case "Merchant":
                 this.dialogue[0] = "Selamat datang petualang, Kamu orang yang beruntung menemukan tokoku";
                 this.dialogue[1] = "Tertarik untuk melihat lihat?";
-                this.dialogue[2] = "1. menarik.... biarkan aku melihat lihat";
-                this.dialogue[3] = "2. maaf, aku sedang buru buru, mungkin lain kali";
+                this.dialogue[2] = "Pilih salah satu item ini petualang!";
+                this.dialogue[3] = "1. menarik.... biarkan aku melihat lihat";
+                this.dialogue[4] = "2. maaf, aku sedang buru buru, mungkin lain kali";
+                
                 break;
             case "Pemberi Hadiah":
                 this.dialogue[0] = "aah... petualang, Terimakasih sudah mau melindungi kota kami";
                 this.dialogue[1] = "Aku memiliki sedikit hadiah untukmu, apakah kamu mau menerimanya?";
-                this.dialogue[2] = "1. baik, terimakasih pemberiannya tuan";
-                this.dialogue[3] = "2. Tidak perlu tuan, aku bersedia melindungi kota ini tanpa meminta imbalan sepeserpun";
+                this.dialogue[2] = "Apakah kamu akan menggunakan item ini petualang?";
                 break;
             case "Informan":
                 this.dialogue[0] = "halo petualang, aku dengar kamu ingin mencari dan mengalahkan raja iblis ";
@@ -71,51 +74,46 @@ public class NPC extends Entity{
         }
         
     }
-    public void tipeReward(Player a){
-
+    public void setReward(){
         if (this.npctype.equals("Merchant")){
-            System.out.println("Pilih salah satu item ini petualang!");
             int n1, n2;
             n1 = intrandom.nextInt(0,3);
             n2 = intrandom.nextInt(0,3);
-            System.out.println("1. " + this.reward.arrEquipment[n1].getNama());
-            System.out.println("2. " + this.reward.arrEquipment[n2].getNama());
-            Scanner input = new Scanner(System.in);
-            System.out.println("Masukkan Input");
-            int choose = input.nextInt();
-            if (choose == 1){
-                this.reward = this.reward.arrEquipment[n1];
-                a.wear.changeEquipment(a, reward);
-            }else if(choose ==2){
-                this.reward = this.reward.arrEquipment[n2];
-                a.wear.changeEquipment(a, reward);
-            }
+            this.reward1 = this.reward1.arrEquipment[n1];
+            this.reward2 = this.reward2.arrEquipment[n2];
+            this.dialogue[5]= ("1. " + this.reward1.arrEquipment[n1].getNama() +"/t"+ "2. " + this.reward2.arrEquipment[n2].getNama());
         }else if (this.npctype.equals("Pemberi Hadiah")){
-            System.out.println("Apakah kamu akan menggunakan item ini petualang?");
             int n1;
             n1 = intrandom.nextInt(0,3);
-            System.out.println(this.reward.arrEquipment[n1].getNama());
-            System.out.println("1. Iyadong maszeh");
-            System.out.println("2. gaah males mau beli truk");
-            Scanner input = new Scanner(System.in);
-            System.out.println("Masukkan Input");
-            int choose = input.nextInt();
-            if (choose == 1){
-                this.reward = this.reward.arrEquipment[n1];
-                a.wear.changeEquipment(a, reward);
+            this.reward1 = this.reward1.arrEquipment[n1];
+            this.dialogue[3]= ("Reward :" + this.reward1.arrEquipment[n1].getNama());
+        }
+    }
+    public void pilihReward(Player a,int x){
+
+        if (this.npctype.equals("Merchant")){
+            if (x == 1){
+                a.wear.changeEquipment(a, reward1);
+            }else if(x ==2){
+                a.wear.changeEquipment(a, reward2);
+            }
+        }else if (this.npctype.equals("Pemberi Hadiah")){
+            if (x == 1){
+                a.wear.changeEquipment(a, reward1);
+            }else if(x ==2){
             }
         }
     }
-    public void pilih (Player a){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Masukkan Input");
-        int choose = input.nextInt();
-        if(choose == 1){
-            this.tipeReward(a);
-        }else if (choose == 2){
+    //public int pilih (Player a){
+        //Scanner input = new Scanner(System.in);
+        //System.out.println("Masukkan Input");
+        //int choose = input.nextInt();
+        //if(choose == 1){
+            //this.tipeReward(a,);
+        //}else if (choose == 2){
             //next Interaction
-        }
-    }
+        //}
+    //}
     public void SetType(){
         n = this.n;
         if (n == 1){
@@ -128,9 +126,16 @@ public class NPC extends Entity{
     }
 
     public void Dialogue(Player a){
-        this.SetType();
+        SetType();
         this.SetDiag();
         this.DialogueOut();
-        this.pilih(a);
     }
+
+    /**
+     * @return the dialogue
+     */
+    public String[] getDialogue() {
+        return dialogue;
+    }
+    
 }
