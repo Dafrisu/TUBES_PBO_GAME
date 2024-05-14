@@ -32,5 +32,6 @@ public class PBO_W6 {
         alur.run();
         System.out.println(alur.isBattle());
         System.out.println("");
+        
     }
 }
