@@ -11,15 +11,15 @@ import java.awt.event.*;
  * @author haika
  */
 public class GUI extends javax.swing.JFrame {
-    Player dafa;
-    Enemy slime;
-    boolean battle = false;
-    boolean chooseClass = false;
-    int classN;
-    Stage alur = new Stage();
-    Equipment equipment = new Equipment();
-    NPC udin = new NPC(10,10,10);
-    int idxDialogue = 0;
+    private Player dafa;
+    private Enemy slime;
+    private boolean battle = false;
+    private boolean chooseClass = false;
+    private int classN;
+    private Stage alur = new Stage();
+    private Equipment equipment = new Equipment();
+    private NPC udin = new NPC(10,10,10);
+    private int idxDialogue = 0;
     public GUI() {
         initComponents();
         NamaPlayer.setVisible(false);
@@ -406,22 +406,22 @@ public class GUI extends javax.swing.JFrame {
         Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
-                alur.run();
-            if (alur.getCurrentInteraction() < alur.getMAX_INTERACTIONS() ){
-                if (alur.isBattle() == true){
-                    Stage.setSelectedIndex(3);
-                    Stage.setSelectedIndex(2);
+                getAlur().run();
+            if (getAlur().getCurrentInteraction() < getAlur().getMAX_INTERACTIONS() ){
+                if (getAlur().isBattle() == true){
+                        getStage().setSelectedIndex(3);
+                        getStage().setSelectedIndex(2);
                 }else{
-                    Stage.setSelectedIndex(3);
-                    Stage.setSelectedIndex(5);
+                        getStage().setSelectedIndex(3);
+                        getStage().setSelectedIndex(5);
                 }
             }else{
-                Stage.setSelectedIndex(3);
+                    getStage().setSelectedIndex(3);
             }
-            alur.setCurrentInteraction(alur.getCurrentInteraction() + 1);
-                alur.setBattle(true);
-                winorlose.setVisible(false);
-                labelbox.setText("|");
+                getAlur().setCurrentInteraction(getAlur().getCurrentInteraction() + 1);
+                getAlur().setBattle(true);
+                getWinorlose().setVisible(false);
+                getLabelbox().setText("|");
             }
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
@@ -435,35 +435,35 @@ public class GUI extends javax.swing.JFrame {
     private void OkbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkbuttonActionPerformed
         // TODO add your handling code here:
         if (!GetNamePlayer.getText().equals("")){
-            String nama = GetNamePlayer.getText();
-            dafa = new Player(nama, 200,100,100);
-            NamaPlayer.setText(dafa.getNama());
-            NamaPlayer.setVisible(true);
-            ValueHP.setText(dafa.getHP() +"");
-            ValueDef.setText(dafa.getDefense() + "");
-            ValueAtk.setText(dafa.getAttack_point() + "");
-            Stage.setSelectedIndex(1);
+            String nama = getGetNamePlayer().getText();
+            setDafa(new Player(nama, 200,100,100));
+            getNamaPlayer().setText(getDafa().getNama());
+            getNamaPlayer().setVisible(true);
+            getValueHP().setText(getDafa().getHP() +"");
+            getValueDef().setText(getDafa().getDefense() + "");
+            getValueAtk().setText(getDafa().getAttack_point() + "");
+            getStage().setSelectedIndex(1);
             
         }
         
     }//GEN-LAST:event_OkbuttonActionPerformed
 
     private void Attack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Attack_buttonActionPerformed
-        dafa.attack(slime);
+        getDafa().attack(getSlime());
         
-        HPMusuh.setValue(slime.getHP());
-        slime.attack(dafa);
+        getHPMusuh().setValue(getSlime().getHP());
+        getSlime().attack(getDafa());
         ChangeHP();
-        if (slime.getHP() < 0){
+        if (getSlime().getHP() < 0){
             
-            dafa.setHP(dafa.getMaxHP());
+            getDafa().setHP(getDafa().getMaxHP());
             ChangeHP();
             Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
-                winorlose.setVisible(true);
-                winorlose.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-                afterbattle.setText("Anda Berhasil Mengalahkan Musuh");
+                    getWinorlose().setVisible(true);
+                    getWinorlose().setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                    getAfterbattle().setText("Anda Berhasil Mengalahkan Musuh");
             }
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
@@ -477,13 +477,13 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-        if (alur.isBattle() == true){
-            Attack_button.setVisible(true);
-            slime = new Enemy("Slime", 200, 100, 100);
-            HPMusuh.setMaximum(slime.getHP());
-            HPMusuh.setValue(slime.getHP());
+        if (getAlur().isBattle() == true){
+            getAttack_button().setVisible(true);
+            setSlime(new Enemy("Slime", 200, 100, 100));
+            getHPMusuh().setMaximum(getSlime().getHP());
+            getHPMusuh().setValue(getSlime().getHP());
         }else{
-            Attack_button.setVisible(false);
+            getAttack_button().setVisible(false);
         }
         // error still
         
@@ -491,64 +491,64 @@ public class GUI extends javax.swing.JFrame {
 
     private void button_assasinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_assasinActionPerformed
         // TODO add your handling code here:
-        classN =1;
-        dafa.tipeClass(classN);
-        ChoosenClass.setText(dafa.dapatkanClass());
-        this.Stage.setSelectedIndex(4);
+        setClassN(1);
+        getDafa().tipeClass(getClassN());
+        getChoosenClass().setText(getDafa().dapatkanClass());
+        this.getStage().setSelectedIndex(4);
     }//GEN-LAST:event_button_assasinActionPerformed
 
     private void button_guardianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_guardianActionPerformed
         // TODO add your handling code here:
-        classN = 2;
-        dafa.tipeClass(classN);
-        ChoosenClass.setText(dafa.dapatkanClass());
-        this.Stage.setSelectedIndex(4);
+        setClassN(2);
+        getDafa().tipeClass(getClassN());
+        getChoosenClass().setText(getDafa().dapatkanClass());
+        this.getStage().setSelectedIndex(4);
     }//GEN-LAST:event_button_guardianActionPerformed
 
     private void HPMusuhStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_HPMusuhStateChanged
         // TODO add your handling code here:
-        HPMusuh.setValue(slime.getHP());
+        getHPMusuh().setValue(getSlime().getHP());
     }//GEN-LAST:event_HPMusuhStateChanged
 
     private void YesclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesclassActionPerformed
         // TODO add your handling code here:
-        equipment.EquipmentInit(dafa);
-        equipment.EquipmentsetforClass(dafa);
+        getEquipment().EquipmentInit(getDafa());
+        getEquipment().EquipmentsetforClass(getDafa());
         ChangeAttr();
         
-        dafa.setMaxHP();
+        getDafa().setMaxHP();
 
-        udin.reward1.EquipmentInit(dafa);
-        udin.reward2.EquipmentInit(dafa);
-        udin.setReward();
-        alur.run();
-        if (alur.isBattle() == true){
-            Stage.setSelectedIndex(2);
+        getUdin().reward1.EquipmentInit(getDafa());
+        getUdin().reward2.EquipmentInit(getDafa());
+        getUdin().setReward();
+        getAlur().run();
+        if (getAlur().isBattle() == true){
+            getStage().setSelectedIndex(2);
         }else{
-            Stage.setSelectedIndex(5);
+            getStage().setSelectedIndex(5);
         }
-        alur.setCurrentInteraction(alur.getCurrentInteraction() + 1);
+        getAlur().setCurrentInteraction(getAlur().getCurrentInteraction() + 1);
          // error still
     }//GEN-LAST:event_YesclassActionPerformed
 
     private void NoclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoclassActionPerformed
-        Stage.setSelectedIndex(1);
+        getStage().setSelectedIndex(1);
     }//GEN-LAST:event_NoclassActionPerformed
 
     private void boxdialog1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boxdialog1MouseClicked
         // TODO add your handling code here:
         String[] textNPC = new String[5];
         System.out.println(textNPC.length);
-        textNPC = udin.getDialogue();
+        textNPC = getUdin().getDialogue();
         try {
-            if (idxDialogue == textNPC.length -1) {
+            if (getIdxDialogue() == textNPC.length -1) {
                 throw new Exception("Sudah max idx");
             }
-            if (idxDialogue<textNPC.length){
-                labelbox.setText(textNPC[idxDialogue]);
-                idxDialogue++;
-                if(textNPC[idxDialogue]==null && idxDialogue < textNPC.length){
-                    idxDialogue++;
+            if (getIdxDialogue()<textNPC.length){
+                getLabelbox().setText(textNPC[getIdxDialogue()]);
+                setIdxDialogue(getIdxDialogue() + 1);
+                if(textNPC[getIdxDialogue()]==null && getIdxDialogue() < textNPC.length){
+                    setIdxDialogue(getIdxDialogue() + 1);
                 }
             }
         }catch(Exception e){
@@ -586,31 +586,31 @@ public class GUI extends javax.swing.JFrame {
 
     private void button_necromancerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_necromancerActionPerformed
         // TODO add your handling code here:
-        classN = 3; 
-        dafa.tipeClass(classN);
-        ChoosenClass.setText(dafa.dapatkanClass());
-        this.Stage.setSelectedIndex(4);
+        setClassN(3); 
+        getDafa().tipeClass(getClassN());
+        getChoosenClass().setText(getDafa().dapatkanClass());
+        this.getStage().setSelectedIndex(4);
     }//GEN-LAST:event_button_necromancerActionPerformed
 
     private void button_archerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_archerActionPerformed
         // TODO add your handling code here:
-        classN = 4;
-        dafa.tipeClass(classN);
-        ChoosenClass.setText(dafa.dapatkanClass());
-        this.Stage.setSelectedIndex(4);
+        setClassN(4);
+        getDafa().tipeClass(getClassN());
+        getChoosenClass().setText(getDafa().dapatkanClass());
+        this.getStage().setSelectedIndex(4);
     }//GEN-LAST:event_button_archerActionPerformed
 
     private void Opsi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi1ActionPerformed
         int pilih;
         pilih = 1;
-        udin.pilihReward(dafa, pilih);
+        getUdin().pilihReward(getDafa(), pilih);
         Timer();
     }//GEN-LAST:event_Opsi1ActionPerformed
 
     private void Opsi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi2ActionPerformed
         int pilih;
         pilih = 2;
-        udin.pilihReward(dafa, pilih);
+        getUdin().pilihReward(getDafa(), pilih);
         Timer();
     }//GEN-LAST:event_Opsi2ActionPerformed
     public void ChangeAttr(){
@@ -619,14 +619,14 @@ public class GUI extends javax.swing.JFrame {
         ChangeAtk();
     }
     public void ChangeHP(){
-        ValueHP.setText(dafa.getHP() + "");
+        getValueHP().setText(getDafa().getHP() + "");
     }
     public void ChangeDef(){
-        ValueDef.setText(dafa.getDefense() +"");
+        getValueDef().setText(getDafa().getDefense() +"");
     }
     
     public void ChangeAtk(){
-        ValueAtk.setText(dafa.getAttack_point() + "");
+        getValueAtk().setText(getDafa().getAttack_point() + "");
     }
     /**
      * @param args the command line arguments
@@ -709,4 +709,676 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel labelbox;
     private javax.swing.JPanel winorlose;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the dafa
+     */
+    public Player getDafa() {
+        return dafa;
+    }
+
+    /**
+     * @param dafa the dafa to set
+     */
+    public void setDafa(Player dafa) {
+        this.dafa = dafa;
+    }
+
+    /**
+     * @return the slime
+     */
+    public Enemy getSlime() {
+        return slime;
+    }
+
+    /**
+     * @param slime the slime to set
+     */
+    public void setSlime(Enemy slime) {
+        this.slime = slime;
+    }
+
+    /**
+     * @return the battle
+     */
+    public boolean isBattle() {
+        return battle;
+    }
+
+    /**
+     * @param battle the battle to set
+     */
+    public void setBattle(boolean battle) {
+        this.battle = battle;
+    }
+
+    /**
+     * @return the chooseClass
+     */
+    public boolean isChooseClass() {
+        return chooseClass;
+    }
+
+    /**
+     * @param chooseClass the chooseClass to set
+     */
+    public void setChooseClass(boolean chooseClass) {
+        this.chooseClass = chooseClass;
+    }
+
+    /**
+     * @return the classN
+     */
+    public int getClassN() {
+        return classN;
+    }
+
+    /**
+     * @param classN the classN to set
+     */
+    public void setClassN(int classN) {
+        this.classN = classN;
+    }
+
+    /**
+     * @return the alur
+     */
+    public Stage getAlur() {
+        return alur;
+    }
+
+    /**
+     * @param alur the alur to set
+     */
+    public void setAlur(Stage alur) {
+        this.alur = alur;
+    }
+
+    /**
+     * @return the equipment
+     */
+    public Equipment getEquipment() {
+        return equipment;
+    }
+
+    /**
+     * @param equipment the equipment to set
+     */
+    public void setEquipment(Equipment equipment) {
+        this.equipment = equipment;
+    }
+
+    /**
+     * @return the udin
+     */
+    public NPC getUdin() {
+        return udin;
+    }
+
+    /**
+     * @param udin the udin to set
+     */
+    public void setUdin(NPC udin) {
+        this.udin = udin;
+    }
+
+    /**
+     * @return the idxDialogue
+     */
+    public int getIdxDialogue() {
+        return idxDialogue;
+    }
+
+    /**
+     * @param idxDialogue the idxDialogue to set
+     */
+    public void setIdxDialogue(int idxDialogue) {
+        this.idxDialogue = idxDialogue;
+    }
+
+    /**
+     * @return the Attack_button
+     */
+    public javax.swing.JButton getAttack_button() {
+        return Attack_button;
+    }
+
+    /**
+     * @param Attack_button the Attack_button to set
+     */
+    public void setAttack_button(javax.swing.JButton Attack_button) {
+        this.Attack_button = Attack_button;
+    }
+
+    /**
+     * @return the ChoosenClass
+     */
+    public javax.swing.JLabel getChoosenClass() {
+        return ChoosenClass;
+    }
+
+    /**
+     * @param ChoosenClass the ChoosenClass to set
+     */
+    public void setChoosenClass(javax.swing.JLabel ChoosenClass) {
+        this.ChoosenClass = ChoosenClass;
+    }
+
+    /**
+     * @return the ClassQ
+     */
+    public javax.swing.JLabel getClassQ() {
+        return ClassQ;
+    }
+
+    /**
+     * @param ClassQ the ClassQ to set
+     */
+    public void setClassQ(javax.swing.JLabel ClassQ) {
+        this.ClassQ = ClassQ;
+    }
+
+    /**
+     * @return the EnemyLabel
+     */
+    public javax.swing.JLabel getEnemyLabel() {
+        return EnemyLabel;
+    }
+
+    /**
+     * @param EnemyLabel the EnemyLabel to set
+     */
+    public void setEnemyLabel(javax.swing.JLabel EnemyLabel) {
+        this.EnemyLabel = EnemyLabel;
+    }
+
+    /**
+     * @return the GetNamePlayer
+     */
+    public javax.swing.JTextField getGetNamePlayer() {
+        return GetNamePlayer;
+    }
+
+    /**
+     * @param GetNamePlayer the GetNamePlayer to set
+     */
+    public void setGetNamePlayer(javax.swing.JTextField GetNamePlayer) {
+        this.GetNamePlayer = GetNamePlayer;
+    }
+
+    /**
+     * @return the HPMusuh
+     */
+    public javax.swing.JProgressBar getHPMusuh() {
+        return HPMusuh;
+    }
+
+    /**
+     * @param HPMusuh the HPMusuh to set
+     */
+    public void setHPMusuh(javax.swing.JProgressBar HPMusuh) {
+        this.HPMusuh = HPMusuh;
+    }
+
+    /**
+     * @return the NamaPlayer
+     */
+    public javax.swing.JLabel getNamaPlayer() {
+        return NamaPlayer;
+    }
+
+    /**
+     * @param NamaPlayer the NamaPlayer to set
+     */
+    public void setNamaPlayer(javax.swing.JLabel NamaPlayer) {
+        this.NamaPlayer = NamaPlayer;
+    }
+
+    /**
+     * @return the Noclass
+     */
+    public javax.swing.JButton getNoclass() {
+        return Noclass;
+    }
+
+    /**
+     * @param Noclass the Noclass to set
+     */
+    public void setNoclass(javax.swing.JButton Noclass) {
+        this.Noclass = Noclass;
+    }
+
+    /**
+     * @return the Okbutton
+     */
+    public javax.swing.JButton getOkbutton() {
+        return Okbutton;
+    }
+
+    /**
+     * @param Okbutton the Okbutton to set
+     */
+    public void setOkbutton(javax.swing.JButton Okbutton) {
+        this.Okbutton = Okbutton;
+    }
+
+    /**
+     * @return the Opsi1
+     */
+    public javax.swing.JButton getOpsi1() {
+        return Opsi1;
+    }
+
+    /**
+     * @param Opsi1 the Opsi1 to set
+     */
+    public void setOpsi1(javax.swing.JButton Opsi1) {
+        this.Opsi1 = Opsi1;
+    }
+
+    /**
+     * @return the Opsi2
+     */
+    public javax.swing.JButton getOpsi2() {
+        return Opsi2;
+    }
+
+    /**
+     * @param Opsi2 the Opsi2 to set
+     */
+    public void setOpsi2(javax.swing.JButton Opsi2) {
+        this.Opsi2 = Opsi2;
+    }
+
+    /**
+     * @return the Player
+     */
+    public javax.swing.JLabel getPlayer() {
+        return Player;
+    }
+
+    /**
+     * @param Player the Player to set
+     */
+    public void setPlayer(javax.swing.JLabel Player) {
+        this.Player = Player;
+    }
+
+    /**
+     * @return the Stage
+     */
+    public javax.swing.JTabbedPane getStage() {
+        return Stage;
+    }
+
+    /**
+     * @param Stage the Stage to set
+     */
+    public void setStage(javax.swing.JTabbedPane Stage) {
+        this.Stage = Stage;
+    }
+
+    /**
+     * @return the ValueAtk
+     */
+    public javax.swing.JLabel getValueAtk() {
+        return ValueAtk;
+    }
+
+    /**
+     * @param ValueAtk the ValueAtk to set
+     */
+    public void setValueAtk(javax.swing.JLabel ValueAtk) {
+        this.ValueAtk = ValueAtk;
+    }
+
+    /**
+     * @return the ValueDef
+     */
+    public javax.swing.JLabel getValueDef() {
+        return ValueDef;
+    }
+
+    /**
+     * @param ValueDef the ValueDef to set
+     */
+    public void setValueDef(javax.swing.JLabel ValueDef) {
+        this.ValueDef = ValueDef;
+    }
+
+    /**
+     * @return the ValueHP
+     */
+    public javax.swing.JLabel getValueHP() {
+        return ValueHP;
+    }
+
+    /**
+     * @param ValueHP the ValueHP to set
+     */
+    public void setValueHP(javax.swing.JLabel ValueHP) {
+        this.ValueHP = ValueHP;
+    }
+
+    /**
+     * @return the Yesclass
+     */
+    public javax.swing.JButton getYesclass() {
+        return Yesclass;
+    }
+
+    /**
+     * @param Yesclass the Yesclass to set
+     */
+    public void setYesclass(javax.swing.JButton Yesclass) {
+        this.Yesclass = Yesclass;
+    }
+
+    /**
+     * @return the afterbattle
+     */
+    public javax.swing.JLabel getAfterbattle() {
+        return afterbattle;
+    }
+
+    /**
+     * @param afterbattle the afterbattle to set
+     */
+    public void setAfterbattle(javax.swing.JLabel afterbattle) {
+        this.afterbattle = afterbattle;
+    }
+
+    /**
+     * @return the boxdialog1
+     */
+    public javax.swing.JPanel getBoxdialog1() {
+        return boxdialog1;
+    }
+
+    /**
+     * @param boxdialog1 the boxdialog1 to set
+     */
+    public void setBoxdialog1(javax.swing.JPanel boxdialog1) {
+        this.boxdialog1 = boxdialog1;
+    }
+
+    /**
+     * @return the button_archer
+     */
+    public javax.swing.JButton getButton_archer() {
+        return button_archer;
+    }
+
+    /**
+     * @param button_archer the button_archer to set
+     */
+    public void setButton_archer(javax.swing.JButton button_archer) {
+        this.button_archer = button_archer;
+    }
+
+    /**
+     * @return the button_assasin
+     */
+    public javax.swing.JButton getButton_assasin() {
+        return button_assasin;
+    }
+
+    /**
+     * @param button_assasin the button_assasin to set
+     */
+    public void setButton_assasin(javax.swing.JButton button_assasin) {
+        this.button_assasin = button_assasin;
+    }
+
+    /**
+     * @return the button_guardian
+     */
+    public javax.swing.JButton getButton_guardian() {
+        return button_guardian;
+    }
+
+    /**
+     * @param button_guardian the button_guardian to set
+     */
+    public void setButton_guardian(javax.swing.JButton button_guardian) {
+        this.button_guardian = button_guardian;
+    }
+
+    /**
+     * @return the button_necromancer
+     */
+    public javax.swing.JButton getButton_necromancer() {
+        return button_necromancer;
+    }
+
+    /**
+     * @param button_necromancer the button_necromancer to set
+     */
+    public void setButton_necromancer(javax.swing.JButton button_necromancer) {
+        this.button_necromancer = button_necromancer;
+    }
+
+    /**
+     * @return the jLabel1
+     */
+    public javax.swing.JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    /**
+     * @param jLabel1 the jLabel1 to set
+     */
+    public void setjLabel1(javax.swing.JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    /**
+     * @return the jLabel2
+     */
+    public javax.swing.JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    /**
+     * @param jLabel2 the jLabel2 to set
+     */
+    public void setjLabel2(javax.swing.JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    /**
+     * @return the jLabel3
+     */
+    public javax.swing.JLabel getjLabel3() {
+        return jLabel3;
+    }
+
+    /**
+     * @param jLabel3 the jLabel3 to set
+     */
+    public void setjLabel3(javax.swing.JLabel jLabel3) {
+        this.jLabel3 = jLabel3;
+    }
+
+    /**
+     * @return the jLabel4
+     */
+    public javax.swing.JLabel getjLabel4() {
+        return jLabel4;
+    }
+
+    /**
+     * @param jLabel4 the jLabel4 to set
+     */
+    public void setjLabel4(javax.swing.JLabel jLabel4) {
+        this.jLabel4 = jLabel4;
+    }
+
+    /**
+     * @return the jPanel1
+     */
+    public javax.swing.JPanel getjPanel1() {
+        return jPanel1;
+    }
+
+    /**
+     * @param jPanel1 the jPanel1 to set
+     */
+    public void setjPanel1(javax.swing.JPanel jPanel1) {
+        this.jPanel1 = jPanel1;
+    }
+
+    /**
+     * @return the jPanel2
+     */
+    public javax.swing.JPanel getjPanel2() {
+        return jPanel2;
+    }
+
+    /**
+     * @param jPanel2 the jPanel2 to set
+     */
+    public void setjPanel2(javax.swing.JPanel jPanel2) {
+        this.jPanel2 = jPanel2;
+    }
+
+    /**
+     * @return the jPanel3
+     */
+    public javax.swing.JPanel getjPanel3() {
+        return jPanel3;
+    }
+
+    /**
+     * @param jPanel3 the jPanel3 to set
+     */
+    public void setjPanel3(javax.swing.JPanel jPanel3) {
+        this.jPanel3 = jPanel3;
+    }
+
+    /**
+     * @return the jPanel4
+     */
+    public javax.swing.JPanel getjPanel4() {
+        return jPanel4;
+    }
+
+    /**
+     * @param jPanel4 the jPanel4 to set
+     */
+    public void setjPanel4(javax.swing.JPanel jPanel4) {
+        this.jPanel4 = jPanel4;
+    }
+
+    /**
+     * @return the jPanel5
+     */
+    public javax.swing.JPanel getjPanel5() {
+        return jPanel5;
+    }
+
+    /**
+     * @param jPanel5 the jPanel5 to set
+     */
+    public void setjPanel5(javax.swing.JPanel jPanel5) {
+        this.jPanel5 = jPanel5;
+    }
+
+    /**
+     * @return the jPanel6
+     */
+    public javax.swing.JPanel getjPanel6() {
+        return jPanel6;
+    }
+
+    /**
+     * @param jPanel6 the jPanel6 to set
+     */
+    public void setjPanel6(javax.swing.JPanel jPanel6) {
+        this.jPanel6 = jPanel6;
+    }
+
+    /**
+     * @return the jPanel7
+     */
+    public javax.swing.JPanel getjPanel7() {
+        return jPanel7;
+    }
+
+    /**
+     * @param jPanel7 the jPanel7 to set
+     */
+    public void setjPanel7(javax.swing.JPanel jPanel7) {
+        this.jPanel7 = jPanel7;
+    }
+
+    /**
+     * @return the labelAtk
+     */
+    public javax.swing.JLabel getLabelAtk() {
+        return labelAtk;
+    }
+
+    /**
+     * @param labelAtk the labelAtk to set
+     */
+    public void setLabelAtk(javax.swing.JLabel labelAtk) {
+        this.labelAtk = labelAtk;
+    }
+
+    /**
+     * @return the labelDef
+     */
+    public javax.swing.JLabel getLabelDef() {
+        return labelDef;
+    }
+
+    /**
+     * @param labelDef the labelDef to set
+     */
+    public void setLabelDef(javax.swing.JLabel labelDef) {
+        this.labelDef = labelDef;
+    }
+
+    /**
+     * @return the labelHP
+     */
+    public javax.swing.JLabel getLabelHP() {
+        return labelHP;
+    }
+
+    /**
+     * @param labelHP the labelHP to set
+     */
+    public void setLabelHP(javax.swing.JLabel labelHP) {
+        this.labelHP = labelHP;
+    }
+
+    /**
+     * @return the labelbox
+     */
+    public javax.swing.JLabel getLabelbox() {
+        return labelbox;
+    }
+
+    /**
+     * @param labelbox the labelbox to set
+     */
+    public void setLabelbox(javax.swing.JLabel labelbox) {
+        this.labelbox = labelbox;
+    }
+
+    /**
+     * @return the winorlose
+     */
+    public javax.swing.JPanel getWinorlose() {
+        return winorlose;
+    }
+
+    /**
+     * @param winorlose the winorlose to set
+     */
+    public void setWinorlose(javax.swing.JPanel winorlose) {
+        this.winorlose = winorlose;
+    }
 }
