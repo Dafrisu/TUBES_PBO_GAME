@@ -10,8 +10,8 @@ import java.util.Random;
  * @author Mahesa
  */
 public class Stage {
-    private int MAX_INTERACTIONS =5;
-    private int currentInteraction = 0;
+    private int MAX_INTERACTIONS =9;
+    private static int currentInteraction = 0;
     private boolean battle;
     Random random = new Random(); // Create a Random object
     
@@ -38,8 +38,20 @@ public class Stage {
     public void setBattle(boolean battle) {
         this.battle = battle;
     }
+    public static Enemy EnemyGoing(){
+        Enemy musuh = null;
+        if( currentInteraction <3){
+            musuh = new Enemy(Enemy.Enemytype.Slime);
+        }else if (currentInteraction >=3 && currentInteraction < 5){
+            musuh = new Enemy(Enemy.Enemytype.Goblin);
+        }
+        if(currentInteraction >=5 && currentInteraction < 9){
+            musuh = new Enemy(Enemy.Enemytype.Rock_Giant);
+        }
+        return musuh;
+    }
 
-    public void run() {
+    public void run(Enemy e) {
         int encounterType = random.nextInt(2)+1; // Generate random number (1 or 2)
         System.out.println(encounterType);
         if ( currentInteraction < MAX_INTERACTIONS){
