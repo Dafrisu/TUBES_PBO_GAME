@@ -16,6 +16,7 @@ import java.awt.event.*;
  * @author haika
  */
 public class GUI extends javax.swing.JFrame {
+    private boolean win = true;
     public DefaultListModel model = new DefaultListModel<>();
     private boolean battle = false;
     private boolean chooseClass = false;
@@ -77,6 +78,9 @@ public class GUI extends javax.swing.JFrame {
         labelbox = new javax.swing.JLabel();
         Opsi1 = new javax.swing.JButton();
         Opsi2 = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        Deadmessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -167,7 +171,7 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap(110, Short.MAX_VALUE))
         );
 
-        Stage.addTab("tab1", jPanel2);
+        Stage.addTab("name", jPanel2);
 
         jLabel2.setText("Pilih Class ");
 
@@ -233,7 +237,7 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
-        Stage.addTab("tab2", jPanel3);
+        Stage.addTab("class", jPanel3);
 
         jPanel4.setMaximumSize(new java.awt.Dimension(720, 250));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -270,7 +274,7 @@ public class GUI extends javax.swing.JFrame {
 
         jPanel4.add(winorlose, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 450, 30));
 
-        Stage.addTab("tab3", jPanel4);
+        Stage.addTab("battle", jPanel4);
 
         jLabel3.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel3.setText("MENANG ");
@@ -292,7 +296,7 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap(136, Short.MAX_VALUE))
         );
 
-        Stage.addTab("tab4", jPanel6);
+        Stage.addTab("win", jPanel6);
 
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -333,7 +337,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel4.setText("(Class Tidak akan bisa berubah Di lain waktu)");
         jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 101, 364, -1));
 
-        Stage.addTab("tab5", jPanel5);
+        Stage.addTab("confclass", jPanel5);
 
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -366,7 +370,35 @@ public class GUI extends javax.swing.JFrame {
         });
         jPanel7.add(Opsi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, -1, -1));
 
-        Stage.addTab("tab6", jPanel7);
+        Stage.addTab("npc", jPanel7);
+
+        jLabel5.setFont(new java.awt.Font("OCR A Extended", 0, 36)); // NOI18N
+        jLabel5.setText("YOU LOSE");
+
+        Deadmessage.setText("dead");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(259, 259, 259)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Deadmessage)
+                    .addComponent(jLabel5))
+                .addContainerGap(285, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Deadmessage)
+                .addContainerGap(128, Short.MAX_VALUE))
+        );
+
+        Stage.addTab("lose", jPanel8);
 
         getContentPane().add(Stage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 280));
 
@@ -512,6 +544,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton Attack_button;
     private javax.swing.JLabel ChoosenClass;
     private javax.swing.JLabel ClassQ;
+    private javax.swing.JLabel Deadmessage;
     private javax.swing.JLabel EnemyLabel;
     private javax.swing.JTextField GetNamePlayer;
     private javax.swing.JProgressBar HPMusuh;
@@ -536,6 +569,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -543,6 +577,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelAtk;
     private javax.swing.JLabel labelDef;
@@ -1005,5 +1040,17 @@ public class GUI extends javax.swing.JFrame {
 
     public javax.swing.JList<String> getListdamage() {
         return listdamage;
+    }
+
+    public boolean isWin() {
+        return win;
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
+    }
+
+    public javax.swing.JLabel getDeadmessage() {
+        return Deadmessage;
     }
 }

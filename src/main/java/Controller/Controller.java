@@ -7,6 +7,7 @@ import Model.*;
 import VIew.GUI;
 import java.awt.Color;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -127,32 +128,52 @@ public class Controller {
         view.getListdamage().setModel(view.model);
     }
     
+    // button untuk menyerang musuh
     public void attackbutton(){
         model.player.attack(model.enemy);
         view.getHPMusuh().setValue(model.enemy.getHP());
         view.model.addElement(model.enemy.getType().name() + " Terkena Serangan " + model.player.getAttack_point() + " Damage");
-        model.enemy.attack(model.player);
-        view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getAttack_point() + " Damage");
-        ChangeHP();
+        if(model.enemy.getHP() >= 0){
+            model.enemy.attack(model.player);
+            view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getAttack_point() + " Damage");
+            ChangeAttr();
+        }
+        if (model.player.getHP() <=0){
+            model.player.setHP(0);
+            ChangeAttr();
+            view.setWin(winlose(model.player));
+            if(!view.isWin()){
+                view.getAttack_button().setVisible(false);
+                timerlose();
+            }
+        }
+        
         if (model.enemy.getHP() < 0){
             
             model.player.setHP(model.player.getMaxHP());
             ChangeHP();
-            Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
-            public void actionPerformed(ActionEvent e) {
-                // Proses yang akan dilakukan setelah delay
-                    view.getWinorlose().setVisible(true);
-                    view.getWinorlose().setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-                    view.getAfterbattle().setText("Anda Berhasil Mengalahkan Musuh");
+            view.setWin(winlose(model.enemy));
+            if(view.isWin()){
+                view.getAttack_button().setVisible(false);
+                timerwin(); 
             }
-        });
-        timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
-        timer.start(); // Memulai timer
-            
-//            Stage.setSelectedIndex(Stage.getSelectedIndex() + 1);
         }
     }
-    
+    public boolean winlose(Entity e){
+        boolean win = false;
+        if(e instanceof Enemy){
+            if(e.getHP() <=0){
+                win = true;
+            }
+        }
+        if(e instanceof Player){
+            if(e.getHP() <= 0){
+                win = false;
+            }
+        }
+        return win;
+    }
+    // set NPC dialog di GUI
     public void NPCInteraction(){
         
         String[] textNPC = new String[5];
@@ -173,20 +194,51 @@ public class Controller {
             System.out.println(e.getMessage());
         }
     }
-    
+    public void timerwin(){
+        Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
+            public void actionPerformed(ActionEvent e) {
+                // Proses yang akan dilakukan setelah delay
+                    view.getWinorlose().setVisible(true);
+                    view.getWinorlose().setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                    view.getAfterbattle().setText("Anda Berhasil Mengalahkan Musuh");
+            }
+        });
+        timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
+        timer.start(); // Memulai timer
+    }
+    public void timerlose(){
+        Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
+            public void actionPerformed(ActionEvent e) {
+                // Proses yang akan dilakukan setelah delay
+                    view.getWinorlose().setVisible(true);
+                    view.getWinorlose().setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                    view.getAfterbattle().setText("Telah dikalahkan oleh musuh....");
+            }
+        });
+        timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
+        timer.start(); // Memulai timer
+    }
+    // Timer untuk delay sebelum ganti stage jika menang
     public void Timer(){
-        Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
+        if(view.isWin()){
+            Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
                 view.getAlur().run(model.enemy);
+                if(view.getAlur().getCurrentInteraction() == view.getAlur().getMAX_INTERACTIONS()){
+                    view.getStage().setSelectedIndex(3);
+                }
             if (view.getAlur().getCurrentInteraction() < view.getAlur().getMAX_INTERACTIONS() ){
                 if (view.getAlur().isBattle() == true){
                         view.getStage().setSelectedIndex(3);
                         view.getStage().setSelectedIndex(2);
                 }else{
-                        
-                        view.getStage().setSelectedIndex(3);
-                        view.getStage().setSelectedIndex(5);
+                    view.getStage().setSelectedIndex(3);
+                    view.getStage().setSelectedIndex(5);
+                    setOpsiName();
+                    view.getOpsi1().setVisible(false);
+                    view.getOpsi2().setVisible(false);
                 }
             }else{
                     view.getStage().setSelectedIndex(3);
@@ -200,12 +252,35 @@ public class Controller {
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
         timer.start(); // Memulai timer
+        }else{
+            Timer timer = new Timer(1000, new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    view.getStage().setSelectedIndex(6);
+                    view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getType());
+                }
+                
+            });
+            timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
+            timer.start(); // Memulai timer
+        }
          // error still
     }
+    public void setOpsiName(){
+        if (model.npc.getNpctype().equals("Merchant")) {
+            view.getOpsi1().setText(model.npc.reward1.getNama());
+            view.getOpsi2().setText(model.npc.reward2.getNama());
+        } else {
+            view.getOpsi1().setText("Terima");
+            view.getOpsi2().setText("Tolak");
+        }
+    }
+    // memilih opsi pertama ketika interaksi dengan NPC
     private void Opsi1ActionPerformed() {                                   
         int pilih;
         pilih = 1;
         model.npc.pilihReward(model.player,pilih);
+        model.player.setMaxHP();
         ChangeAttr();
         model.npc = new NPC(10,10,10);
         model.npc.reward1.EquipmentInit(model.player);
@@ -214,36 +289,44 @@ public class Controller {
         Timer();
     }                                     
 
+    // memilih opsi kedua ketika interaksi dengan NPC
     private void Opsi2ActionPerformed() {                                    
         int pilih;
         pilih = 2;
-        model.npc.pilihReward(model.player, pilih);
-        ChangeAttr();
-        model.npc = new NPC(10,10,10);
-        model.npc.reward1.EquipmentInit(model.player);
-        model.npc.reward2.EquipmentInit(model.player);
-        model.npc.setReward();
-        Timer();
+        if(model.npc.getNpctype().equals("Merchant")){
+            model.npc.pilihReward(model.player, pilih);
+            model.player.setMaxHP();
+            ChangeAttr();
+            model.npc = new NPC(10, 10, 10);
+            model.npc.reward1.EquipmentInit(model.player);
+            model.npc.reward2.EquipmentInit(model.player);
+            model.npc.setReward();
+            Timer(); 
+        }else{
+            Timer();
+        }
     }
     
     //menampilkan semua dialog npc di box panel
     private void BoxDialogPerformed(){
-        String[] textNPC = new String[4];
-        System.out.println(textNPC.length);
-        textNPC = model.npc.getDialogue();
+        ArrayList<String> textNPC = new ArrayList<>();
+        textNPC = model.npc.getListDialog();
+        System.out.println(textNPC.size());
         try {
-            if (view.getIdxDialogue() == textNPC.length -1) {
-                throw new Exception("Sudah max idx");
+            if(view.getIdxDialogue() == textNPC.size() - 1){
+                view.getOpsi1().setVisible(true);
+                view.getOpsi2().setVisible(true);
             }
-            if (view.getIdxDialogue()<textNPC.length-1){
-                view.getLabelbox().setText(textNPC[view.getIdxDialogue()]);
+
+            if (view.getIdxDialogue() == textNPC.size()) {
+                throw new Exception("Mencapai akhir dialog");
+            }
+            if (view.getIdxDialogue()<textNPC.size() ){
+                view.getLabelbox().setText(textNPC.get(view.getIdxDialogue()));
                 view.setIdxDialogue(view.getIdxDialogue() + 1);
-                if(textNPC[view.getIdxDialogue()]==null && view.getIdxDialogue() < textNPC.length){
-                    view.setIdxDialogue(view.getIdxDialogue() + 1);
-                }
             }
         }catch(Exception e){
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(view, e.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }
     
@@ -326,6 +409,7 @@ public class Controller {
         model.npc.reward1.EquipmentInit(model.player);
         model.npc.reward2.EquipmentInit(model.player);
         model.npc.setReward();
+        setOpsiName();
         view.getAlur().run(model.enemy);
         if (view.getAlur().isBattle() == true){
             view.getStage().setSelectedIndex(2);
