@@ -149,9 +149,11 @@ public class Controller {
         }
         
         if (model.enemy.getHP() < 0){
-            
+            view.absorbHP = view.absorbHP + model.enemy.getMaxHP()*20/100;
+            model.player.setMaxHP();
+            view.model.addElement("Absorb HP musuh sebanyak "+  (model.enemy.getMaxHP()*20/100) );
             model.player.setHP(model.player.getMaxHP());
-            ChangeHP();
+            ChangeAttr();
             view.setWin(winlose(model.enemy));
             if(view.isWin()){
                 view.getAttack_button().setVisible(false);

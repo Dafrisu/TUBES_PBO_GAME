@@ -16,6 +16,9 @@ import java.awt.event.*;
  * @author haika
  */
 public class GUI extends javax.swing.JFrame {
+    public static int absorbHP = 0;
+    public static int absorbdef = 0;
+    public static int absorbatk = 0;
     private boolean win = true;
     public DefaultListModel model = new DefaultListModel<>();
     private boolean battle = false;
