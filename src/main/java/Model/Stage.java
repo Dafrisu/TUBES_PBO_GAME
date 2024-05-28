@@ -65,8 +65,5 @@ public class Stage {
         }else{
             System.out.println("Udah habis");
         }
-        
-        
-
     }
 }

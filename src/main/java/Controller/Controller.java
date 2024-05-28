@@ -130,15 +130,24 @@ public class Controller {
     
     // button untuk menyerang musuh
     public void attackbutton(){
+        // player attack enemy
         model.player.attack(model.enemy);
         view.getHPMusuh().setValue(model.enemy.getHP());
+
+        // jika enemy belum mati, player terkena serangan
+
         view.model.addElement(model.enemy.getMusuh().name() + " Terkena Serangan " + model.player.getDamage() + " Damage");
+
         if(model.enemy.getHP() >= 0){
             model.enemy.attack(model.player);
             view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getDamage() + " Damage");
             ChangeAttr();
         }
+        
+        // jika player mati, ganti tab panel ke panel lose
         if (model.player.getHP() <=0){
+            
+            // set attribut Hp musuh jadi 0 dan ubah attributnya di GUI
             model.player.setHP(0);
             ChangeAttr();
             view.setWin(winlose(model.player));
@@ -148,10 +157,12 @@ public class Controller {
             }
         }
         
+        // jika enemy mati, set button attack invisible, lalu masuk ke fungsi timerwin(delay untuk stage selanjutnya)
         if (model.enemy.getHP() < 0){
             view.absorbHP = view.absorbHP + model.enemy.getMaxHP()*20/100;
             model.player.setMaxHP();
             view.model.addElement("Absorb HP musuh sebanyak "+  (model.enemy.getMaxHP()*20/100) );
+
             model.player.setHP(model.player.getMaxHP());
             ChangeAttr();
             view.setWin(winlose(model.enemy));
@@ -161,13 +172,19 @@ public class Controller {
             }
         }
     }
+    
+    // Pengecekan jika Entity kalah, jika musuh kalah return win, jika player kalah return !win
     public boolean winlose(Entity e){
         boolean win = false;
+        
+        // jika entity adalah enemy, dan enemy Hp <0, return win
         if(e instanceof Enemy){
             if(e.getHP() <=0){
                 win = true;
             }
         }
+        
+        // jika entity adalah player, dan player Hp < 0, return !win
         if(e instanceof Player){
             if(e.getHP() <= 0){
                 win = false;
@@ -175,6 +192,7 @@ public class Controller {
         }
         return win;
     }
+    
     // set NPC dialog di GUI
     public void NPCInteraction(){
         
@@ -230,6 +248,7 @@ public class Controller {
                 view.getAlur().run(model.enemy);
                 if(view.getAlur().getCurrentInteraction() == view.getAlur().getMAX_INTERACTIONS()){
                     view.getStage().setSelectedIndex(3);
+                    view.getAttack_button().setVisible(false);
                 }
             if (view.getAlur().getCurrentInteraction() < view.getAlur().getMAX_INTERACTIONS() ){
                 if (view.getAlur().isBattle() == true){
@@ -436,6 +455,7 @@ public class Controller {
         }else{
             view.getAttack_button().setVisible(false);
         }
+
         if(!view.isWin()){
             view.getAttack_button().setVisible(false);
         }
