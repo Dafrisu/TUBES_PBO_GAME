@@ -17,22 +17,23 @@ public class Enemy extends Entity implements Actions{
     private Enemies Musuh;
     private int pilih;
     Random random = new Random();
+    private int damage;
     
     public Enemy (Enemies Musuh){
         super(Musuh.getHp(), Musuh.getDef(), Musuh.getAtk());
+        this.Musuh = Musuh;
         setTypeMusuh();
         Buff();
-        this.Musuh = Musuh;
     }
     
     public void Buff() {
-        this.setHP(Musuh.getHp()+ typeMusuh.getHp());
-        this.setDefense(Musuh.getDef()+ typeMusuh.getDef());
-        this.setAttack_point(Musuh.getAtk()+ typeMusuh.getAtk());
+        this.setHP(getMusuh().getHp()+ typeMusuh.getHp());
+        this.setDefense(getMusuh().getDef()+ typeMusuh.getDef());
+        this.setAttack_point(getMusuh().getAtk()+ typeMusuh.getAtk());
     }
     
     public enum Enemies{
-        Slime( generateRandom(100,150), 80, 80),
+        Slime( generateRandom(50,80), 80, 80),
         Goblin( generateRandom(300, 400), 200, 200),
         Rock_Giant(generateRandom(100,200),20,400),
         Dragoon( generateRandom(300, 400), 200, 200);
@@ -64,9 +65,9 @@ public class Enemy extends Entity implements Actions{
     }
     
     public enum Enemytype{
-        Fighter( generateRandom(100,150), 80, 80),
-        Elite( generateRandom(300, 400), 200, 200),
-        Rogue(generateRandom(100,200),20,400);
+        Fighter( generateRandom(70,80), 80, 80),
+        Elite( generateRandom(300, 400), 100, 90),
+        Rogue(generateRandom(30,50),20,400);
         
         private int hp;
         private int def;
@@ -108,26 +109,35 @@ public class Enemy extends Entity implements Actions{
             typeMusuh = Enemytype.Rogue;
         }
     }
-
-    public String getName() {
-        return nama;
-    }
-
-    public void setName(String nama) {
-        this.nama = nama;
-    }
-
+    
     @Override
-    public void attack(Entity tod) {
+    public void attack(Entity Enemy) {
+        int reduce = Enemy.getDefense() * 20/100;
         if (super.persepective(this) == false) {
-            tod.setHP(tod.getHP() - super.getAttack_point());
+            Enemy.setHP(Enemy.getHP() - (super.getAttack_point() - reduce));
+            setDamage(this.getAttack_point() - reduce);
         }
     }
 
-    @Override
-    public void run_nibba_run() {
-        System.out.println("Dem bro");
-        System.out.println("Enemy too strong (emot klarifikasi trevis skut)");
-        System.out.println("Adios");
+    /**
+     * @return the damage
+     */
+    public int getDamage() {
+        return damage;
     }
+
+    /**
+     * @param damage the damage to set
+     */
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    /**
+     * @return the Musuh
+     */
+    public Enemies getMusuh() {
+        return Musuh;
+    }
+    
 }

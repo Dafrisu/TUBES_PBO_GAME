@@ -132,10 +132,10 @@ public class Controller {
     public void attackbutton(){
         model.player.attack(model.enemy);
         view.getHPMusuh().setValue(model.enemy.getHP());
-        view.model.addElement(model.enemy.getType().name() + " Terkena Serangan " + model.player.getAttack_point() + " Damage");
+        view.model.addElement(model.enemy.getMusuh().name() + " Terkena Serangan " + model.player.getDamage() + " Damage");
         if(model.enemy.getHP() >= 0){
             model.enemy.attack(model.player);
-            view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getAttack_point() + " Damage");
+            view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getDamage() + " Damage");
             ChangeAttr();
         }
         if (model.player.getHP() <=0){
@@ -305,7 +305,6 @@ public class Controller {
         }else{
             Timer();
         }
-        
     }
     
     //menampilkan semua dialog npc di box panel
@@ -318,6 +317,7 @@ public class Controller {
                 view.getOpsi1().setVisible(true);
                 view.getOpsi2().setVisible(true);
             }
+
             if (view.getIdxDialogue() == textNPC.size()) {
                 throw new Exception("Mencapai akhir dialog");
             }
@@ -428,10 +428,13 @@ public class Controller {
         if (view.getAlur().isBattle() == true){
             view.getAttack_button().setVisible(true);
             model.enemy = Stage.EnemyGoing();
-            view.getEnemyLabel().setText(model.enemy.getType().toString());
+            view.getEnemyLabel().setText(model.enemy.getMusuh().toString() +" ("+model.enemy.getType()+")");
             view.getHPMusuh().setMaximum(model.enemy.getHP());
             view.getHPMusuh().setValue(model.enemy.getHP());
         }else{
+            view.getAttack_button().setVisible(false);
+        }
+        if(!view.isWin()){
             view.getAttack_button().setVisible(false);
         }
     }

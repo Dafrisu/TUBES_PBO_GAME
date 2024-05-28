@@ -413,9 +413,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_GetNamePlayerActionPerformed
 
     private void OkbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkbuttonActionPerformed
-        // TODO add your handling code here:
-        
-        
+
     }//GEN-LAST:event_OkbuttonActionPerformed
 
     private void Attack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Attack_buttonActionPerformed
@@ -423,21 +421,17 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_Attack_buttonActionPerformed
 
     private void StageStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_StageStateChanged
-        // TODO add your handling code here:
-        
-        
-        
-        // error still
-        
+
     }//GEN-LAST:event_StageStateChanged
 
     private void button_assasinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_assasinActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_button_assasinActionPerformed
 
     private void button_guardianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_guardianActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_button_guardianActionPerformed
 
     private void HPMusuhStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_HPMusuhStateChanged
@@ -457,7 +451,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void boxdialog1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boxdialog1MouseClicked
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_boxdialog1MouseClicked
 
     private void winorloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_winorloseMouseClicked
@@ -490,12 +484,12 @@ public class GUI extends javax.swing.JFrame {
 
     private void button_necromancerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_necromancerActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_button_necromancerActionPerformed
 
     private void button_archerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_archerActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_button_archerActionPerformed
 
     private void Opsi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi1ActionPerformed
@@ -505,7 +499,7 @@ public class GUI extends javax.swing.JFrame {
     private void Opsi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi2ActionPerformed
         
     }//GEN-LAST:event_Opsi2ActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -594,361 +588,451 @@ public class GUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 
+
     public boolean isBattle() {
         return battle;
     }
+
 
     public void setBattle(boolean battle) {
         this.battle = battle;
     }
 
+
     public boolean isChooseClass() {
         return chooseClass;
     }
+
 
     public void setChooseClass(boolean chooseClass) {
         this.chooseClass = chooseClass;
     }
 
+
     public int getClassN() {
         return classN;
     }
+
 
     public void setClassN(int classN) {
         this.classN = classN;
     }
 
+
     public Stage getAlur() {
         return alur;
     }
+
 
     public void setAlur(Stage alur) {
         this.alur = alur;
     }
 
+
     public Equipment getEquipment() {
         return equipment;
     }
+
 
     public void setEquipment(Equipment equipment) {
         this.equipment = equipment;
     }
 
+
     public int getIdxDialogue() {
         return idxDialogue;
     }
+
 
     public void setIdxDialogue(int idxDialogue) {
         this.idxDialogue = idxDialogue;
     }
 
+
     public javax.swing.JButton getAttack_button() {
         return Attack_button;
     }
+
 
     public void setAttack_button(javax.swing.JButton Attack_button) {
         this.Attack_button = Attack_button;
     }
 
+
     public javax.swing.JLabel getChoosenClass() {
         return ChoosenClass;
     }
+
 
     public void setChoosenClass(javax.swing.JLabel ChoosenClass) {
         this.ChoosenClass = ChoosenClass;
     }
 
+
     public javax.swing.JLabel getClassQ() {
         return ClassQ;
     }
+
 
     public void setClassQ(javax.swing.JLabel ClassQ) {
         this.ClassQ = ClassQ;
     }
 
+
     public javax.swing.JLabel getEnemyLabel() {
         return EnemyLabel;
     }
+
 
     public void setEnemyLabel(javax.swing.JLabel EnemyLabel) {
         this.EnemyLabel = EnemyLabel;
     }
 
+
     public javax.swing.JTextField getGetNamePlayer() {
         return GetNamePlayer;
     }
+
 
     public void setGetNamePlayer(javax.swing.JTextField GetNamePlayer) {
         this.GetNamePlayer = GetNamePlayer;
     }
 
+
     public javax.swing.JProgressBar getHPMusuh() {
         return HPMusuh;
     }
+
 
     public void setHPMusuh(javax.swing.JProgressBar HPMusuh) {
         this.HPMusuh = HPMusuh;
     }
 
+
     public javax.swing.JLabel getNamaPlayer() {
         return NamaPlayer;
     }
+
 
     public void setNamaPlayer(javax.swing.JLabel NamaPlayer) {
         this.NamaPlayer = NamaPlayer;
     }
 
+
     public javax.swing.JButton getNoclass() {
         return Noclass;
     }
+
 
     public void setNoclass(javax.swing.JButton Noclass) {
         this.Noclass = Noclass;
     }
 
+
     public javax.swing.JButton getOkbutton() {
         return Okbutton;
     }
+
 
     public void setOkbutton(javax.swing.JButton Okbutton) {
         this.Okbutton = Okbutton;
     }
 
+
     public javax.swing.JButton getOpsi1() {
         return Opsi1;
     }
+
 
     public void setOpsi1(javax.swing.JButton Opsi1) {
         this.Opsi1 = Opsi1;
     }
 
+
     public javax.swing.JButton getOpsi2() {
         return Opsi2;
     }
+
 
     public void setOpsi2(javax.swing.JButton Opsi2) {
         this.Opsi2 = Opsi2;
     }
 
+
     public javax.swing.JLabel getPlayer() {
         return Player;
     }
+
 
     public void setPlayer(javax.swing.JLabel Player) {
         this.Player = Player;
     }
 
+
     public javax.swing.JTabbedPane getStage() {
         return Stage;
     }
+
 
     public void setStage(javax.swing.JTabbedPane Stage) {
         this.Stage = Stage;
     }
 
+
     public javax.swing.JLabel getValueAtk() {
         return ValueAtk;
     }
+
 
     public void setValueAtk(javax.swing.JLabel ValueAtk) {
         this.ValueAtk = ValueAtk;
     }
 
+
     public javax.swing.JLabel getValueDef() {
         return ValueDef;
     }
+
 
     public void setValueDef(javax.swing.JLabel ValueDef) {
         this.ValueDef = ValueDef;
     }
 
+
     public javax.swing.JLabel getValueHP() {
         return ValueHP;
     }
+
 
     public void setValueHP(javax.swing.JLabel ValueHP) {
         this.ValueHP = ValueHP;
     }
 
+
     public javax.swing.JButton getYesclass() {
         return Yesclass;
     }
+
 
     public void setYesclass(javax.swing.JButton Yesclass) {
         this.Yesclass = Yesclass;
     }
 
+
     public javax.swing.JLabel getAfterbattle() {
         return afterbattle;
     }
+
 
     public void setAfterbattle(javax.swing.JLabel afterbattle) {
         this.afterbattle = afterbattle;
     }
 
+
     public javax.swing.JPanel getBoxdialog1() {
         return boxdialog1;
     }
+
 
     public void setBoxdialog1(javax.swing.JPanel boxdialog1) {
         this.boxdialog1 = boxdialog1;
     }
 
+
     public javax.swing.JButton getButton_archer() {
         return button_archer;
     }
+
 
     public void setButton_archer(javax.swing.JButton button_archer) {
         this.button_archer = button_archer;
     }
 
+
     public javax.swing.JButton getButton_assasin() {
         return button_assasin;
     }
+
 
     public void setButton_assasin(javax.swing.JButton button_assasin) {
         this.button_assasin = button_assasin;
     }
 
+
     public javax.swing.JButton getButton_guardian() {
         return button_guardian;
     }
+
 
     public void setButton_guardian(javax.swing.JButton button_guardian) {
         this.button_guardian = button_guardian;
     }
 
+
     public javax.swing.JButton getButton_necromancer() {
         return button_necromancer;
     }
+
 
     public void setButton_necromancer(javax.swing.JButton button_necromancer) {
         this.button_necromancer = button_necromancer;
     }
 
+
     public javax.swing.JLabel getjLabel1() {
         return jLabel1;
     }
+
 
     public void setjLabel1(javax.swing.JLabel jLabel1) {
         this.jLabel1 = jLabel1;
     }
 
+
     public javax.swing.JLabel getjLabel2() {
         return jLabel2;
     }
+
 
     public void setjLabel2(javax.swing.JLabel jLabel2) {
         this.jLabel2 = jLabel2;
     }
 
+
     public javax.swing.JLabel getjLabel3() {
         return jLabel3;
     }
+
 
     public void setjLabel3(javax.swing.JLabel jLabel3) {
         this.jLabel3 = jLabel3;
     }
 
+
     public javax.swing.JLabel getjLabel4() {
         return jLabel4;
     }
+
 
     public void setjLabel4(javax.swing.JLabel jLabel4) {
         this.jLabel4 = jLabel4;
     }
 
+
     public javax.swing.JPanel getjPanel1() {
         return jPanel1;
     }
+
 
     public void setjPanel1(javax.swing.JPanel jPanel1) {
         this.jPanel1 = jPanel1;
     }
 
+
     public javax.swing.JPanel getjPanel2() {
         return jPanel2;
     }
+
 
     public void setjPanel2(javax.swing.JPanel jPanel2) {
         this.jPanel2 = jPanel2;
     }
 
+
     public javax.swing.JPanel getjPanel3() {
         return jPanel3;
     }
+
 
     public void setjPanel3(javax.swing.JPanel jPanel3) {
         this.jPanel3 = jPanel3;
     }
 
+
     public javax.swing.JPanel getjPanel4() {
         return jPanel4;
     }
+
 
     public void setjPanel4(javax.swing.JPanel jPanel4) {
         this.jPanel4 = jPanel4;
     }
 
+
     public javax.swing.JPanel getjPanel5() {
         return jPanel5;
     }
+
 
     public void setjPanel5(javax.swing.JPanel jPanel5) {
         this.jPanel5 = jPanel5;
     }
 
+
     public javax.swing.JPanel getjPanel6() {
         return jPanel6;
     }
+
 
     public void setjPanel6(javax.swing.JPanel jPanel6) {
         this.jPanel6 = jPanel6;
     }
 
+
     public javax.swing.JPanel getjPanel7() {
         return jPanel7;
     }
+
 
     public void setjPanel7(javax.swing.JPanel jPanel7) {
         this.jPanel7 = jPanel7;
     }
 
+
     public javax.swing.JLabel getLabelAtk() {
         return labelAtk;
     }
+
 
     public void setLabelAtk(javax.swing.JLabel labelAtk) {
         this.labelAtk = labelAtk;
     }
 
+
     public javax.swing.JLabel getLabelDef() {
         return labelDef;
     }
+
 
     public void setLabelDef(javax.swing.JLabel labelDef) {
         this.labelDef = labelDef;
     }
 
+
     public javax.swing.JLabel getLabelHP() {
         return labelHP;
     }
+
 
     public void setLabelHP(javax.swing.JLabel labelHP) {
         this.labelHP = labelHP;
     }
 
+
     public javax.swing.JLabel getLabelbox() {
         return labelbox;
     }
+
 
     public void setLabelbox(javax.swing.JLabel labelbox) {
         this.labelbox = labelbox;
     }
 
+
     public javax.swing.JPanel getWinorlose() {
         return winorlose;
     }
+
 
     public void setWinorlose(javax.swing.JPanel winorlose) {
         this.winorlose = winorlose;
