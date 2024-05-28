@@ -444,7 +444,7 @@ public class GUI extends javax.swing.JFrame {
         
         if (getAlur().isBattle() == true){
             getAttack_button().setVisible(true);
-            setSlime(new Enemy("Slime", 1000, 1000, 1000));
+            //setSlime(new Enemy("Slime", 1000, 1000, 1000));
             getHPMusuh().setMaximum(getSlime().getHP());
             getHPMusuh().setValue(getSlime().getHP());
         }else{

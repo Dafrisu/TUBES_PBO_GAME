@@ -97,11 +97,6 @@ public class Player extends Entity implements Class, Actions{
         }
     }
 
-    @Override
-    public void run_nibba_run() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     public int getMaxHP() {
         return MaxHP;
     }
