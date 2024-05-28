@@ -38,8 +38,8 @@ public class Enemy extends Entity implements Actions{
     
     public enum Enemies{
         Slime( generateRandom(50,80), 80, 80),
-        Goblin( generateRandom(300, 400), 200, 200),
-        Rock_Giant(generateRandom(100,200),20,400),
+        Goblin( generateRandom(70, 100), 100, 150),
+        Rock_Giant(generateRandom(200,250),300,70),
         Dragoon( generateRandom(300, 400), 200, 200);
         
         private int hp;
@@ -69,9 +69,9 @@ public class Enemy extends Entity implements Actions{
     }
     
     public enum Enemytype{
-        Fighter( generateRandom(70,80), 80, 80),
-        Elite( generateRandom(300, 400), 100, 90),
-        Rogue(generateRandom(30,50),20,400);
+        Fighter( generateRandom(40,70), 30, 30),
+        Elite( generateRandom(100, 150), 70, 90),
+        Rogue(generateRandom(15,30),0,200);
         
         private int hp;
         private int def;
