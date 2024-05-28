@@ -159,8 +159,12 @@ public class Controller {
         
         // jika enemy mati, set button attack invisible, lalu masuk ke fungsi timerwin(delay untuk stage selanjutnya)
         if (model.enemy.getHP() < 0){
+            view.absorbHP = view.absorbHP + model.enemy.getMaxHP()*20/100;
+            model.player.setMaxHP();
+            view.model.addElement("Absorb HP musuh sebanyak "+  (model.enemy.getMaxHP()*20/100) );
+
             model.player.setHP(model.player.getMaxHP());
-            ChangeHP();
+            ChangeAttr();
             view.setWin(winlose(model.enemy));
             if(view.isWin()){
                 view.getAttack_button().setVisible(false);
@@ -244,6 +248,7 @@ public class Controller {
                 view.getAlur().run(model.enemy);
                 if(view.getAlur().getCurrentInteraction() == view.getAlur().getMAX_INTERACTIONS()){
                     view.getStage().setSelectedIndex(3);
+                    view.getAttack_button().setVisible(false);
                 }
             if (view.getAlur().getCurrentInteraction() < view.getAlur().getMAX_INTERACTIONS() ){
                 if (view.getAlur().isBattle() == true){
@@ -273,7 +278,7 @@ public class Controller {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     view.getStage().setSelectedIndex(6);
-                    view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getType());
+                    view.getDeadmessage().setText("Player Dibunuh Oleh " +model.enemy.getMusuh() +"(" +model.enemy.getType()+ ")");
                 }
                 
             });
@@ -450,11 +455,8 @@ public class Controller {
         }else{
             view.getAttack_button().setVisible(false);
         }
-<<<<<<< HEAD
-        if (view.isWin() == false){
-=======
+
         if(!view.isWin()){
->>>>>>> 7200fde65aa89db26a5f1d7552cf7fc1cf643ab7
             view.getAttack_button().setVisible(false);
         }
     }

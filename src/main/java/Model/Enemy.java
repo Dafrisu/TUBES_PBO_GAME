@@ -16,12 +16,16 @@ public class Enemy extends Entity implements Actions{
     private Enemytype typeMusuh;
     private Enemies Musuh;
     private int pilih;
-    Random random = new Random();
+    private int maxHP;
+    private int maxdef;
+    private int maxatk;
+    private Random random = new Random();
     private int damage;
     
     public Enemy (Enemies Musuh){
         super(Musuh.getHp(), Musuh.getDef(), Musuh.getAtk());
         this.Musuh = Musuh;
+        this.maxHP = Musuh.getHp();
         setTypeMusuh();
         Buff();
     }
@@ -139,5 +143,16 @@ public class Enemy extends Entity implements Actions{
     public Enemies getMusuh() {
         return Musuh;
     }
-    
+
+    public int getMaxdef() {
+        return maxdef;
+    }
+
+    public int getMaxatk() {
+        return maxatk;
+    }
+
+    public int getMaxHP() {
+        return maxHP;
+    }
 }

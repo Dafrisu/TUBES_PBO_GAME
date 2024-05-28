@@ -8,6 +8,7 @@ package Model;
  *
  * @author haika
  */
+import VIew.GUI;
 import java.util.Scanner;
 
 public class Player extends Entity implements Class, Actions{
@@ -15,6 +16,8 @@ public class Player extends Entity implements Class, Actions{
     private String skills;
     private String Class;
     private final int baseHP = 200;
+    private final int basedef = 100;
+    private final int baseatk = 100;
     private int MaxHP;
     public Equipment wear = new Equipment();
     private int damage;
@@ -106,7 +109,7 @@ public class Player extends Entity implements Class, Actions{
     }
 
     public void setMaxHP() {
-        this.MaxHP = this.baseHP + wear.getEquipment_HP();
+        this.MaxHP = this.baseHP + wear.getEquipment_HP() + (GUI.absorbHP);
     }
 
     public int getBaseHP() {
