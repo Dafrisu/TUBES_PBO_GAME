@@ -14,6 +14,7 @@ public class Player extends Entity implements Class, Actions{
     private String nama;
     private String skills;
     private String Class;
+    private final int baseHP = 200;
     private int MaxHP;
     public Equipment wear = new Equipment();
     
@@ -107,6 +108,10 @@ public class Player extends Entity implements Class, Actions{
     }
 
     public void setMaxHP() {
-        this.MaxHP = MaxHP + wear.getEquipment_HP();
+        this.MaxHP = this.baseHP + wear.getEquipment_HP();
+    }
+
+    public int getBaseHP() {
+        return baseHP;
     }
 }

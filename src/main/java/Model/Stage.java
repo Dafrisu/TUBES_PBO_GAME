@@ -10,7 +10,7 @@ import java.util.Random;
  * @author Mahesa
  */
 public class Stage {
-    private int MAX_INTERACTIONS =9;
+    private static int MAX_INTERACTIONS =9;
     private static int currentInteraction = 0;
     private boolean battle;
     Random random = new Random(); // Create a Random object
@@ -45,7 +45,7 @@ public class Stage {
         }else if (currentInteraction >=3 && currentInteraction < 5){
             musuh = new Enemy(Enemy.Enemies.Goblin);
         }
-        if(currentInteraction >=5 && currentInteraction < 9){
+        if(currentInteraction >=5 && currentInteraction <= 9){
             musuh = new Enemy(Enemy.Enemies.Rock_Giant);
         }
         return musuh;
