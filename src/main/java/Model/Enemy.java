@@ -12,12 +12,14 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author haika
  */
 public class Enemy extends Entity implements Actions{
+    private String nama;
     private Enemytype type;
     Random random = new Random();
     
     public Enemy (Enemytype type){
         super(type.getHp(), type.getDef(), type.getAtk());
         this.type = type;
+
     }
     public enum Enemytype{
         Slime( generateRandom(50,70), 50, 50),

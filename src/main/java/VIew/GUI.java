@@ -16,14 +16,12 @@ import java.awt.event.*;
  * @author haika
  */
 public class GUI extends javax.swing.JFrame {
-    private Player dafa;
-    private Enemy slime;
+    public DefaultListModel model = new DefaultListModel<>();
     private boolean battle = false;
     private boolean chooseClass = false;
     private int classN;
     private Stage alur = new Stage();
     private Equipment equipment = new Equipment();
-    private NPC udin = new NPC(10,10,10);
     private int idxDialogue = 0;
     public GUI() {
         initComponents();
@@ -47,6 +45,8 @@ public class GUI extends javax.swing.JFrame {
         ValueAtk = new javax.swing.JLabel();
         ValueDef = new javax.swing.JLabel();
         Attack_button = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listdamage = new javax.swing.JList<>();
         Stage = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -115,6 +115,10 @@ public class GUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(Attack_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(283, 44, -1, -1));
+
+        jScrollPane1.setViewportView(listdamage);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, 220, 150));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 720, 200));
 
@@ -235,6 +239,7 @@ public class GUI extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         HPMusuh.setFont(new java.awt.Font("Segoe Print", 0, 10)); // NOI18N
+        HPMusuh.setForeground(new java.awt.Color(255, 0, 51));
         HPMusuh.setMaximum(200);
         HPMusuh.setToolTipText("");
         HPMusuh.setValue(200);
@@ -368,30 +373,7 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     public void Timer(){
-        Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
-            public void actionPerformed(ActionEvent e) {
-                // Proses yang akan dilakukan setelah delay
-                getAlur().run();
-            if (getAlur().getCurrentInteraction() < getAlur().getMAX_INTERACTIONS() ){
-                if (getAlur().isBattle() == true){
-                        getStage().setSelectedIndex(3);
-                        getStage().setSelectedIndex(2);
-                }else{
-                        getStage().setSelectedIndex(3);
-                        getStage().setSelectedIndex(5);
-                }
-            }else{
-                    getStage().setSelectedIndex(3);
-            }
-                getAlur().setCurrentInteraction(getAlur().getCurrentInteraction() + 1);
-                getAlur().setBattle(true);
-                getWinorlose().setVisible(false);
-                getLabelbox().setText("|");
-                setIdxDialogue(0);
-            }
-        });
-        timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
-        timer.start(); // Memulai timer
+        
          // error still
     }
     private void GetNamePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GetNamePlayerActionPerformed
@@ -399,59 +381,15 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_GetNamePlayerActionPerformed
 
     private void OkbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkbuttonActionPerformed
-        // TODO add your handling code here:
-        if (!GetNamePlayer.getText().equals("")){
-            String nama = getGetNamePlayer().getText();
-            setDafa(new Player(nama, 200,100,100));
-            getNamaPlayer().setText(getDafa().getNama());
-            getNamaPlayer().setVisible(true);
-            getValueHP().setText(getDafa().getHP() +"");
-            getValueDef().setText(getDafa().getDefense() + "");
-            getValueAtk().setText(getDafa().getAttack_point() + "");
-            getStage().setSelectedIndex(1);
-            
-        }
+
     }//GEN-LAST:event_OkbuttonActionPerformed
 
     private void Attack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Attack_buttonActionPerformed
-        getDafa().attack(getSlime());
         
-        getHPMusuh().setValue(getSlime().getHP());
-        getSlime().attack(getDafa());
-        ChangeHP();
-        if (getSlime().getHP() < 0){
-            
-            getDafa().setHP(getDafa().getMaxHP());
-            ChangeHP();
-            Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
-            public void actionPerformed(ActionEvent e) {
-                // Proses yang akan dilakukan setelah delay
-                    getWinorlose().setVisible(true);
-                    getWinorlose().setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-                    getAfterbattle().setText("Anda Berhasil Mengalahkan Musuh");
-            }
-        });
-        timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
-        timer.start(); // Memulai timer
-            
-//            Stage.setSelectedIndex(Stage.getSelectedIndex() + 1);
-        }
     }//GEN-LAST:event_Attack_buttonActionPerformed
 
     private void StageStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_StageStateChanged
-        // TODO add your handling code here:
-        
-        
-        if (getAlur().isBattle() == true){
-            getAttack_button().setVisible(true);
-            //setSlime(new Enemy("Slime", 1000, 1000, 1000));
-            getHPMusuh().setMaximum(getSlime().getHP());
-            getHPMusuh().setValue(getSlime().getHP());
-        }else{
-            getAttack_button().setVisible(false);
-        }
-        // error still
-        
+
     }//GEN-LAST:event_StageStateChanged
 
     private void button_assasinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_assasinActionPerformed
@@ -466,32 +404,17 @@ public class GUI extends javax.swing.JFrame {
 
     private void HPMusuhStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_HPMusuhStateChanged
         // TODO add your handling code here:
-        getHPMusuh().setValue(getSlime().getHP());
+        
     }//GEN-LAST:event_HPMusuhStateChanged
 
     private void YesclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesclassActionPerformed
         // TODO add your handling code here:
-        getEquipment().EquipmentInit(getDafa());
-        getEquipment().EquipmentsetforClass(getDafa());
-        ChangeAttr();
         
-        getDafa().setMaxHP();
-
-        getUdin().reward1.EquipmentInit(getDafa());
-        getUdin().reward2.EquipmentInit(getDafa());
-        getUdin().setReward();
-        getAlur().run();
-        if (getAlur().isBattle() == true){
-            getStage().setSelectedIndex(2);
-        }else{
-            getStage().setSelectedIndex(5);
-        }
-        getAlur().setCurrentInteraction(getAlur().getCurrentInteraction() + 1);
          // error still
     }//GEN-LAST:event_YesclassActionPerformed
 
     private void NoclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoclassActionPerformed
-        getStage().setSelectedIndex(1);
+        
     }//GEN-LAST:event_NoclassActionPerformed
 
     private void boxdialog1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boxdialog1MouseClicked
@@ -524,7 +447,7 @@ public class GUI extends javax.swing.JFrame {
         timer.start(); // Memulai timer
          // error still
            */
-        Timer();
+        
     }//GEN-LAST:event_winorloseMouseClicked
 
     private void button_necromancerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_necromancerActionPerformed
@@ -538,35 +461,13 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_button_archerActionPerformed
 
     private void Opsi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi1ActionPerformed
-        int pilih;
-        pilih = 1;
-        getUdin().pilihReward(getDafa(), pilih);
-        ChangeAttr();
-        Timer();
+        
     }//GEN-LAST:event_Opsi1ActionPerformed
 
     private void Opsi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi2ActionPerformed
-        int pilih;
-        pilih = 2;
-        getUdin().pilihReward(getDafa(), pilih);
-        ChangeAttr();
-        Timer();
+        
     }//GEN-LAST:event_Opsi2ActionPerformed
-    public void ChangeAttr(){
-        ChangeHP();
-        ChangeDef();
-        ChangeAtk();
-    }
-    public void ChangeHP(){
-        getValueHP().setText(getDafa().getHP() + "");
-    }
-    public void ChangeDef(){
-        getValueDef().setText(getDafa().getDefense() +"");
-    }
-    
-    public void ChangeAtk(){
-        getValueAtk().setText(getDafa().getAttack_point() + "");
-    }
+
     /**
      * @param args the command line arguments
      */
@@ -642,31 +543,15 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelAtk;
     private javax.swing.JLabel labelDef;
     private javax.swing.JLabel labelHP;
     private javax.swing.JLabel labelbox;
+    private javax.swing.JList<String> listdamage;
     private javax.swing.JPanel winorlose;
     // End of variables declaration//GEN-END:variables
 
-
-    public Player getDafa() {
-        return dafa;
-    }
-
-
-    public void setDafa(Player dafa) {
-        this.dafa = dafa;
-    }
-
-    public Enemy getSlime() {
-        return slime;
-    }
-
-
-    public void setSlime(Enemy slime) {
-        this.slime = slime;
-    }
 
 
     public boolean isBattle() {
@@ -716,16 +601,6 @@ public class GUI extends javax.swing.JFrame {
 
     public void setEquipment(Equipment equipment) {
         this.equipment = equipment;
-    }
-
-
-    public NPC getUdin() {
-        return udin;
-    }
-
-
-    public void setUdin(NPC udin) {
-        this.udin = udin;
     }
 
 
@@ -1126,5 +1001,9 @@ public class GUI extends javax.swing.JFrame {
 
     public void setWinorlose(javax.swing.JPanel winorlose) {
         this.winorlose = winorlose;
+    }
+
+    public javax.swing.JList<String> getListdamage() {
+        return listdamage;
     }
 }

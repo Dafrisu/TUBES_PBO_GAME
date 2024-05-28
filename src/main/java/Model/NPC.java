@@ -17,16 +17,15 @@ public class NPC extends Entity{
     private String npctype;
     private int idxDialogue;
     private Random intrandom = new Random();
-    private int n = 2;
+    private int n;
     public Equipment reward1 = new Equipment();
     public Equipment reward2 = new Equipment();
-    public NPC(String nama,int HP, int def, int att) {
-        super(HP, def, att);
-        this.nama = nama;
-    }
     
     public NPC(int HP, int def, int att){
         super(HP,def,att);
+        n = intrandom.nextInt(1,2);
+        SetType();
+        SetDiag();
     }
 
 
@@ -54,8 +53,6 @@ public class NPC extends Entity{
                 this.dialogue[0] = "Selamat datang petualang, Kamu orang yang beruntung menemukan tokoku";
                 this.dialogue[1] = "Tertarik untuk melihat lihat?";
                 this.dialogue[2] = "Pilih salah satu item ini petualang!";
-                this.dialogue[3] = "1. menarik.... biarkan aku melihat lihat";
-                this.dialogue[4] = "2. maaf, aku sedang buru buru, mungkin lain kali";
                 
                 break;
             case "Pemberi Hadiah":
@@ -82,7 +79,7 @@ public class NPC extends Entity{
             n2 = intrandom.nextInt(0,3);
             this.reward1 = this.reward1.arrEquipment[n1];
             this.reward2 = this.reward2.arrEquipment[n2];
-            this.dialogue[5]= ("1. " + this.reward1.getNama() +"/t"+ "2. " + this.reward2.getNama());
+            this.dialogue[3]= ("1. " + this.reward1.getNama() +" "+ "2. " + this.reward2.getNama());
         }else if (this.npctype.equals("Pemberi Hadiah")){
             int n1;
             n1 = intrandom.nextInt(0,3);
@@ -122,8 +119,6 @@ public class NPC extends Entity{
             this.npctype = "Merchant";
         }else if (n ==2){
             this.npctype = "Pemberi Hadiah";
-        }else if (n == 3){
-            this.npctype = "Informan";
         }
     }
 

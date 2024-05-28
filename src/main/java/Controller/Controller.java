@@ -7,8 +7,11 @@ import Model.*;
 import VIew.GUI;
 import java.awt.Color;
 import java.awt.event.*;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 /**
  *
  * @author haika
@@ -24,7 +27,7 @@ public class Controller {
         view.getAttack_button().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                attackbutton();
             }
         });
         view.getOpsi1().addActionListener(new ActionListener(){
@@ -81,18 +84,77 @@ public class Controller {
             }
             
         });
+        view.getYesclass().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                yesclassbutton();
+            }
+            
+        });
+        view.getNoclass().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                noclassbutton();
+            }
+        });
+        view.getWinorlose().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                winorlosebox();
+            }
+        });
+        view.getStage().addChangeListener(new ChangeListener(){
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                statestagechange();
+            }
+        });
+        view.getHPMusuh().addChangeListener(new ChangeListener(){
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                hpmusuhstatechange();
+            }
+            
+        });
     }
     
     public void init(){
         view.getNamaPlayer().setVisible(false);
         view.getAttack_button().setVisible(false);
         model.npc = new NPC(10,10,10);
-        model.npc.SetType();
-        model.npc.SetDiag();
+        
         view.getWinorlose().setVisible(false);
+        view.getListdamage().setModel(view.model);
+    }
+    
+    public void attackbutton(){
+        model.player.attack(model.enemy);
+        view.getHPMusuh().setValue(model.enemy.getHP());
+        view.model.addElement(model.enemy.getType().name() + " Terkena Serangan " + model.player.getAttack_point() + " Damage");
+        model.enemy.attack(model.player);
+        view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getAttack_point() + " Damage");
+        ChangeHP();
+        if (model.enemy.getHP() < 0){
+            
+            model.player.setHP(model.player.getMaxHP());
+            ChangeHP();
+            Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
+            public void actionPerformed(ActionEvent e) {
+                // Proses yang akan dilakukan setelah delay
+                    view.getWinorlose().setVisible(true);
+                    view.getWinorlose().setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                    view.getAfterbattle().setText("Anda Berhasil Mengalahkan Musuh");
+            }
+        });
+        timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
+        timer.start(); // Memulai timer
+            
+//            Stage.setSelectedIndex(Stage.getSelectedIndex() + 1);
+        }
     }
     
     public void NPCInteraction(){
+        
         String[] textNPC = new String[5];
         System.out.println(textNPC.length);
         textNPC = model.npc.getDialogue();
@@ -116,12 +178,13 @@ public class Controller {
         Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
-                view.getAlur().run();
+                view.getAlur().run(model.enemy);
             if (view.getAlur().getCurrentInteraction() < view.getAlur().getMAX_INTERACTIONS() ){
                 if (view.getAlur().isBattle() == true){
                         view.getStage().setSelectedIndex(3);
                         view.getStage().setSelectedIndex(2);
                 }else{
+                        
                         view.getStage().setSelectedIndex(3);
                         view.getStage().setSelectedIndex(5);
                 }
@@ -143,7 +206,11 @@ public class Controller {
         int pilih;
         pilih = 1;
         model.npc.pilihReward(model.player,pilih);
-        view.ChangeAttr();
+        ChangeAttr();
+        model.npc = new NPC(10,10,10);
+        model.npc.reward1.EquipmentInit(model.player);
+        model.npc.reward2.EquipmentInit(model.player);
+        model.npc.setReward();
         Timer();
     }                                     
 
@@ -151,9 +218,15 @@ public class Controller {
         int pilih;
         pilih = 2;
         model.npc.pilihReward(model.player, pilih);
-        view.ChangeAttr();
+        ChangeAttr();
+        model.npc = new NPC(10,10,10);
+        model.npc.reward1.EquipmentInit(model.player);
+        model.npc.reward2.EquipmentInit(model.player);
+        model.npc.setReward();
         Timer();
-    }    
+    }
+    
+    //menampilkan semua dialog npc di box panel
     private void BoxDialogPerformed(){
         String[] textNPC = new String[5];
         System.out.println(textNPC.length);
@@ -173,6 +246,8 @@ public class Controller {
             System.out.println(e.getMessage());
         }
     }
+    
+    //mengkonfirm nama player
     private void OKButton(){
         if (!view.getGetNamePlayer().getText().equals("")){
             String nama = view.getGetNamePlayer().getText();
@@ -185,43 +260,98 @@ public class Controller {
             view.getStage().setSelectedIndex(1);
         }
     }
+    
+    //memilih class assassin
     public void buttonAssassin(){
         view.setClassN(1);
         model.player.tipeClass(view.getClassN());
         view.getChoosenClass().setText(model.player.dapatkanClass());
         view.getStage().setSelectedIndex(4);
     }
+    
+    //memilih class guardian
     public void buttonGuardian(){
         view.setClassN(2);
         model.player.tipeClass(view.getClassN());
         view.getChoosenClass().setText(model.player.dapatkanClass());
         view.getStage().setSelectedIndex(4);
     }
+    
+    //memilih class necromancer
     public void buttonNecromancer(){
         view.setClassN(3); 
         model.player.tipeClass(view.getClassN());
         view.getChoosenClass().setText(model.player.dapatkanClass());
         view.getStage().setSelectedIndex(4);
     }
+    
+    //memilih class archer
     public void buttonArcher(){
         view.setClassN(4);
         model.player.tipeClass(view.getClassN());
         view.getChoosenClass().setText(model.player.dapatkanClass());
         view.getStage().setSelectedIndex(4);
     }
+    
+    //mengganti semua attribute di label HP, def, dan atk di GUI
     public void ChangeAttr(){
         ChangeHP();
         ChangeDef();
         ChangeAtk();
     }
+    
+    // setlabel HP di GUI
     public void ChangeHP(){
         view.getValueHP().setText(model.player.getHP() + "");
     }
+    
+    //set label Def di GUI
     public void ChangeDef(){
         view.getValueDef().setText(model.player.getDefense() +"");
     }
     
+    //set label Atk di GUI
     public void ChangeAtk(){
         view.getValueAtk().setText(model.player.getAttack_point() + "");
+    }
+    
+    //confirm class yang dipilih
+    public void yesclassbutton(){
+        view.getEquipment().EquipmentInit(model.player);
+        view.getEquipment().EquipmentsetforClass(model.player);
+        ChangeAttr();
+        
+        model.player.setMaxHP();
+
+        model.npc.reward1.EquipmentInit(model.player);
+        model.npc.reward2.EquipmentInit(model.player);
+        model.npc.setReward();
+        view.getAlur().run(model.enemy);
+        if (view.getAlur().isBattle() == true){
+            view.getStage().setSelectedIndex(2);
+        }else{
+            view.getStage().setSelectedIndex(5);
+        }
+        view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
+    }
+    public void noclassbutton(){
+        view.getStage().setSelectedIndex(1);
+    }
+    public void winorlosebox(){
+        Timer();
+    }
+    public void statestagechange(){
+        if (view.getAlur().isBattle() == true){
+            view.getAttack_button().setVisible(true);
+            model.enemy = Stage.EnemyGoing();
+            view.getEnemyLabel().setText(model.enemy.getType().toString());
+            view.getHPMusuh().setMaximum(model.enemy.getHP());
+            view.getHPMusuh().setValue(model.enemy.getHP());
+        }else{
+            view.getAttack_button().setVisible(false);
+        }
+    }
+    public void hpmusuhstatechange(){
+        view.getHPMusuh().setValue(model.enemy.getHP());
     }
 }
