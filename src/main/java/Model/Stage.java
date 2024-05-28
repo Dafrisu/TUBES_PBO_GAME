@@ -41,12 +41,12 @@ public class Stage {
     public static Enemy EnemyGoing(){
         Enemy musuh = null;
         if( currentInteraction <3){
-            musuh = new Enemy(Enemy.Enemytype.Slime);
+            musuh = new Enemy(Enemy.Enemies.Slime);
         }else if (currentInteraction >=3 && currentInteraction < 5){
-            musuh = new Enemy(Enemy.Enemytype.Goblin);
+            musuh = new Enemy(Enemy.Enemies.Goblin);
         }
         if(currentInteraction >=5 && currentInteraction < 9){
-            musuh = new Enemy(Enemy.Enemytype.Rock_Giant);
+            musuh = new Enemy(Enemy.Enemies.Rock_Giant);
         }
         return musuh;
     }
