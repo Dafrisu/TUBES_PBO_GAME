@@ -257,7 +257,7 @@ public class Controller {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     view.getStage().setSelectedIndex(6);
-                    view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getType());
+                    view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() +" ("+model.enemy.getType()+")");
                 }
                 
             });
