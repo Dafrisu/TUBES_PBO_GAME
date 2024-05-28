@@ -10,5 +10,4 @@ package Model;
  */
 public abstract interface Actions {
     public abstract void attack(Entity a);
-    public abstract void run_nibba_run();
 }

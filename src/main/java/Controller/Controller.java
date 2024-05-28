@@ -133,12 +133,16 @@ public class Controller {
         // player attack enemy
         model.player.attack(model.enemy);
         view.getHPMusuh().setValue(model.enemy.getHP());
+<<<<<<< HEAD
         view.model.addElement(model.enemy.getType().name() + " Terkena Serangan " + model.player.getAttack_point() + " Damage");
         
         // jika enemy belum mati, player terkena serangan
+=======
+        view.model.addElement(model.enemy.getMusuh().name() + " Terkena Serangan " + model.player.getDamage() + " Damage");
+>>>>>>> 7200fde65aa89db26a5f1d7552cf7fc1cf643ab7
         if(model.enemy.getHP() >= 0){
             model.enemy.attack(model.player);
-            view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getAttack_point() + " Damage");
+            view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getDamage() + " Damage");
             ChangeAttr();
         }
         
@@ -319,7 +323,6 @@ public class Controller {
         }else{
             Timer();
         }
-        
     }
     
     //menampilkan semua dialog npc di box panel
@@ -332,6 +335,7 @@ public class Controller {
                 view.getOpsi1().setVisible(true);
                 view.getOpsi2().setVisible(true);
             }
+
             if (view.getIdxDialogue() == textNPC.size()) {
                 throw new Exception("Mencapai akhir dialog");
             }
@@ -442,13 +446,17 @@ public class Controller {
         if (view.getAlur().isBattle() == true){
             view.getAttack_button().setVisible(true);
             model.enemy = Stage.EnemyGoing();
-            view.getEnemyLabel().setText(model.enemy.getType().toString());
+            view.getEnemyLabel().setText(model.enemy.getMusuh().toString() +" ("+model.enemy.getType()+")");
             view.getHPMusuh().setMaximum(model.enemy.getHP());
             view.getHPMusuh().setValue(model.enemy.getHP());
         }else{
             view.getAttack_button().setVisible(false);
         }
+<<<<<<< HEAD
         if (view.isWin() == false){
+=======
+        if(!view.isWin()){
+>>>>>>> 7200fde65aa89db26a5f1d7552cf7fc1cf643ab7
             view.getAttack_button().setVisible(false);
         }
     }

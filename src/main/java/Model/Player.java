@@ -17,7 +17,7 @@ public class Player extends Entity implements Class, Actions{
     private final int baseHP = 200;
     private int MaxHP;
     public Equipment wear = new Equipment();
-    
+    private int damage;
     public Player(String nama,int HP, int def, int att ){
         super(HP,def,att);
         this.nama = nama;
@@ -93,14 +93,12 @@ public class Player extends Entity implements Class, Actions{
     }
     @Override
     public void attack(Entity a) {
+        int reduce = a.getDefense() * 20/100;
+        
         if (super.persepective(this) == true){
-            a.setHP(a.getHP() - this.getAttack_point());
+            a.setHP(a.getHP() - (this.getAttack_point() - reduce));
+            setDamage(this.getAttack_point() - reduce);
         }
-    }
-
-    @Override
-    public void run_nibba_run() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getMaxHP() {
@@ -114,4 +112,19 @@ public class Player extends Entity implements Class, Actions{
     public int getBaseHP() {
         return baseHP;
     }
+
+    /**
+     * @return the damage
+     */
+    public int getDamage() {
+        return damage;
+    }
+
+    /**
+     * @param damage the damage to set
+     */
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+    
 }
