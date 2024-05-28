@@ -133,13 +133,11 @@ public class Controller {
         // player attack enemy
         model.player.attack(model.enemy);
         view.getHPMusuh().setValue(model.enemy.getHP());
-<<<<<<< HEAD
-        view.model.addElement(model.enemy.getType().name() + " Terkena Serangan " + model.player.getAttack_point() + " Damage");
-        
+
         // jika enemy belum mati, player terkena serangan
-=======
+
         view.model.addElement(model.enemy.getMusuh().name() + " Terkena Serangan " + model.player.getDamage() + " Damage");
->>>>>>> 7200fde65aa89db26a5f1d7552cf7fc1cf643ab7
+
         if(model.enemy.getHP() >= 0){
             model.enemy.attack(model.player);
             view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getDamage() + " Damage");
