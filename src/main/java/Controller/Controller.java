@@ -132,7 +132,7 @@ public class Controller {
     public void attackbutton(){
         model.player.attack(model.enemy);
         view.getHPMusuh().setValue(model.enemy.getHP());
-        view.model.addElement(model.enemy.getType().name() + " Terkena Serangan " + model.player.getDamage() + " Damage");
+        view.model.addElement(model.enemy.getMusuh().name() + " Terkena Serangan " + model.player.getDamage() + " Damage");
         if(model.enemy.getHP() >= 0){
             model.enemy.attack(model.player);
             view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getDamage() + " Damage");
@@ -428,7 +428,7 @@ public class Controller {
         if (view.getAlur().isBattle() == true){
             view.getAttack_button().setVisible(true);
             model.enemy = Stage.EnemyGoing();
-            view.getEnemyLabel().setText(model.enemy.getType().toString());
+            view.getEnemyLabel().setText(model.enemy.getMusuh().toString() +" ("+model.enemy.getType()+")");
             view.getHPMusuh().setMaximum(model.enemy.getHP());
             view.getHPMusuh().setValue(model.enemy.getHP());
         }else{
