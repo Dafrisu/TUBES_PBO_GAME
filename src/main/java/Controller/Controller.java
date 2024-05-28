@@ -228,14 +228,14 @@ public class Controller {
     
     //menampilkan semua dialog npc di box panel
     private void BoxDialogPerformed(){
-        String[] textNPC = new String[5];
+        String[] textNPC = new String[4];
         System.out.println(textNPC.length);
         textNPC = model.npc.getDialogue();
         try {
             if (view.getIdxDialogue() == textNPC.length -1) {
                 throw new Exception("Sudah max idx");
             }
-            if (view.getIdxDialogue()<textNPC.length){
+            if (view.getIdxDialogue()<textNPC.length-1){
                 view.getLabelbox().setText(textNPC[view.getIdxDialogue()]);
                 view.setIdxDialogue(view.getIdxDialogue() + 1);
                 if(textNPC[view.getIdxDialogue()]==null && view.getIdxDialogue() < textNPC.length){

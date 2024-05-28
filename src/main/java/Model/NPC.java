@@ -23,7 +23,7 @@ public class NPC extends Entity{
     
     public NPC(int HP, int def, int att){
         super(HP,def,att);
-        n = intrandom.nextInt(1,2);
+        n = intrandom.nextInt(1,3);
         SetType();
         SetDiag();
     }
@@ -75,14 +75,14 @@ public class NPC extends Entity{
     public void setReward(){
         if (this.npctype.equals("Merchant")){
             int n1, n2;
-            n1 = intrandom.nextInt(0,3);
-            n2 = intrandom.nextInt(0,3);
+            n1 = intrandom.nextInt(0,4);
+            n2 = intrandom.nextInt(0,4);
             this.reward1 = this.reward1.arrEquipment[n1];
             this.reward2 = this.reward2.arrEquipment[n2];
             this.dialogue[3]= ("1. " + this.reward1.getNama() +" "+ "2. " + this.reward2.getNama());
         }else if (this.npctype.equals("Pemberi Hadiah")){
             int n1;
-            n1 = intrandom.nextInt(0,3);
+            n1 = intrandom.nextInt(0,4);
             this.reward1 = this.reward1.arrEquipment[n1];
             this.dialogue[3]= ("Reward :" + this.reward1.getNama());
         }
