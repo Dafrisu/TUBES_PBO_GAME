@@ -9,6 +9,7 @@ com\mycompany\pbo_w6\PBO_W6.class
 Model\Stage.class
 Controller\Controller$4.class
 VIew\GUI$2.class
+Controller\Controller$18.class
 VIew\GUI$16.class
 VIew\GUI$8.class
 Model\NPC.class
@@ -40,6 +41,7 @@ Model\Actions.class
 VIew\GUI$15.class
 Model\Entity.class
 Controller\Controller$14.class
+Controller\Controller$17.class
 Controller\Controller$1.class
 VIew\GUI$1.class
 VIew\GUI$10.class
