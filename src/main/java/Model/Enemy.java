@@ -15,11 +15,10 @@ public class Enemy extends Entity implements Actions{
     private String nama;
     private Enemytype type;
     Random random = new Random();
-    
+    private int damage;
     public Enemy (Enemytype type){
         super(type.getHp(), type.getDef(), type.getAtk());
-        this.type = type;
-
+        this.type = type; 
     }
     public enum Enemytype{
         Slime( generateRandom(50,70), 50, 50),
@@ -62,8 +61,25 @@ public class Enemy extends Entity implements Actions{
     
     @Override
     public void attack(Entity Enemy) {
+        int reduce = Enemy.getDefense() * 20/100;
         if (super.persepective(this) == false) {
-            Enemy.setHP(Enemy.getHP() - super.getAttack_point());
+            Enemy.setHP(Enemy.getHP() - (super.getAttack_point() - reduce));
+            setDamage(this.getAttack_point() - reduce);
         }
     }
+
+    /**
+     * @return the damage
+     */
+    public int getDamage() {
+        return damage;
+    }
+
+    /**
+     * @param damage the damage to set
+     */
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+    
 }
