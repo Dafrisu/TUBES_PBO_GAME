@@ -5,6 +5,7 @@
 package Controller;
 import Model.*;
 import VIew.GUI;
+import VIew.Main_Menu;
 import java.awt.Color;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -20,10 +21,12 @@ import javax.swing.event.ChangeListener;
 public class Controller {
     private Model model;
     private GUI view;
+    private Main_Menu menu;
     
-    public Controller(Model model, GUI view){
+    public Controller(Model model, GUI view, Main_Menu menu){
         this.model = model;
         this.view = view;
+        this.menu = menu;
         init();
         view.getAttack_button().addActionListener(new ActionListener(){
             @Override
@@ -116,6 +119,63 @@ public class Controller {
                 hpmusuhstatechange();
             }
             
+        });
+        
+        // ------ ACtion performed Main menu-------//
+        
+        menu.getPlay_button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e){
+                mousePlayenter();
+            }
+        });
+        menu.getPlay_button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseExited(MouseEvent e){
+                mousePlayexit();
+            }
+        });
+        menu.getScoreBoard_button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e){
+                mouseScoreenter();
+            }
+        });
+        menu.getScoreBoard_button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseExited(MouseEvent e){
+                mouseScoreexit();
+            }
+        });
+        menu.getExit_Button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e){
+                mouseExitEnter();
+            }
+        });
+        menu.getExit_Button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseExited(MouseEvent e){
+                mouseExitexit();
+            }
+        });
+        menu.getPlay_button().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Playclicked();
+            }
+        });
+        menu.getScoreBoard_button().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Scoreclicked();
+            }
+        });
+        menu.getExit_Button().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Exitclicked();
+            }
         });
     }
     
@@ -224,6 +284,7 @@ public class Controller {
     // delay untuk menampilkan border menang
     public void timerwin(){
         Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
                     view.getWinorlose().setVisible(true);
@@ -238,6 +299,7 @@ public class Controller {
     // delay untuk menampilkan border kalah
     public void timerlose(){
         Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
                     view.getWinorlose().setVisible(true);
@@ -472,5 +534,36 @@ public class Controller {
     }
     public void hpmusuhstatechange(){
         view.getHPMusuh().setValue(model.enemy.getHP());
+    }
+    
+    // ------------- Bagian GUI Main Menu--------//
+    
+    public void mousePlayenter(){
+        menu.getPlay_button().setBackground(Color.GRAY);
+    }
+    public void mouseScoreenter(){
+        menu.getScoreBoard_button().setBackground(Color.GRAY);
+    }
+    public void mouseExitEnter(){
+        menu.getExit_Button().setBackground(Color.GRAY);
+    }
+    public void mousePlayexit(){
+        menu.getPlay_button().setBackground(Color.white);
+    }
+    public void mouseScoreexit(){
+        menu.getScoreBoard_button().setBackground(Color.white);
+    }
+    public void mouseExitexit(){
+        menu.getExit_Button().setBackground(Color.white);
+    }
+    public void Playclicked(){
+        menu.setVisible(false);
+        view.setVisible(true);
+    }
+    public void Scoreclicked(){
+        // not yet implemented
+    }
+    public void Exitclicked(){
+        menu.dispose();
     }
 }
