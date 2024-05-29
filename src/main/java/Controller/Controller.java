@@ -214,8 +214,16 @@ public class Controller {
             System.out.println(e.getMessage());
         }
     }
+    
+    public void delay(ActionListener e){
+        Timer timer = new Timer(1000, e);
+        timer.setRepeats(false);
+        timer.start();
+    }
+    
+    // delay untuk menampilkan border menang
     public void timerwin(){
-        Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
+        Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
                     view.getWinorlose().setVisible(true);
@@ -226,8 +234,10 @@ public class Controller {
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
         timer.start(); // Memulai timer
     }
+    
+    // delay untuk menampilkan border kalah
     public void timerlose(){
-        Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
+        Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
                     view.getWinorlose().setVisible(true);
