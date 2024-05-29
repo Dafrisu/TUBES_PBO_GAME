@@ -24,11 +24,17 @@ public class Enemy extends Entity implements Actions{
     
     public Enemy (Enemies Musuh){
         super(Musuh.getHp(), Musuh.getDef(), Musuh.getAtk());
-        this.Musuh = Musuh;
-        this.maxHP = Musuh.getHp();
-        setTypeMusuh();
-        Buff();
+        if(Musuh == Enemies.Dragoon){
+            this.Musuh = Musuh;
+            this.maxHP = Musuh.getHp();
+        }else{
+            this.Musuh = Musuh;
+            this.maxHP = Musuh.getHp();
+            setTypeMusuh();
+            Buff();
+        }
     }
+    
     
     public void Buff() {
         this.setHP(getMusuh().getHp()+ typeMusuh.getHp());
@@ -38,9 +44,9 @@ public class Enemy extends Entity implements Actions{
     
     public enum Enemies{
         Slime( generateRandom(50,80), 80, 80),
-        Goblin( generateRandom(70, 100), 100, 150),
-        Rock_Giant(generateRandom(200,250),300,70),
-        Dragoon( generateRandom(300, 400), 200, 200);
+        Goblin( generateRandom(70, 120), 100, 150),
+        Rock_Giant(generateRandom(340,400),300,85),
+        Dragoon( 1000, 300, 200);
         
         private int hp;
         private int def;

@@ -16,6 +16,22 @@ import java.awt.event.*;
  * @author haika
  */
 public class GUI extends javax.swing.JFrame {
+
+    public javax.swing.JButton getMainMenu_onkalah() {
+        return MainMenu_onkalah;
+    }
+
+    public javax.swing.JButton getMainMenu_onmenang() {
+        return MainMenu_onmenang;
+    }
+
+    public javax.swing.JButton getRestart_onkalah() {
+        return Restart_onkalah;
+    }
+
+    public javax.swing.JButton getRestart_onmenang() {
+        return Restart_onmenang;
+    }
     public static int absorbHP = 0;
     public static int absorbdef = 0;
     public static int absorbatk = 0;
@@ -70,6 +86,8 @@ public class GUI extends javax.swing.JFrame {
         afterbattle = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        Restart_onmenang = new javax.swing.JButton();
+        MainMenu_onmenang = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         ClassQ = new javax.swing.JLabel();
         ChoosenClass = new javax.swing.JLabel();
@@ -84,7 +102,8 @@ public class GUI extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         Deadmessage = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
+        Restart_onkalah = new javax.swing.JButton();
+        MainMenu_onkalah = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -283,21 +302,36 @@ public class GUI extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("OCR A Extended", 0, 24)); // NOI18N
         jLabel3.setText("MENANG ");
 
+        Restart_onmenang.setText("RESTART");
+
+        MainMenu_onmenang.setText("MAIN MENU");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(284, 284, 284)
-                .addComponent(jLabel3)
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(284, 284, 284)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(209, 209, 209)
+                        .addComponent(Restart_onmenang, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85)
+                        .addComponent(MainMenu_onmenang)))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(83, 83, 83)
                 .addComponent(jLabel3)
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Restart_onmenang)
+                    .addComponent(MainMenu_onmenang))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         Stage.addTab("win", jPanel6);
@@ -376,46 +410,22 @@ public class GUI extends javax.swing.JFrame {
 
         Stage.addTab("npc", jPanel7);
 
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jLabel5.setFont(new java.awt.Font("OCR A Extended", 0, 36)); // NOI18N
         jLabel5.setText("YOU LOSE");
+        jPanel8.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 51, -1, -1));
 
         Deadmessage.setText("dead");
+        jPanel8.add(Deadmessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 101, -1, -1));
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(259, 259, 259)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Deadmessage)
-                    .addComponent(jLabel5))
-                .addContainerGap(285, Short.MAX_VALUE))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Deadmessage)
-                .addContainerGap(128, Short.MAX_VALUE))
-        );
+        Restart_onkalah.setText("RESTART");
+        jPanel8.add(Restart_onkalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 90, -1));
+
+        MainMenu_onkalah.setText("MAIN MENU");
+        jPanel8.add(MainMenu_onkalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 150, -1, -1));
 
         Stage.addTab("lose", jPanel8);
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 245, Short.MAX_VALUE)
-        );
-
-        Stage.addTab("tab8", jPanel9);
 
         getContentPane().add(Stage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 280));
 
@@ -425,14 +435,6 @@ public class GUI extends javax.swing.JFrame {
         
          // error still
     }
-    private void GetNamePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GetNamePlayerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_GetNamePlayerActionPerformed
-
-    private void OkbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkbuttonActionPerformed
-
-    }//GEN-LAST:event_OkbuttonActionPerformed
-
     private void Attack_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Attack_buttonActionPerformed
         
     }//GEN-LAST:event_Attack_buttonActionPerformed
@@ -441,35 +443,27 @@ public class GUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_StageStateChanged
 
-    private void button_assasinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_assasinActionPerformed
-        // TODO add your handling code here:
+    private void Opsi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi2ActionPerformed
 
-    }//GEN-LAST:event_button_assasinActionPerformed
+    }//GEN-LAST:event_Opsi2ActionPerformed
 
-    private void button_guardianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_guardianActionPerformed
-        // TODO add your handling code here:
+    private void Opsi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi1ActionPerformed
 
-    }//GEN-LAST:event_button_guardianActionPerformed
-
-    private void HPMusuhStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_HPMusuhStateChanged
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_HPMusuhStateChanged
-
-    private void YesclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesclassActionPerformed
-        // TODO add your handling code here:
-        
-         // error still
-    }//GEN-LAST:event_YesclassActionPerformed
-
-    private void NoclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoclassActionPerformed
-        
-    }//GEN-LAST:event_NoclassActionPerformed
+    }//GEN-LAST:event_Opsi1ActionPerformed
 
     private void boxdialog1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boxdialog1MouseClicked
         // TODO add your handling code here:
-
     }//GEN-LAST:event_boxdialog1MouseClicked
+
+    private void NoclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoclassActionPerformed
+
+    }//GEN-LAST:event_NoclassActionPerformed
+
+    private void YesclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesclassActionPerformed
+        // TODO add your handling code here:
+
+        // error still
+    }//GEN-LAST:event_YesclassActionPerformed
 
     private void winorloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_winorloseMouseClicked
         // TODO add your handling code here:
@@ -477,45 +471,56 @@ public class GUI extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
                 winorlose.setVisible(false);
-                 alur.run();
-            if (alur.getCurrentInteraction() < alur.getMAX_INTERACTIONS() ){
-                if (alur.isBattle() == true){
-                    Stage.setSelectedIndex(3);
-                    Stage.setSelectedIndex(2);
+                alur.run();
+                if (alur.getCurrentInteraction() < alur.getMAX_INTERACTIONS() ){
+                    if (alur.isBattle() == true){
+                        Stage.setSelectedIndex(3);
+                        Stage.setSelectedIndex(2);
+                    }else{
+                        Stage.setSelectedIndex(3);
+                        Stage.setSelectedIndex(5);
+                    }
                 }else{
                     Stage.setSelectedIndex(3);
-                    Stage.setSelectedIndex(5);
                 }
-            }else{
-                Stage.setSelectedIndex(3);
-            }
-            alur.setCurrentInteraction(alur.getCurrentInteraction() + 1);
+                alur.setCurrentInteraction(alur.getCurrentInteraction() + 1);
             }
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
         timer.start(); // Memulai timer
-         // error still
-           */
-        
+        // error still
+        */
+
     }//GEN-LAST:event_winorloseMouseClicked
 
-    private void button_necromancerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_necromancerActionPerformed
+    private void HPMusuhStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_HPMusuhStateChanged
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_button_necromancerActionPerformed
+    }//GEN-LAST:event_HPMusuhStateChanged
 
     private void button_archerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_archerActionPerformed
         // TODO add your handling code here:
-
     }//GEN-LAST:event_button_archerActionPerformed
 
-    private void Opsi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi1ActionPerformed
-        
-    }//GEN-LAST:event_Opsi1ActionPerformed
+    private void button_necromancerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_necromancerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button_necromancerActionPerformed
 
-    private void Opsi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Opsi2ActionPerformed
-        
-    }//GEN-LAST:event_Opsi2ActionPerformed
+    private void button_guardianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_guardianActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button_guardianActionPerformed
+
+    private void button_assasinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_assasinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button_assasinActionPerformed
+
+    private void GetNamePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GetNamePlayerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_GetNamePlayerActionPerformed
+
+    private void OkbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkbuttonActionPerformed
+
+    }//GEN-LAST:event_OkbuttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -565,12 +570,16 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel EnemyLabel;
     private javax.swing.JTextField GetNamePlayer;
     private javax.swing.JProgressBar HPMusuh;
+    private javax.swing.JButton MainMenu_onkalah;
+    private javax.swing.JButton MainMenu_onmenang;
     private javax.swing.JLabel NamaPlayer;
     private javax.swing.JButton Noclass;
     private javax.swing.JButton Okbutton;
     private javax.swing.JButton Opsi1;
     private javax.swing.JButton Opsi2;
     private javax.swing.JLabel Player;
+    private javax.swing.JButton Restart_onkalah;
+    private javax.swing.JButton Restart_onmenang;
     private javax.swing.JTabbedPane Stage;
     private javax.swing.JLabel ValueAtk;
     private javax.swing.JLabel ValueDef;
@@ -595,7 +604,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelAtk;
     private javax.swing.JLabel labelDef;

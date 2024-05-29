@@ -120,6 +120,32 @@ public class Controller {
             }
             
         });
+        view.getRestart_onmenang().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RestartWin();
+            }
+            
+        });
+        view.getRestart_onkalah().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RestartLose();
+            }
+        });
+        view.getMainMenu_onmenang().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuWin();
+            }
+        });
+        view.getMainMenu_onkalah().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuLose();
+            }
+            
+        });
         
         // ------ ACtion performed Main menu-------//
         
@@ -219,10 +245,9 @@ public class Controller {
         
         // jika enemy mati, set button attack invisible, lalu masuk ke fungsi timerwin(delay untuk stage selanjutnya)
         if (model.enemy.getHP() < 0){
-            view.absorbHP = view.absorbHP + model.enemy.getMaxHP()*20/100;
+            view.absorbHP = view.absorbHP + model.enemy.getMaxHP()*10/100;
             model.player.setMaxHP();
-            view.model.addElement("Absorb HP musuh sebanyak "+  (model.enemy.getMaxHP()*20/100) );
-
+            view.model.addElement("Absorb HP musuh sebanyak "+  (model.enemy.getMaxHP()*10/100) );
             model.player.setHP(model.player.getMaxHP());
             ChangeAttr();
             view.setWin(winlose(model.enemy));
@@ -326,21 +351,22 @@ public class Controller {
                 if (view.getAlur().isBattle() == true){
                         view.getStage().setSelectedIndex(3);
                         view.getStage().setSelectedIndex(2);
+                        view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
                 }else{
                     view.getStage().setSelectedIndex(3);
                     view.getStage().setSelectedIndex(5);
                     setOpsiName();
                     view.getOpsi1().setVisible(false);
                     view.getOpsi2().setVisible(false);
+                    view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
                 }
             }else{
                     view.getStage().setSelectedIndex(3);
             }
-                view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
-                view.getAlur().setBattle(true);
+                
                 view.getWinorlose().setVisible(false);
                 view.getLabelbox().setText("|");
-                view.setIdxDialogue(0);
+                view.setIdxDialogue(0);   
             }
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
@@ -349,8 +375,14 @@ public class Controller {
             Timer timer = new Timer(1000, new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    view.getStage().setSelectedIndex(6);
-                    view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() +" ("+model.enemy.getType()+")");
+                    if(model.enemy.getMusuh() != Enemy.Enemies.Dragoon){
+                        view.getStage().setSelectedIndex(6);
+                        view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() +" ("+model.enemy.getType()+")");
+                    }else{
+                        view.getStage().setSelectedIndex(6);
+                        view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() + "(Last Boss)");
+                    }
+                    
                 }
                 
             });
@@ -427,7 +459,7 @@ public class Controller {
     private void OKButton(){
         if (!view.getGetNamePlayer().getText().equals("")){
             String nama = view.getGetNamePlayer().getText();
-            model.player = new Player(nama, 200,100,100);
+            model.player = new Player(nama, 50,30,30);
             view.getNamaPlayer().setText(model.player.getNama());
             view.getNamaPlayer().setVisible(true);
             view.getValueHP().setText(model.player.getHP() +"");
@@ -441,7 +473,7 @@ public class Controller {
     public void buttonAssassin(){
         view.setClassN(1);
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.dapatkanClass());
+        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
         view.getStage().setSelectedIndex(4);
     }
     
@@ -449,7 +481,7 @@ public class Controller {
     public void buttonGuardian(){
         view.setClassN(2);
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.dapatkanClass());
+        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
         view.getStage().setSelectedIndex(4);
     }
     
@@ -457,7 +489,7 @@ public class Controller {
     public void buttonNecromancer(){
         view.setClassN(3); 
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.dapatkanClass());
+        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
         view.getStage().setSelectedIndex(4);
     }
     
@@ -465,8 +497,9 @@ public class Controller {
     public void buttonArcher(){
         view.setClassN(4);
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.dapatkanClass());
+        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
         view.getStage().setSelectedIndex(4);
+        
     }
     
     //mengganti semua attribute di label HP, def, dan atk di GUI
@@ -495,10 +528,11 @@ public class Controller {
     public void yesclassbutton(){
         view.getEquipment().EquipmentInit(model.player);
         view.getEquipment().EquipmentsetforClass(model.player);
-        ChangeAttr();
-        
+        model.player.setBaseHP(model.player.getHP());
+        model.player.setBasedef(model.player.getDefense());
+        model.player.setBaseatk(model.player.getAttack_point());
         model.player.setMaxHP();
-
+        ChangeAttr();
         model.npc.reward1.EquipmentInit(model.player);
         model.npc.reward2.EquipmentInit(model.player);
         model.npc.setReward();
@@ -520,8 +554,14 @@ public class Controller {
     public void statestagechange(){
         if (view.getAlur().isBattle() == true){
             view.getAttack_button().setVisible(true);
-            model.enemy = Stage.EnemyGoing();
-            view.getEnemyLabel().setText(model.enemy.getMusuh().toString() +" ("+model.enemy.getType()+")");
+            if(view.isWin()){
+                model.enemy = Stage.EnemyGoing();
+            }
+            if (model.enemy.getMusuh() != Enemy.Enemies.Dragoon) {
+                view.getEnemyLabel().setText(model.enemy.getMusuh().toString() + " (" + model.enemy.getType() + ")");
+            } else {
+                view.getEnemyLabel().setText(model.enemy.getMusuh().toString());
+            }
             view.getHPMusuh().setMaximum(model.enemy.getHP());
             view.getHPMusuh().setValue(model.enemy.getHP());
         }else{
@@ -534,6 +574,48 @@ public class Controller {
     }
     public void hpmusuhstatechange(){
         view.getHPMusuh().setValue(model.enemy.getHP());
+    }
+    
+    public void RestartWin(){
+        GUI.absorbHP = 0;
+        GUI.absorbdef = 0;
+        GUI.absorbatk = 0;
+        view.getAlur().setCurrentInteraction(0);
+        view.getStage().setSelectedIndex(0);
+        view.getGetNamePlayer().setText("");
+        view.getNamaPlayer().setText("Player");
+        view.model.clear();
+    }
+    
+    public void RestartLose(){
+        GUI.absorbHP = 0;
+        GUI.absorbdef = 0;
+        GUI.absorbatk = 0;
+        view.setWin(true);
+        view.getAlur().setCurrentInteraction(0);
+        view.getStage().setSelectedIndex(0);
+        view.getGetNamePlayer().setText("");
+        view.getNamaPlayer().setText("Player");
+        view.model.clear();
+    }
+    public void MenuWin(){
+        view.getAlur().setCurrentInteraction(0);
+        view.setVisible(false);
+        view.getStage().setSelectedIndex(0);
+        menu.setVisible(true);
+        view.getGetNamePlayer().setText("");
+        view.getNamaPlayer().setText("Player");
+        view.model.clear();
+    }
+    public void MenuLose(){
+        view.getAlur().setCurrentInteraction(0);
+        view.setVisible(false);
+        view.setWin(true);
+        view.getStage().setSelectedIndex(0);
+        menu.setVisible(true);
+        view.getGetNamePlayer().setText("");
+        view.getNamaPlayer().setText("Player");
+        view.model.clear();
     }
     
     // ------------- Bagian GUI Main Menu--------//
@@ -557,6 +639,7 @@ public class Controller {
         menu.getExit_Button().setBackground(Color.white);
     }
     public void Playclicked(){
+        this.view = view;
         menu.setVisible(false);
         view.setVisible(true);
     }
@@ -564,6 +647,13 @@ public class Controller {
         // not yet implemented
     }
     public void Exitclicked(){
-        menu.dispose();
+        int pilih = JOptionPane.showConfirmDialog(view, 
+                "Apakah Anda Yakin ingin Keluar??", 
+                "Konfirmasi", 
+                JOptionPane.OK_CANCEL_OPTION, 
+                JOptionPane.WARNING_MESSAGE);
+        if(pilih == JOptionPane.OK_OPTION){
+            menu.dispose();
+        }
     }
 }

@@ -71,12 +71,12 @@ public class NPC extends Entity{
             n2 = intrandom.nextInt(0,4);
             this.reward1 = this.reward1.arrEquipment[n1];
             this.reward2 = this.reward2.arrEquipment[n2];
-            this.listDialog.add("1. " + this.reward1.getNama() +"\n "+ "2. " + this.reward2.getNama());
+            this.listDialog.add("1. " +this.reward1.getTipe()+"("+ this.reward1.getNama()+")"+"\n "+ "2. " +this.reward2.getTipe()+"("+ this.reward2.getNama()+")");
         }else if (this.getNpctype().equals("Pemberi Hadiah")){
             int n1;
             n1 = intrandom.nextInt(0,4);
             this.reward1 = this.reward1.arrEquipment[n1];
-            this.listDialog.add("Reward :" + this.reward1.getNama());
+            this.listDialog.add("Reward :" +this.reward1.getTipe()+"("+this.reward1.getNama()+")");
         }
     }
     public void pilihReward(Player a,int x){
