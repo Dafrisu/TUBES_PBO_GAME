@@ -9,24 +9,69 @@ package Model;
  * @author haika
  */
 import VIew.GUI;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Player extends Entity implements Class, Actions{
     private String nama;
     private String skills;
-    private String Class;
-    private final int baseHP = 200;
-    private final int basedef = 100;
-    private final int baseatk = 100;
+    private ClassSet Class;
+    private int baseHP = 50;
+    private int basedef = 30;
+    private int baseatk = 30;
+    private Random random = new Random();
     private int MaxHP;
+    private int MaxDef;
+    private int MaxAtk;
     public Equipment wear = new Equipment();
     private int damage;
-    public Player(String nama,int HP, int def, int att ){
-        super(HP,def,att);
+    public Player(String nama,int HP, int def, int atk ){
+        super(HP,def,atk);
         this.nama = nama;
         this.MaxHP = HP;
     }
+    public void MergeStat() {
+        super.setHP(super.getHP() + Class.getHp());
+        super.setAttack_point(super.getAttack_point() + Class.getAtk());
+        super.setDefense(super.getDefense() + Class.getDef());
+        baseHP = super.getHP();
+        baseatk = super.getAttack_point() ;
+        basedef = super.getDefense() ;
+
+    }
     
+    public enum ClassSet{
+        Assassin( generateRandom(100,125), 45, 200),
+        Guardian( generateRandom(175, 250), 300, 70),
+        Necromancer(generateRandom(150,200),60,100),
+        Archer( generateRandom(60,80), 50, 250);
+        
+        private int hp;
+        private int def;
+        private int atk;
+        
+        ClassSet(int hp, int def, int atk){
+            this.hp = hp;
+            this.def = def;
+            this.atk = atk;
+        }
+
+        public int getHp() {
+            return hp;
+        }
+
+        public int getDef() {
+            return def;
+        }
+
+        public int getAtk() {
+            return atk;
+        }
+        private static int generateRandom(int min, int max) {
+            return ThreadLocalRandom.current().nextInt(min, max + 1);
+        }
+    }
    
     
     public String getNama() {
@@ -40,13 +85,13 @@ public class Player extends Entity implements Class, Actions{
     @Override
     public void tipeClass(int choose) {
         if (choose == 1){
-            this.setClass("Assassin");
+            this.setPlayerClass(ClassSet.Assassin);
         }else if (choose == 2){
-            this.setClass("Guardian");
+            this.setPlayerClass(ClassSet.Guardian);
         }else if(choose == 3){
-            this.setClass("Necromancer");
+            this.setPlayerClass(ClassSet.Necromancer);
         }else if(choose == 4){
-            this.setClass("Archer");
+            this.setPlayerClass(ClassSet.Archer);
         }else{
             System.out.println("input invalid");
         }
@@ -54,13 +99,13 @@ public class Player extends Entity implements Class, Actions{
 
     @Override
     public void Skillset() {
-        if (this.dapatkanClass().equals("Assassin")){
+        if (this.getPlayerClass().toString().equals("Assassin")){
             this.setSkills("Assassin_Skillset");
-        }else if (this.dapatkanClass().equals("Guardian")){
+        }else if (this.getPlayerClass().toString().equals("Guardian")){
             this.setSkills("Guardian_Skillset");
-        }else if(this.dapatkanClass().equals("Necromancer")){
+        }else if(this.getPlayerClass().toString().equals("Necromancer")){
             this.setSkills("Necromancer_Skillset");
-        }else if(this.dapatkanClass().equals("Archer")){
+        }else if(this.getPlayerClass().toString().equals("Archer")){
             this.setSkills("Archer_Skillset");
         }else{
             System.out.println("Player belum punya Class");
@@ -75,13 +120,9 @@ public class Player extends Entity implements Class, Actions{
         this.skills = skills;
     }
 
-    public String dapatkanClass() {
-        return Class;
-    }
+    
 
-    public void setClass(String Class) {
-        this.Class = Class;
-    }
+    
     public void CheckStats(){
         System.out.println("HP\t:" + this.getHP());
         System.out.println("Def\t:" + this.getDefense());
@@ -128,6 +169,84 @@ public class Player extends Entity implements Class, Actions{
      */
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    /**
+     * @return the Class
+     */
+    public ClassSet getPlayerClass() {
+        return Class;
+    }
+
+    /**
+     * @param Class the Class to set
+     */
+    public void setPlayerClass(ClassSet Class) {
+        this.Class = Class;
+        MergeStat();
+    }  
+
+    /**
+     * @param baseHP the baseHP to set
+     */
+    public void setBaseHP(int baseHP) {
+        this.baseHP = baseHP;
+    }
+
+    /**
+     * @return the basedef
+     */
+    public int getBasedef() {
+        return basedef;
+    }
+
+    /**
+     * @param basedef the basedef to set
+     */
+    public void setBasedef(int basedef) {
+        this.basedef = basedef;
+    }
+
+    /**
+     * @return the baseatk
+     */
+    public int getBaseatk() {
+        return baseatk;
+    }
+
+    /**
+     * @param baseatk the baseatk to set
+     */
+    public void setBaseatk(int baseatk) {
+        this.baseatk = baseatk;
+    }
+
+    /**
+     * @return the MaxDef
+     */
+    public int getMaxDef() {
+        return MaxDef;
+    }
+
+    /**
+     * @return the MaxAtk
+     */
+    public int getMaxAtk() {
+        return MaxAtk;
+    }
+
+    /**
+     * @param MaxDef the MaxDef to set
+     */
+    public void setMaxDef(int MaxDef) {
+        this.MaxDef = basedef + wear.getEquipment_def();
+    }
+
+    /**
+     * @param MaxAtk the MaxAtk to set
+     */
+    public void setMaxAtk(int MaxAtk) {
+        this.MaxAtk = baseatk + wear.getEquipment_att();
     }
     
 }

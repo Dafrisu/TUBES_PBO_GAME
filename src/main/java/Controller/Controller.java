@@ -159,10 +159,9 @@ public class Controller {
         
         // jika enemy mati, set button attack invisible, lalu masuk ke fungsi timerwin(delay untuk stage selanjutnya)
         if (model.enemy.getHP() < 0){
-            view.absorbHP = view.absorbHP + model.enemy.getMaxHP()*20/100;
+            view.absorbHP = view.absorbHP + model.enemy.getMaxHP()*10/100;
             model.player.setMaxHP();
-            view.model.addElement("Absorb HP musuh sebanyak "+  (model.enemy.getMaxHP()*20/100) );
-
+            view.model.addElement("Absorb HP musuh sebanyak "+  (model.enemy.getMaxHP()*10/100) );
             model.player.setHP(model.player.getMaxHP());
             ChangeAttr();
             view.setWin(winlose(model.enemy));
@@ -355,7 +354,7 @@ public class Controller {
     private void OKButton(){
         if (!view.getGetNamePlayer().getText().equals("")){
             String nama = view.getGetNamePlayer().getText();
-            model.player = new Player(nama, 200,100,100);
+            model.player = new Player(nama, 50,30,30);
             view.getNamaPlayer().setText(model.player.getNama());
             view.getNamaPlayer().setVisible(true);
             view.getValueHP().setText(model.player.getHP() +"");
@@ -369,7 +368,7 @@ public class Controller {
     public void buttonAssassin(){
         view.setClassN(1);
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.dapatkanClass());
+        view.getChoosenClass().setText(model.player.getClass().toString());
         view.getStage().setSelectedIndex(4);
     }
     
@@ -377,7 +376,7 @@ public class Controller {
     public void buttonGuardian(){
         view.setClassN(2);
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.dapatkanClass());
+        view.getChoosenClass().setText(model.player.getClass().toString());
         view.getStage().setSelectedIndex(4);
     }
     
@@ -385,7 +384,7 @@ public class Controller {
     public void buttonNecromancer(){
         view.setClassN(3); 
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.dapatkanClass());
+        view.getChoosenClass().setText(model.player.getClass().toString());
         view.getStage().setSelectedIndex(4);
     }
     
@@ -393,8 +392,9 @@ public class Controller {
     public void buttonArcher(){
         view.setClassN(4);
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.dapatkanClass());
+        view.getChoosenClass().setText(model.player.getClass().toString());
         view.getStage().setSelectedIndex(4);
+        
     }
     
     //mengganti semua attribute di label HP, def, dan atk di GUI
@@ -423,10 +423,8 @@ public class Controller {
     public void yesclassbutton(){
         view.getEquipment().EquipmentInit(model.player);
         view.getEquipment().EquipmentsetforClass(model.player);
-        ChangeAttr();
-        
         model.player.setMaxHP();
-
+        ChangeAttr();
         model.npc.reward1.EquipmentInit(model.player);
         model.npc.reward2.EquipmentInit(model.player);
         model.npc.setReward();
