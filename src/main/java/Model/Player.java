@@ -32,12 +32,12 @@ public class Player extends Entity implements Class, Actions{
         this.MaxHP = HP;
     }
     public void MergeStat() {
-        super.setHP(super.getHP() + Class.getHp());
-        super.setAttack_point(super.getAttack_point() + Class.getAtk());
-        super.setDefense(super.getDefense() + Class.getDef());
-        baseHP = super.getHP();
-        baseatk = super.getAttack_point() ;
-        basedef = super.getDefense() ;
+        super.setHP(baseHP + Class.getHp());
+        super.setAttack_point(basedef + Class.getAtk());
+        super.setDefense(baseatk + Class.getDef());
+//        baseHP = super.getHP();
+//        baseatk = super.getAttack_point() ;
+//        basedef = super.getDefense() ;
 
     }
     

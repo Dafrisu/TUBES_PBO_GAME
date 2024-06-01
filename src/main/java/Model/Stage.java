@@ -10,7 +10,7 @@ import java.util.Random;
  * @author Mahesa
  */
 public class Stage {
-    private static int MAX_INTERACTIONS =9;
+    private static int MAX_INTERACTIONS =11;
     private static int currentInteraction = 0;
     private boolean battle;
     Random random = new Random(); // Create a Random object
@@ -20,7 +20,7 @@ public class Stage {
     }
 
     public void setMAX_INTERACTIONS(int MAX_INTERACTIONS) {
-        this.MAX_INTERACTIONS = 5;
+        this.MAX_INTERACTIONS = MAX_INTERACTIONS;
     }
 
     public int getCurrentInteraction() {
@@ -47,6 +47,8 @@ public class Stage {
         }
         if(currentInteraction >=5 && currentInteraction <= 9){
             musuh = new Enemy(Enemy.Enemies.Rock_Giant);
+        }else if (currentInteraction == MAX_INTERACTIONS - 1){
+            musuh = new Enemy(Enemy.Enemies.Dragoon);
         }
         return musuh;
     }
@@ -54,7 +56,7 @@ public class Stage {
     public void run(Enemy e) {
         int encounterType = random.nextInt(2)+1; // Generate random number (1 or 2)
         System.out.println(encounterType);
-        if ( currentInteraction < MAX_INTERACTIONS){
+        if ( currentInteraction < MAX_INTERACTIONS - 1){
             
             if (encounterType == 1){
                 setBattle(true);
@@ -62,8 +64,12 @@ public class Stage {
             else if (encounterType == 2){
                 setBattle(false);
             }
-        }else{
+        }else if(currentInteraction == MAX_INTERACTIONS -1){
+            setBattle(true);
+        }
+        else{
             System.out.println("Udah habis");
+            setBattle(false);
         }
     }
 }

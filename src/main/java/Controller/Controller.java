@@ -5,6 +5,7 @@
 package Controller;
 import Model.*;
 import VIew.GUI;
+import VIew.Main_Menu;
 import java.awt.Color;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -20,10 +21,12 @@ import javax.swing.event.ChangeListener;
 public class Controller {
     private Model model;
     private GUI view;
+    private Main_Menu menu;
     
-    public Controller(Model model, GUI view){
+    public Controller(Model model, GUI view, Main_Menu menu){
         this.model = model;
         this.view = view;
+        this.menu = menu;
         init();
         view.getAttack_button().addActionListener(new ActionListener(){
             @Override
@@ -116,6 +119,89 @@ public class Controller {
                 hpmusuhstatechange();
             }
             
+        });
+        view.getRestart_onmenang().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RestartWin();
+            }
+            
+        });
+        view.getRestart_onkalah().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RestartLose();
+            }
+        });
+        view.getMainMenu_onmenang().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuWin();
+            }
+        });
+        view.getMainMenu_onkalah().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MenuLose();
+            }
+            
+        });
+        
+        // ------ ACtion performed Main menu-------//
+        
+        menu.getPlay_button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e){
+                mousePlayenter();
+            }
+        });
+        menu.getPlay_button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseExited(MouseEvent e){
+                mousePlayexit();
+            }
+        });
+        menu.getScoreBoard_button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e){
+                mouseScoreenter();
+            }
+        });
+        menu.getScoreBoard_button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseExited(MouseEvent e){
+                mouseScoreexit();
+            }
+        });
+        menu.getExit_Button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e){
+                mouseExitEnter();
+            }
+        });
+        menu.getExit_Button().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseExited(MouseEvent e){
+                mouseExitexit();
+            }
+        });
+        menu.getPlay_button().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Playclicked();
+            }
+        });
+        menu.getScoreBoard_button().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Scoreclicked();
+            }
+        });
+        menu.getExit_Button().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Exitclicked();
+            }
         });
     }
     
@@ -213,8 +299,17 @@ public class Controller {
             System.out.println(e.getMessage());
         }
     }
+    
+    public void delay(ActionListener e){
+        Timer timer = new Timer(1000, e);
+        timer.setRepeats(false);
+        timer.start();
+    }
+    
+    // delay untuk menampilkan border menang
     public void timerwin(){
-        Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
+        Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
                     view.getWinorlose().setVisible(true);
@@ -225,8 +320,11 @@ public class Controller {
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
         timer.start(); // Memulai timer
     }
+    
+    // delay untuk menampilkan border kalah
     public void timerlose(){
-        Timer timer = new Timer(1000, new ActionListener() { // Delay 3 detik (3000 milidetik)
+        Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
                     view.getWinorlose().setVisible(true);
@@ -253,21 +351,22 @@ public class Controller {
                 if (view.getAlur().isBattle() == true){
                         view.getStage().setSelectedIndex(3);
                         view.getStage().setSelectedIndex(2);
+                        view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
                 }else{
                     view.getStage().setSelectedIndex(3);
                     view.getStage().setSelectedIndex(5);
                     setOpsiName();
                     view.getOpsi1().setVisible(false);
                     view.getOpsi2().setVisible(false);
+                    view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
                 }
             }else{
                     view.getStage().setSelectedIndex(3);
             }
-                view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
-                view.getAlur().setBattle(true);
+                
                 view.getWinorlose().setVisible(false);
                 view.getLabelbox().setText("|");
-                view.setIdxDialogue(0);
+                view.setIdxDialogue(0);   
             }
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
@@ -276,8 +375,14 @@ public class Controller {
             Timer timer = new Timer(1000, new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    view.getStage().setSelectedIndex(6);
-                    view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() +" ("+model.enemy.getType()+")");
+                    if(model.enemy.getMusuh() != Enemy.Enemies.Dragoon){
+                        view.getStage().setSelectedIndex(6);
+                        view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() +" ("+model.enemy.getType()+")");
+                    }else{
+                        view.getStage().setSelectedIndex(6);
+                        view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() + "(Last Boss)");
+                    }
+                    
                 }
                 
             });
@@ -368,7 +473,7 @@ public class Controller {
     public void buttonAssassin(){
         view.setClassN(1);
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.getClass().toString());
+        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
         view.getStage().setSelectedIndex(4);
     }
     
@@ -376,7 +481,7 @@ public class Controller {
     public void buttonGuardian(){
         view.setClassN(2);
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.getClass().toString());
+        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
         view.getStage().setSelectedIndex(4);
     }
     
@@ -384,7 +489,7 @@ public class Controller {
     public void buttonNecromancer(){
         view.setClassN(3); 
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.getClass().toString());
+        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
         view.getStage().setSelectedIndex(4);
     }
     
@@ -392,7 +497,7 @@ public class Controller {
     public void buttonArcher(){
         view.setClassN(4);
         model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.getClass().toString());
+        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
         view.getStage().setSelectedIndex(4);
         
     }
@@ -423,6 +528,9 @@ public class Controller {
     public void yesclassbutton(){
         view.getEquipment().EquipmentInit(model.player);
         view.getEquipment().EquipmentsetforClass(model.player);
+        model.player.setBaseHP(model.player.getHP());
+        model.player.setBasedef(model.player.getDefense());
+        model.player.setBaseatk(model.player.getAttack_point());
         model.player.setMaxHP();
         ChangeAttr();
         model.npc.reward1.EquipmentInit(model.player);
@@ -446,8 +554,14 @@ public class Controller {
     public void statestagechange(){
         if (view.getAlur().isBattle() == true){
             view.getAttack_button().setVisible(true);
-            model.enemy = Stage.EnemyGoing();
-            view.getEnemyLabel().setText(model.enemy.getMusuh().toString() +" ("+model.enemy.getType()+")");
+            if(view.isWin()){
+                model.enemy = Stage.EnemyGoing();
+            }
+            if (model.enemy.getMusuh() != Enemy.Enemies.Dragoon) {
+                view.getEnemyLabel().setText(model.enemy.getMusuh().toString() + " (" + model.enemy.getType() + ")");
+            } else {
+                view.getEnemyLabel().setText(model.enemy.getMusuh().toString());
+            }
             view.getHPMusuh().setMaximum(model.enemy.getHP());
             view.getHPMusuh().setValue(model.enemy.getHP());
         }else{
@@ -460,5 +574,86 @@ public class Controller {
     }
     public void hpmusuhstatechange(){
         view.getHPMusuh().setValue(model.enemy.getHP());
+    }
+    
+    public void RestartWin(){
+        GUI.absorbHP = 0;
+        GUI.absorbdef = 0;
+        GUI.absorbatk = 0;
+        view.getAlur().setCurrentInteraction(0);
+        view.getStage().setSelectedIndex(0);
+        view.getGetNamePlayer().setText("");
+        view.getNamaPlayer().setText("Player");
+        view.model.clear();
+    }
+    
+    public void RestartLose(){
+        GUI.absorbHP = 0;
+        GUI.absorbdef = 0;
+        GUI.absorbatk = 0;
+        view.setWin(true);
+        view.getAlur().setCurrentInteraction(0);
+        view.getStage().setSelectedIndex(0);
+        view.getGetNamePlayer().setText("");
+        view.getNamaPlayer().setText("Player");
+        view.model.clear();
+    }
+    public void MenuWin(){
+        view.getAlur().setCurrentInteraction(0);
+        view.setVisible(false);
+        view.getStage().setSelectedIndex(0);
+        menu.setVisible(true);
+        view.getGetNamePlayer().setText("");
+        view.getNamaPlayer().setText("Player");
+        view.model.clear();
+    }
+    public void MenuLose(){
+        view.getAlur().setCurrentInteraction(0);
+        view.setVisible(false);
+        view.setWin(true);
+        view.getStage().setSelectedIndex(0);
+        menu.setVisible(true);
+        view.getGetNamePlayer().setText("");
+        view.getNamaPlayer().setText("Player");
+        view.model.clear();
+    }
+    
+    // ------------- Bagian GUI Main Menu--------//
+    
+    public void mousePlayenter(){
+        menu.getPlay_button().setBackground(Color.GRAY);
+    }
+    public void mouseScoreenter(){
+        menu.getScoreBoard_button().setBackground(Color.GRAY);
+    }
+    public void mouseExitEnter(){
+        menu.getExit_Button().setBackground(Color.GRAY);
+    }
+    public void mousePlayexit(){
+        menu.getPlay_button().setBackground(Color.white);
+    }
+    public void mouseScoreexit(){
+        menu.getScoreBoard_button().setBackground(Color.white);
+    }
+    public void mouseExitexit(){
+        menu.getExit_Button().setBackground(Color.white);
+    }
+    public void Playclicked(){
+        this.view = view;
+        menu.setVisible(false);
+        view.setVisible(true);
+    }
+    public void Scoreclicked(){
+        // not yet implemented
+    }
+    public void Exitclicked(){
+        int pilih = JOptionPane.showConfirmDialog(view, 
+                "Apakah Anda Yakin ingin Keluar??", 
+                "Konfirmasi", 
+                JOptionPane.OK_CANCEL_OPTION, 
+                JOptionPane.WARNING_MESSAGE);
+        if(pilih == JOptionPane.OK_OPTION){
+            menu.dispose();
+        }
     }
 }
