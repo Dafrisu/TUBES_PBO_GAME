@@ -17,21 +17,6 @@ import java.awt.event.*;
  */
 public class GUI extends javax.swing.JFrame {
 
-    public javax.swing.JButton getMainMenu_onkalah() {
-        return MainMenu_onkalah;
-    }
-
-    public javax.swing.JButton getMainMenu_onmenang() {
-        return MainMenu_onmenang;
-    }
-
-    public javax.swing.JButton getRestart_onkalah() {
-        return Restart_onkalah;
-    }
-
-    public javax.swing.JButton getRestart_onmenang() {
-        return Restart_onmenang;
-    }
     public static int absorbHP = 0;
     public static int absorbdef = 0;
     public static int absorbatk = 0;
@@ -88,6 +73,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         Restart_onmenang = new javax.swing.JButton();
         MainMenu_onmenang = new javax.swing.JButton();
+        scoreonwin = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         ClassQ = new javax.swing.JLabel();
         ChoosenClass = new javax.swing.JLabel();
@@ -104,6 +90,7 @@ public class GUI extends javax.swing.JFrame {
         Deadmessage = new javax.swing.JLabel();
         Restart_onkalah = new javax.swing.JButton();
         MainMenu_onkalah = new javax.swing.JButton();
+        scoreonlose = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -306,6 +293,9 @@ public class GUI extends javax.swing.JFrame {
 
         MainMenu_onmenang.setText("MAIN MENU");
 
+        scoreonwin.setFont(new java.awt.Font("OCR A Extended", 0, 14)); // NOI18N
+        scoreonwin.setText("SCORE : ");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -313,25 +303,30 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(284, 284, 284)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(209, 209, 209)
                         .addComponent(Restart_onmenang, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(85, 85, 85)
-                        .addComponent(MainMenu_onmenang)))
+                        .addComponent(MainMenu_onmenang))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(293, 293, 293)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(275, 275, 275)
+                        .addComponent(scoreonwin)))
                 .addContainerGap(235, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addGap(72, 72, 72)
                 .addComponent(jLabel3)
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scoreonwin)
+                .addGap(20, 20, 20)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Restart_onmenang)
                     .addComponent(MainMenu_onmenang))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         Stage.addTab("win", jPanel6);
@@ -420,10 +415,14 @@ public class GUI extends javax.swing.JFrame {
         jPanel8.add(Deadmessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 101, -1, -1));
 
         Restart_onkalah.setText("RESTART");
-        jPanel8.add(Restart_onkalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 90, -1));
+        jPanel8.add(Restart_onkalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 100, -1));
 
         MainMenu_onkalah.setText("MAIN MENU");
-        jPanel8.add(MainMenu_onkalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 150, -1, -1));
+        jPanel8.add(MainMenu_onkalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, -1, -1));
+
+        scoreonlose.setFont(new java.awt.Font("OCR A Extended", 0, 14)); // NOI18N
+        scoreonlose.setText("Score : ");
+        jPanel8.add(scoreonlose, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, -1, -1));
 
         Stage.addTab("lose", jPanel8);
 
@@ -610,6 +609,8 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel labelHP;
     private javax.swing.JLabel labelbox;
     private javax.swing.JList<String> listdamage;
+    private javax.swing.JLabel scoreonlose;
+    private javax.swing.JLabel scoreonwin;
     private javax.swing.JPanel winorlose;
     // End of variables declaration//GEN-END:variables
 
@@ -1078,5 +1079,28 @@ public class GUI extends javax.swing.JFrame {
 
     public javax.swing.JLabel getDeadmessage() {
         return Deadmessage;
+    }
+    public javax.swing.JButton getMainMenu_onkalah() {
+        return MainMenu_onkalah;
+    }
+
+    public javax.swing.JButton getMainMenu_onmenang() {
+        return MainMenu_onmenang;
+    }
+
+    public javax.swing.JButton getRestart_onkalah() {
+        return Restart_onkalah;
+    }
+
+    public javax.swing.JButton getRestart_onmenang() {
+        return Restart_onmenang;
+    }
+
+    public javax.swing.JLabel getScoreonlose() {
+        return scoreonlose;
+    }
+
+    public javax.swing.JLabel getScoreonwin() {
+        return scoreonwin;
     }
 }
