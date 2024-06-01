@@ -33,7 +33,6 @@ public class Main_Menu extends javax.swing.JFrame {
         Exit_Button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(720, 480));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("OCR A Extended", 1, 36)); // NOI18N

@@ -6,6 +6,7 @@ package Controller;
 import Model.*;
 import VIew.GUI;
 import VIew.Main_Menu;
+import VIew.ScoreBoard;
 import java.awt.Color;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -22,8 +23,9 @@ public class Controller {
     private Model model;
     private GUI view;
     private Main_Menu menu;
+    private ScoreBoard SCBD;
     
-    public Controller(Model model, GUI view, Main_Menu menu){
+    public Controller(Model model, GUI view, Main_Menu menu, ScoreBoard SCBD){
         this.model = model;
         this.view = view;
         this.menu = menu;
@@ -203,6 +205,15 @@ public class Controller {
                 Exitclicked();
             }
         });
+        
+        // ---------- Bagian JDialog ScoreBoard ----------- //
+        
+        SCBD.getClose().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                closeScore();
+            }
+        });
     }
     
     public void init(){
@@ -335,8 +346,9 @@ public class Controller {
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
         timer.start(); // Memulai timer
     }
-    // Timer untuk delay sebelum ganti stage jika menang
+    // Timer untuk delay sebelum ganti stage
     public void Timer(){
+        // timer ganti stage jika menang
         if(view.isWin()){
             Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
             @Override
@@ -347,30 +359,30 @@ public class Controller {
                     view.getStage().setSelectedIndex(3);
                     int fullScore = Model.getScores() + model.player.getMaxHP() + model.player.getMaxDef() + model.player.getMaxAtk();
                     model.setFullScore(fullScore);
-                    view.getScoreLabel().setText("Score: " + model.getFullScore());
+                    view.getScoreonwin().setText("Score : " + model.getFullScore());
                     view.getAttack_button().setVisible(false);
                 }
-            if (view.getAlur().getCurrentInteraction() < view.getAlur().getMAX_INTERACTIONS() ){
-                if (view.getAlur().isBattle() == true){
+                if (view.getAlur().getCurrentInteraction() < view.getAlur().getMAX_INTERACTIONS()) {
+                    if (view.getAlur().isBattle() == true) {
                         view.getStage().setSelectedIndex(3);
                         view.getStage().setSelectedIndex(2);
                         view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
-                }else{
+                    } else {
+                        view.getStage().setSelectedIndex(3);
+                        view.getStage().setSelectedIndex(5);
+                        setOpsiName();
+                        view.getOpsi1().setVisible(false);
+                        view.getOpsi2().setVisible(false);
+                        view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
+                    }
+                } else {
                     view.getStage().setSelectedIndex(3);
-                    view.getStage().setSelectedIndex(5);
-                    setOpsiName();
-                    view.getOpsi1().setVisible(false);
-                    view.getOpsi2().setVisible(false);
-                    view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
+                }    
+                    Model.scores100();
+                    view.getWinorlose().setVisible(false);
+                    view.getLabelbox().setText("|");
+                    view.setIdxDialogue(0);
                 }
-            }else{
-                    view.getStage().setSelectedIndex(3);
-            }
-                Model.scores100();
-                view.getWinorlose().setVisible(false);
-                view.getLabelbox().setText("|");
-                view.setIdxDialogue(0);   
-            }
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
         timer.start(); // Memulai timer
@@ -382,13 +394,13 @@ public class Controller {
                         view.getStage().setSelectedIndex(6);
                         int fullScore = Model.getScores() + model.player.getMaxHP() + model.player.getMaxDef() + model.player.getMaxAtk();
                         model.setFullScore(fullScore);
-                        view.getLabelScoreLose().setText("Score: " + model.getFullScore());
+                        view.getScoreonlose().setText("Score : " + model.getFullScore());
                         view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() +" ("+model.enemy.getType()+")");
                     }else{
                         view.getStage().setSelectedIndex(6);
                         int fullScore = Model.getScores() + model.player.getMaxHP() + model.player.getMaxDef() + model.player.getMaxAtk();
                         model.setFullScore(fullScore);
-                        view.getLabelScoreLose().setText("Score: " + model.getFullScore());
+                        view.getScoreonlose().setText("Score : " + model.getFullScore());
                         view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() + "(Last Boss)");
                     }
                     
@@ -582,7 +594,14 @@ public class Controller {
         }
     }
     public void hpmusuhstatechange(){
+        
         view.getHPMusuh().setValue(model.enemy.getHP());
+//        if(percentagehp <= 100 && percentagehp >=50){
+//            //do logic
+//            view.getHPMusuh().setBackground(Color.green);
+//        }else{
+//            view.getHPMusuh().setBackground(Color.red);
+//        }
     }
     
     public void RestartWin(){
@@ -653,7 +672,8 @@ public class Controller {
         view.setVisible(true);
     }
     public void Scoreclicked(){
-        // not yet implemented
+        ScoreBoard SCBD = new ScoreBoard(menu, true);
+        SCBD.setVisible(true);
     }
     public void Exitclicked(){
         int pilih = JOptionPane.showConfirmDialog(view, 
@@ -664,5 +684,10 @@ public class Controller {
         if(pilih == JOptionPane.OK_OPTION){
             menu.dispose();
         }
+    }
+    
+    // ---------- Bagian JDialog ScoreBoard ----------- //
+    public void closeScore(){
+        SCBD.dispose();
     }
 }
