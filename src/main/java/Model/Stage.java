@@ -13,6 +13,7 @@ public class Stage {
     private static int MAX_INTERACTIONS =11;
     private static int currentInteraction = 0;
     private boolean battle;
+    
     Random random = new Random(); // Create a Random object
     
     public int getMAX_INTERACTIONS() {
@@ -72,4 +73,5 @@ public class Stage {
             setBattle(false);
         }
     }
+
 }

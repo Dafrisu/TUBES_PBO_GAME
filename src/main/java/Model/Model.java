@@ -15,4 +15,29 @@ public class Model {
     public Entity entity;
     public Stage stage;
     public Equipment equipment;
+    private static int scores;
+    private int fullScore ;
+
+    public int getFullScore() {
+        return scores = this.fullScore + getScores();
+    }
+
+    public void setFullScore(int fullScore) {
+        this.fullScore = fullScore;
+    }
+
+    public static int getScores() {
+        return scores;
+    }
+
+    public static void setScores(int scores) {
+        Model.scores = scores;
+    }
+    
+    public static void scores100(){
+        scores = scores + 100;
+    }
+    
+    
+    
 }

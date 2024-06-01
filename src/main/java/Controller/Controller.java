@@ -345,6 +345,9 @@ public class Controller {
                 view.getAlur().run(model.enemy);
                 if(view.getAlur().getCurrentInteraction() == view.getAlur().getMAX_INTERACTIONS()){
                     view.getStage().setSelectedIndex(3);
+                    int fullScore = Model.getScores() + model.player.getMaxHP() + model.player.getMaxDef() + model.player.getMaxAtk();
+                    model.setFullScore(fullScore);
+                    view.getScoreLabel().setText("Score: " + model.getFullScore());
                     view.getAttack_button().setVisible(false);
                 }
             if (view.getAlur().getCurrentInteraction() < view.getAlur().getMAX_INTERACTIONS() ){
@@ -363,7 +366,7 @@ public class Controller {
             }else{
                     view.getStage().setSelectedIndex(3);
             }
-                
+                Model.scores100();
                 view.getWinorlose().setVisible(false);
                 view.getLabelbox().setText("|");
                 view.setIdxDialogue(0);   
@@ -377,9 +380,15 @@ public class Controller {
                 public void actionPerformed(ActionEvent e) {
                     if(model.enemy.getMusuh() != Enemy.Enemies.Dragoon){
                         view.getStage().setSelectedIndex(6);
+                        int fullScore = Model.getScores() + model.player.getMaxHP() + model.player.getMaxDef() + model.player.getMaxAtk();
+                        model.setFullScore(fullScore);
+                        view.getLabelScoreLose().setText("Score: " + model.getFullScore());
                         view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() +" ("+model.enemy.getType()+")");
                     }else{
                         view.getStage().setSelectedIndex(6);
+                        int fullScore = Model.getScores() + model.player.getMaxHP() + model.player.getMaxDef() + model.player.getMaxAtk();
+                        model.setFullScore(fullScore);
+                        view.getLabelScoreLose().setText("Score: " + model.getFullScore());
                         view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() + "(Last Boss)");
                     }
                     

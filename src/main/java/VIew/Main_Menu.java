@@ -153,4 +153,5 @@ public class Main_Menu extends javax.swing.JFrame {
     public javax.swing.JButton getScoreBoard_button() {
         return ScoreBoard_button;
     }
+    
 }
