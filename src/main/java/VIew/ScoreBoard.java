@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package VIew;
-
+import Database.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  * @author haika
  */
 public class ScoreBoard extends javax.swing.JDialog {
-    DefaultTableModel model = new DefaultTableModel();
+    public static DefaultTableModel model = new DefaultTableModel();
     /**
      * Creates new form ScoreBoard
      */
@@ -19,6 +19,14 @@ public class ScoreBoard extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         scoreboardtable.setModel(model);
+        model.addColumn("ID");
+        model.addColumn("Nama");
+        model.addColumn("Last Equipment");
+        model.addColumn("Score");
+        model.addColumn("Last_Enemies");
+    }
+    public static void addscoredata(int id, String nama, String equipment, int score, String enemy) {
+        model.addRow(new Object[]{id, nama, equipment, score, enemy});
     }
 
     /**
@@ -42,13 +50,13 @@ public class ScoreBoard extends javax.swing.JDialog {
 
         scoreboardtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Player", "Last Equipment", "Score", "Last Enemies"
+                "ID", "Player", "Last Equipment", "Score", "Last Enemies"
             }
         ));
         jScrollPane1.setViewportView(scoreboardtable);
@@ -96,6 +104,7 @@ public class ScoreBoard extends javax.swing.JDialog {
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_closeActionPerformed
 
     /**

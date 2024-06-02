@@ -3,12 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Controller;
+import Database.JDBC;
 import Model.*;
 import VIew.GUI;
 import VIew.Main_Menu;
 import VIew.ScoreBoard;
 import java.awt.Color;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
@@ -29,6 +34,7 @@ public class Controller {
         this.model = model;
         this.view = view;
         this.menu = menu;
+        this.SCBD = SCBD;
         init();
         view.getAttack_button().addActionListener(new ActionListener(){
             @Override
@@ -38,6 +44,7 @@ public class Controller {
         });
         view.getOpsi1().addActionListener(new ActionListener(){
             
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Opsi1ActionPerformed();
             }
@@ -196,6 +203,7 @@ public class Controller {
         menu.getScoreBoard_button().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                isitabelscore();
                 Scoreclicked();
             }
         });
@@ -212,10 +220,29 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 closeScore();
+                System.out.println("error");
             }
         });
     }
-    
+    public void addscoretodatabase(){
+        try{
+            Connection connect = DriverManager.getConnection(JDBC.url, JDBC.user, JDBC.pass);
+            Statement stmt = connect.createStatement();
+            if(model.enemy.getMusuh() == Enemy.Enemies.Dragoon){
+                String sql = "insert into score(nama_user,last_equipment,score,last_enemies) values('" + model.player.getNama() + "','" + model.player.wear.getNama() + "', "
+                        + model.getFullScore() + ",'" + model.enemy.getMusuh().toString() + "(Last Boss)" + "'" + ")";
+                stmt.executeUpdate(sql);
+            }else{
+                String sql = "insert into score(nama_user,last_equipment,score,last_enemies) values('" + model.player.getNama() + "','" + model.player.wear.getNama() + "', "
+                        + model.getFullScore() + ",'" + model.enemy.getMusuh().toString() + "(" + model.enemy.getType().toString() + ")" + "'" + ")";
+                stmt.executeUpdate(sql);
+            }
+            connect.close();
+            JOptionPane.showMessageDialog(view, "Berhasil Menambahkan score", "Info", JOptionPane.INFORMATION_MESSAGE);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(menu, e.getMessage());
+        }
+    }
     public void init(){
         view.getNamaPlayer().setVisible(false);
         view.getAttack_button().setVisible(false);
@@ -360,6 +387,7 @@ public class Controller {
                     int fullScore = Model.getScores() + model.player.getMaxHP() + model.player.getMaxDef() + model.player.getMaxAtk();
                     model.setFullScore(fullScore);
                     view.getScoreonwin().setText("Score : " + model.getFullScore());
+                    addscoretodatabase();
                     view.getAttack_button().setVisible(false);
                 }
                 if (view.getAlur().getCurrentInteraction() < view.getAlur().getMAX_INTERACTIONS()) {
@@ -396,12 +424,14 @@ public class Controller {
                         model.setFullScore(fullScore);
                         view.getScoreonlose().setText("Score : " + model.getFullScore());
                         view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() +" ("+model.enemy.getType()+")");
+                        addscoretodatabase();
                     }else{
                         view.getStage().setSelectedIndex(6);
                         int fullScore = Model.getScores() + model.player.getMaxHP() + model.player.getMaxDef() + model.player.getMaxAtk();
                         model.setFullScore(fullScore);
                         view.getScoreonlose().setText("Score : " + model.getFullScore());
                         view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() + "(Last Boss)");
+                        addscoretodatabase();
                     }
                     
                 }
@@ -647,7 +677,29 @@ public class Controller {
     }
     
     // ------------- Bagian GUI Main Menu--------//
-    
+    public void isitabelscore(){
+        ScoreBoard.model.setRowCount(0);
+        try{
+            Connection connect = DriverManager.getConnection(JDBC.url, JDBC.user, JDBC.pass);
+            Statement st = connect.createStatement();
+            ResultSet RS = st.executeQuery("select * from score");
+            int id;
+            String nama;
+            String equipment;
+            int score;
+            String enemy;
+            while(RS.next()){
+                id = RS.getInt("id");
+                nama = RS.getString("nama_user");
+                equipment = RS.getString("last_equipment");
+                score = RS.getInt("score");
+                enemy = RS.getString("last_enemies");
+                ScoreBoard.addscoredata(id, nama, equipment, score, enemy);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(menu, e.getMessage());
+        }
+    }
     public void mousePlayenter(){
         menu.getPlay_button().setBackground(Color.GRAY);
     }
@@ -672,8 +724,8 @@ public class Controller {
         view.setVisible(true);
     }
     public void Scoreclicked(){
-        ScoreBoard SCBD = new ScoreBoard(menu, true);
         SCBD.setVisible(true);
+        
     }
     public void Exitclicked(){
         int pilih = JOptionPane.showConfirmDialog(view, 
