@@ -220,29 +220,37 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 closeScore();
-                System.out.println("error");
+                
             }
         });
     }
     public void addscoretodatabase(){
         try{
+            // koneksikan dengan database
             Connection connect = DriverManager.getConnection(JDBC.url, JDBC.user, JDBC.pass);
             Statement stmt = connect.createStatement();
             if(model.enemy.getMusuh() == Enemy.Enemies.Dragoon){
+                // buat statement insert kemudian execute
                 String sql = "insert into score(nama_user,last_equipment,score,last_enemies) values('" + model.player.getNama() + "','" + model.player.wear.getNama() + "', "
                         + model.getFullScore() + ",'" + model.enemy.getMusuh().toString() + "(Last Boss)" + "'" + ")";
                 stmt.executeUpdate(sql);
             }else{
+                // buat statement insert kemudian execute
                 String sql = "insert into score(nama_user,last_equipment,score,last_enemies) values('" + model.player.getNama() + "','" + model.player.wear.getNama() + "', "
                         + model.getFullScore() + ",'" + model.enemy.getMusuh().toString() + "(" + model.enemy.getType().toString() + ")" + "'" + ")";
                 stmt.executeUpdate(sql);
             }
+            // tutup koneksi
             connect.close();
+            // panel/dialog jika berhasil memasukan data ke database
             JOptionPane.showMessageDialog(view, "Berhasil Menambahkan score", "Info", JOptionPane.INFORMATION_MESSAGE);
         }catch(Exception e){
-            JOptionPane.showMessageDialog(menu, e.getMessage());
+            // panel/dialog jika gagal memasukan data ke database
+            JOptionPane.showMessageDialog(view, e.getMessage());
         }
     }
+    
+    
     public void init(){
         view.getNamaPlayer().setVisible(false);
         view.getAttack_button().setVisible(false);
@@ -254,14 +262,14 @@ public class Controller {
     
     // button untuk menyerang musuh
     public void attackbutton(){
-        // player attack enemy
+        // player attack enemy kemudian set bar HP musuh sesuai damage yang diterima
         model.player.attack(model.enemy);
         view.getHPMusuh().setValue(model.enemy.getHP());
 
-        // jika enemy belum mati, player terkena serangan
-
+        // memasukan data damage ke model list di GUI
         view.model.addElement(model.enemy.getMusuh().name() + " Terkena Serangan " + model.player.getDamage() + " Damage");
-
+        
+        // jika enemy belum mati, player terkena serangan
         if(model.enemy.getHP() >= 0){
             model.enemy.attack(model.player);
             view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getDamage() + " Damage");
@@ -270,7 +278,6 @@ public class Controller {
         
         // jika player mati, ganti tab panel ke panel lose
         if (model.player.getHP() <=0){
-            
             // set attribut Hp musuh jadi 0 dan ubah attributnya di GUI
             model.player.setHP(0);
             ChangeAttr();
@@ -283,8 +290,11 @@ public class Controller {
         
         // jika enemy mati, set button attack invisible, lalu masuk ke fungsi timerwin(delay untuk stage selanjutnya)
         if (model.enemy.getHP() < 0){
+            // absorbHP musuh dan ditambahkan ke HP player
             view.absorbHP = view.absorbHP + model.enemy.getMaxHP()*10/100;
             model.player.setMaxHP();
+            
+            // memasukan info absorb ke model list 
             view.model.addElement("Absorb HP musuh sebanyak "+  (model.enemy.getMaxHP()*10/100) );
             model.player.setHP(model.player.getMaxHP());
             ChangeAttr();
@@ -329,9 +339,6 @@ public class Controller {
             if (view.getIdxDialogue()<textNPC.length){
                 view.getLabelbox().setText(textNPC[view.getIdxDialogue()]);
                 view.setIdxDialogue(view.getIdxDialogue() + 1);
-                if(textNPC[view.getIdxDialogue()]==null && view.getIdxDialogue() < textNPC.length){
-                    view.setIdxDialogue(view.getIdxDialogue() + 1);
-                }
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -634,29 +641,38 @@ public class Controller {
 //        }
     }
     
+    // melakukan restart di panel win
     public void RestartWin(){
         GUI.absorbHP = 0;
         GUI.absorbdef = 0;
         GUI.absorbatk = 0;
+        view.getWinorlose().setVisible(false);
         view.getAlur().setCurrentInteraction(0);
         view.getStage().setSelectedIndex(0);
         view.getGetNamePlayer().setText("");
         view.getNamaPlayer().setText("Player");
         view.model.clear();
+        Model.setScores(0);
     }
     
+    // melakukan restart di panel lose
     public void RestartLose(){
         GUI.absorbHP = 0;
         GUI.absorbdef = 0;
         GUI.absorbatk = 0;
+        view.getWinorlose().setVisible(false);
         view.setWin(true);
         view.getAlur().setCurrentInteraction(0);
         view.getStage().setSelectedIndex(0);
         view.getGetNamePlayer().setText("");
         view.getNamaPlayer().setText("Player");
         view.model.clear();
+        Model.setScores(0);
     }
+    
+    // kembali ke menu di panel win
     public void MenuWin(){
+        view.getWinorlose().setVisible(false);
         view.getAlur().setCurrentInteraction(0);
         view.setVisible(false);
         view.getStage().setSelectedIndex(0);
@@ -664,8 +680,12 @@ public class Controller {
         view.getGetNamePlayer().setText("");
         view.getNamaPlayer().setText("Player");
         view.model.clear();
+        Model.setScores(0);
     }
+    
+    // kembali ke menu di panel lose
     public void MenuLose(){
+        view.getWinorlose().setVisible(false);
         view.getAlur().setCurrentInteraction(0);
         view.setVisible(false);
         view.setWin(true);
@@ -674,9 +694,12 @@ public class Controller {
         view.getGetNamePlayer().setText("");
         view.getNamaPlayer().setText("Player");
         view.model.clear();
+        Model.setScores(0);
     }
     
     // ------------- Bagian GUI Main Menu--------//
+    
+    // memasukan score player di database ke scoreboard
     public void isitabelscore(){
         ScoreBoard.model.setRowCount(0);
         try{
@@ -700,6 +723,8 @@ public class Controller {
             JOptionPane.showMessageDialog(menu, e.getMessage());
         }
     }
+    
+    // pelengkap GUI
     public void mousePlayenter(){
         menu.getPlay_button().setBackground(Color.GRAY);
     }
@@ -718,15 +743,20 @@ public class Controller {
     public void mouseExitexit(){
         menu.getExit_Button().setBackground(Color.white);
     }
+    
+    // masuk ke game ketika klik play
     public void Playclicked(){
         this.view = view;
         menu.setVisible(false);
         view.setVisible(true);
     }
+    
+    // menampilkan dialog scoreboard
     public void Scoreclicked(){
         SCBD.setVisible(true);
-        
     }
+    
+    // exit game di menu
     public void Exitclicked(){
         int pilih = JOptionPane.showConfirmDialog(view, 
                 "Apakah Anda Yakin ingin Keluar??", 
@@ -739,6 +769,8 @@ public class Controller {
     }
     
     // ---------- Bagian JDialog ScoreBoard ----------- //
+    
+    // tutup dialog scoreboard
     public void closeScore(){
         SCBD.dispose();
     }
