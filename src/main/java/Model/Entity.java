@@ -47,12 +47,12 @@ public abstract class Entity{
         this.attack_point = attack_point;
     }
     public boolean persepective (Entity masuk){
-        boolean mantap = true;
+        boolean isplayer = true;
         if (masuk instanceof Player){
-            mantap = true;
+            isplayer = true;
         } else if (masuk instanceof Enemy){
-            mantap = false;
+            isplayer = false;
         }
-        return mantap;
+        return isplayer;
     }
 }

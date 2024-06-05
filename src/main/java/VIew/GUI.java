@@ -178,7 +178,7 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(GetNamePlayer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(Okbutton))
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
         Stage.addTab("name", jPanel2);
@@ -244,7 +244,7 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(button_necromancer)
                 .addGap(18, 18, 18)
                 .addComponent(button_archer)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         Stage.addTab("class", jPanel3);
@@ -326,7 +326,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Restart_onmenang)
                     .addComponent(MainMenu_onmenang))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
 
         Stage.addTab("win", jPanel6);
@@ -426,7 +426,7 @@ public class GUI extends javax.swing.JFrame {
 
         Stage.addTab("lose", jPanel8);
 
-        getContentPane().add(Stage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 280));
+        getContentPane().add(Stage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 720, 320));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
