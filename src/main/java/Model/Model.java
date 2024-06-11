@@ -4,6 +4,8 @@
  */
 package Model;
 
+import Database.JDBC;
+
 /**
  *
  * @author haika
@@ -15,6 +17,7 @@ public class Model implements Actions{
     public Entity entity;
     public Stage stage;
     public Equipment equipment;
+    public JDBC database = new JDBC();
     private static int scores = 0;
     private int fullScore ;
 

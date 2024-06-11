@@ -25,8 +25,8 @@ import javax.swing.event.ChangeListener;
  * @author haika
  */
 public class Controller {
-    private Model model;
-    private GUI view;
+    public static Model model;
+    private static GUI view;
     private Main_Menu menu;
     private ScoreBoard SCBD;
     
@@ -203,7 +203,9 @@ public class Controller {
         menu.getScoreBoard_button().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                isitabelscore();
+                ScoreBoard.model.setRowCount(0);
+                model.database.showtablescore();
+                //isitabelscore();
                 Scoreclicked();
             }
         });
@@ -224,55 +226,30 @@ public class Controller {
             }
         });
     }
-    public void addscoretodatabase(){
-        try{
-            // koneksikan dengan database
-            Connection connect = DriverManager.getConnection(JDBC.url, JDBC.user, JDBC.pass);
-            Statement stmt = connect.createStatement();
-            if(model.enemy.getMusuh() == Enemy.Enemies.Dragoon){
-                // buat statement insert kemudian execute
-                String sql = "insert into score(nama_user,last_equipment,score,last_enemies) values('" + model.player.getNama() + "','" + model.player.wear.getNama() + "', "
-                        + model.getFullScore() + ",'" + model.enemy.getMusuh().toString() + "(Last Boss)" + "'" + ")";
-                stmt.executeUpdate(sql);
-            }else{
-                // buat statement insert kemudian execute
-                String sql = "insert into score(nama_user,last_equipment,score,last_enemies) values('" + model.player.getNama() + "','" + model.player.wear.getNama() + "', "
-                        + model.getFullScore() + ",'" + model.enemy.getMusuh().toString() + "(" + model.enemy.getType().toString() + ")" + "'" + ")";
-                stmt.executeUpdate(sql);
-            }
-            // tutup koneksi
-            connect.close();
-            // panel/dialog jika berhasil memasukan data ke database
-            JOptionPane.showMessageDialog(view, "Berhasil Menambahkan score", "Info", JOptionPane.INFORMATION_MESSAGE);
-        }catch(Exception e){
-            // panel/dialog jika gagal memasukan data ke database
-            JOptionPane.showMessageDialog(view, e.getMessage());
-        }
-    }
     
     
     public void init(){
-        view.getNamaPlayer().setVisible(false);
-        view.getAttack_button().setVisible(false);
+        getView().getNamaPlayer().setVisible(false);
+        getView().getAttack_button().setVisible(false);
         model.npc = new NPC(10,10,10);
         
-        view.getWinorlose().setVisible(false);
-        view.getListdamage().setModel(view.model);
+        getView().getWinorlose().setVisible(false);
+        getView().getListdamage().setModel(getView().model);
     }
     
     // button untuk menyerang musuh
     public void attackbutton(){
         // player attack enemy kemudian set bar HP musuh sesuai damage yang diterima
         model.player.attack(model.enemy);
-        view.getHPMusuh().setValue(model.enemy.getHP());
+        getView().getHPMusuh().setValue(model.enemy.getHP());
 
         // memasukan data damage ke model list di GUI
-        view.model.addElement(model.enemy.getMusuh().name() + " Terkena Serangan " + model.player.getDamage() + " Damage");
+        getView().model.addElement(model.enemy.getMusuh().name() + " Terkena Serangan " + model.player.getDamage() + " Damage");
         
         // jika enemy belum mati, player terkena serangan
         if(model.enemy.getHP() >= 0){
             model.enemy.attack(model.player);
-            view.model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getDamage() + " Damage");
+            getView().model.addElement(model.player.getNama() + " Terkena Serangan " + model.enemy.getDamage() + " Damage");
             ChangeAttr();
         }
         
@@ -281,9 +258,9 @@ public class Controller {
             // set attribut Hp musuh jadi 0 dan ubah attributnya di GUI
             model.player.setHP(0);
             ChangeAttr();
-            view.setWin(winlose(model.player));
+            getView().setWin(winlose(model.player));
             if(!view.isWin()){
-                view.getAttack_button().setVisible(false);
+                getView().getAttack_button().setVisible(false);
                 timerlose();
             }
         }
@@ -291,16 +268,16 @@ public class Controller {
         // jika enemy mati, set button attack invisible, lalu masuk ke fungsi timerwin(delay untuk stage selanjutnya)
         if (model.enemy.getHP() < 0){
             // absorbHP musuh dan ditambahkan ke HP player
-            view.absorbHP = view.absorbHP + model.enemy.getMaxHP()*10/100;
+            view.absorbHP = getView().absorbHP + model.enemy.getMaxHP()*10/100;
             model.player.setMaxHP();
             
             // memasukan info absorb ke model list 
-            view.model.addElement("Absorb HP musuh sebanyak "+  (model.enemy.getMaxHP()*10/100) );
+            getView().model.addElement("Absorb HP musuh sebanyak "+  (model.enemy.getMaxHP()*10/100) );
             model.player.setHP(model.player.getMaxHP());
             ChangeAttr();
-            view.setWin(winlose(model.enemy));
-            if(view.isWin()){
-                view.getAttack_button().setVisible(false);
+            getView().setWin(winlose(model.enemy));
+            if(getView().isWin()){
+                getView().getAttack_button().setVisible(false);
                 timerwin(); 
             }
         }
@@ -333,12 +310,12 @@ public class Controller {
         System.out.println(textNPC.length);
         textNPC = model.npc.getDialogue();
         try {
-            if (view.getIdxDialogue() == textNPC.length -1) {
+            if (getView().getIdxDialogue() == textNPC.length -1) {
                 throw new Exception("Sudah max idx");
             }
-            if (view.getIdxDialogue()<textNPC.length){
-                view.getLabelbox().setText(textNPC[view.getIdxDialogue()]);
-                view.setIdxDialogue(view.getIdxDialogue() + 1);
+            if (getView().getIdxDialogue()<textNPC.length){
+                getView().getLabelbox().setText(textNPC[getView().getIdxDialogue()]);
+                getView().setIdxDialogue(getView().getIdxDialogue() + 1);
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -357,9 +334,9 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
-                    view.getWinorlose().setVisible(true);
-                    view.getWinorlose().setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-                    view.getAfterbattle().setText("Anda Berhasil Mengalahkan Musuh");
+                    getView().getWinorlose().setVisible(true);
+                    getView().getWinorlose().setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                    getView().getAfterbattle().setText("Anda Berhasil Mengalahkan Musuh");
             }
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
@@ -372,9 +349,9 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
-                    view.getWinorlose().setVisible(true);
-                    view.getWinorlose().setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-                    view.getAfterbattle().setText("Telah dikalahkan oleh musuh....");
+                    getView().getWinorlose().setVisible(true);
+                    getView().getWinorlose().setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                    getView().getAfterbattle().setText("Telah dikalahkan oleh musuh....");
             }
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
@@ -383,40 +360,40 @@ public class Controller {
     // Timer untuk delay sebelum ganti stage
     public void Timer(){
         // timer ganti stage jika menang
-        if(view.isWin()){
+        if(getView().isWin()){
             Timer timer = new Timer(1000, new ActionListener() { // Delay 1 detik (1000 milidetik)
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Proses yang akan dilakukan setelah delay
-                view.getAlur().run(model.enemy);
-                if(view.getAlur().getCurrentInteraction() == view.getAlur().getMAX_INTERACTIONS()){
-                    view.getStage().setSelectedIndex(3);
+                    getView().getAlur().run(model.enemy);
+                if( getView().getAlur().getCurrentInteraction() == getView().getAlur().getMAX_INTERACTIONS()){
+                        getView().getStage().setSelectedIndex(3);
                     int fullScore = Model.getScores() + model.player.getMaxHP() + model.player.getMaxDef() + model.player.getMaxAtk();
                     model.setFullScore(fullScore);
-                    view.getScoreonwin().setText("Score : " + model.getFullScore());
-                    addscoretodatabase();
-                    view.getAttack_button().setVisible(false);
+                        getView().getScoreonwin().setText("Score : " + model.getFullScore());
+                    model.database.addscoretodatabase();
+                        getView().getAttack_button().setVisible(false);
                 }
-                if (view.getAlur().getCurrentInteraction() < view.getAlur().getMAX_INTERACTIONS()) {
-                    if (view.getAlur().isBattle() == true) {
-                        view.getStage().setSelectedIndex(3);
-                        view.getStage().setSelectedIndex(2);
-                        view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
+                if (getView().getAlur().getCurrentInteraction() < getView().getAlur().getMAX_INTERACTIONS()) {
+                    if (getView().getAlur().isBattle() == true) {
+                            getView().getStage().setSelectedIndex(3);
+                            getView().getStage().setSelectedIndex(2);
+                            getView().getAlur().setCurrentInteraction(getView().getAlur().getCurrentInteraction() + 1);
                     } else {
-                        view.getStage().setSelectedIndex(3);
-                        view.getStage().setSelectedIndex(5);
+                            getView().getStage().setSelectedIndex(3);
+                            getView().getStage().setSelectedIndex(5);
                         setOpsiName();
-                        view.getOpsi1().setVisible(false);
-                        view.getOpsi2().setVisible(false);
-                        view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
+                            getView().getOpsi1().setVisible(false);
+                            getView().getOpsi2().setVisible(false);
+                            getView().getAlur().setCurrentInteraction(getView().getAlur().getCurrentInteraction() + 1);
                     }
                 } else {
-                    view.getStage().setSelectedIndex(3);
+                        getView().getStage().setSelectedIndex(3);
                 }    
                     Model.scores100();
-                    view.getWinorlose().setVisible(false);
-                    view.getLabelbox().setText("|");
-                    view.setIdxDialogue(0);
+                    getView().getWinorlose().setVisible(false);
+                    getView().getLabelbox().setText("|");
+                    getView().setIdxDialogue(0);
                 }
         });
         timer.setRepeats(false); // Setel agar timer hanya berjalan satu kali
@@ -426,19 +403,19 @@ public class Controller {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(model.enemy.getMusuh() != Enemy.Enemies.Dragoon){
-                        view.getStage().setSelectedIndex(6);
+                        getView().getStage().setSelectedIndex(6);
                         int fullScore = Model.getScores() + model.player.getMaxHP() + model.player.getMaxDef() + model.player.getMaxAtk();
                         model.setFullScore(fullScore);
-                        view.getScoreonlose().setText("Score : " + model.getFullScore());
-                        view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() +" ("+model.enemy.getType()+")");
-                        addscoretodatabase();
+                        getView().getScoreonlose().setText("Score : " + model.getFullScore());
+                        getView().getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() +" ("+model.enemy.getType()+")");
+                        model.database.addscoretodatabase();
                     }else{
-                        view.getStage().setSelectedIndex(6);
+                        getView().getStage().setSelectedIndex(6);
                         int fullScore = Model.getScores() + model.player.getMaxHP() + model.player.getMaxDef() + model.player.getMaxAtk();
                         model.setFullScore(fullScore);
-                        view.getScoreonlose().setText("Score : " + model.getFullScore());
-                        view.getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() + "(Last Boss)");
-                        addscoretodatabase();
+                        getView().getScoreonlose().setText("Score : " + model.getFullScore());
+                        getView().getDeadmessage().setText("Player Dibunuh Oleh " + model.enemy.getMusuh() + "(Last Boss)");
+                        model.database.addscoretodatabase();
                     }
                     
                 }
@@ -451,11 +428,11 @@ public class Controller {
     }
     public void setOpsiName(){
         if (model.npc.getNpctype().equals("Merchant")) {
-            view.getOpsi1().setText(model.npc.reward1.getNama());
-            view.getOpsi2().setText(model.npc.reward2.getNama());
+            getView().getOpsi1().setText(model.npc.reward1.getNama());
+            getView().getOpsi2().setText(model.npc.reward2.getNama());
         } else {
-            view.getOpsi1().setText("Terima");
-            view.getOpsi2().setText("Tolak");
+            getView().getOpsi1().setText("Terima");
+            getView().getOpsi2().setText("Tolak");
         }
     }
     // memilih opsi pertama ketika interaksi dengan NPC
@@ -496,67 +473,67 @@ public class Controller {
         textNPC = model.npc.getListDialog();
         System.out.println(textNPC.size());
         try {
-            if(view.getIdxDialogue() == textNPC.size() - 1){
-                view.getOpsi1().setVisible(true);
-                view.getOpsi2().setVisible(true);
+            if(getView().getIdxDialogue() == textNPC.size() - 1){
+                getView().getOpsi1().setVisible(true);
+                getView().getOpsi2().setVisible(true);
             }
 
-            if (view.getIdxDialogue() == textNPC.size()) {
+            if (getView().getIdxDialogue() == textNPC.size()) {
                 throw new Exception("Mencapai akhir dialog");
             }
-            if (view.getIdxDialogue()<textNPC.size() ){
-                view.getLabelbox().setText(textNPC.get(view.getIdxDialogue()));
-                view.setIdxDialogue(view.getIdxDialogue() + 1);
+            if (getView().getIdxDialogue()<textNPC.size() ){
+                getView().getLabelbox().setText(textNPC.get(getView().getIdxDialogue()));
+                getView().setIdxDialogue(getView().getIdxDialogue() + 1);
             }
         }catch(Exception e){
-            JOptionPane.showMessageDialog(view, e.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(getView(), e.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }
     
     //mengkonfirm nama player
     private void OKButton(){
         if (!view.getGetNamePlayer().getText().equals("")){
-            String nama = view.getGetNamePlayer().getText();
+            String nama = getView().getGetNamePlayer().getText();
             model.player = new Player(nama, 50,30,30);
-            view.getNamaPlayer().setText(model.player.getNama());
-            view.getNamaPlayer().setVisible(true);
-            view.getValueHP().setText(model.player.getHP() +"");
-            view.getValueDef().setText(model.player.getDefense() + "");
-            view.getValueAtk().setText(model.player.getAttack_point() + "");
-            view.getStage().setSelectedIndex(1);
+            getView().getNamaPlayer().setText(model.player.getNama());
+            getView().getNamaPlayer().setVisible(true);
+            getView().getValueHP().setText(model.player.getHP() +"");
+            getView().getValueDef().setText(model.player.getDefense() + "");
+            getView().getValueAtk().setText(model.player.getAttack_point() + "");
+            getView().getStage().setSelectedIndex(1);
         }
     }
     
     //memilih class assassin
     public void buttonAssassin(){
-        view.setClassN(1);
-        model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
-        view.getStage().setSelectedIndex(4);
+        getView().setClassN(1);
+        model.player.tipeClass(getView().getClassN());
+        getView().getChoosenClass().setText(model.player.getPlayerClass().toString());
+        getView().getStage().setSelectedIndex(4);
     }
     
     //memilih class guardian
     public void buttonGuardian(){
-        view.setClassN(2);
-        model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
-        view.getStage().setSelectedIndex(4);
+        getView().setClassN(2);
+        model.player.tipeClass(getView().getClassN());
+        getView().getChoosenClass().setText(model.player.getPlayerClass().toString());
+        getView().getStage().setSelectedIndex(4);
     }
     
     //memilih class necromancer
     public void buttonNecromancer(){
-        view.setClassN(3); 
-        model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
-        view.getStage().setSelectedIndex(4);
+        getView().setClassN(3); 
+        model.player.tipeClass(getView().getClassN());
+        getView().getChoosenClass().setText(model.player.getPlayerClass().toString());
+        getView().getStage().setSelectedIndex(4);
     }
     
     //memilih class archer
     public void buttonArcher(){
-        view.setClassN(4);
-        model.player.tipeClass(view.getClassN());
-        view.getChoosenClass().setText(model.player.getPlayerClass().toString());
-        view.getStage().setSelectedIndex(4);
+        getView().setClassN(4);
+        model.player.tipeClass(getView().getClassN());
+        getView().getChoosenClass().setText(model.player.getPlayerClass().toString());
+        getView().getStage().setSelectedIndex(4);
         
     }
     
@@ -569,23 +546,23 @@ public class Controller {
     
     // setlabel HP di GUI
     public void ChangeHP(){
-        view.getValueHP().setText(model.player.getHP() + "");
+        getView().getValueHP().setText(model.player.getHP() + "");
     }
     
     //set label Def di GUI
     public void ChangeDef(){
-        view.getValueDef().setText(model.player.getDefense() +"");
+        getView().getValueDef().setText(model.player.getDefense() +"");
     }
     
     //set label Atk di GUI
     public void ChangeAtk(){
-        view.getValueAtk().setText(model.player.getAttack_point() + "");
+        getView().getValueAtk().setText(model.player.getAttack_point() + "");
     }
     
     //confirm class yang dipilih
     public void yesclassbutton(){
-        view.getEquipment().EquipmentInit(model.player);
-        view.getEquipment().EquipmentsetforClass(model.player);
+        getView().getEquipment().EquipmentInit(model.player);
+        getView().getEquipment().EquipmentsetforClass(model.player);
         model.player.setBaseHP(model.player.getHP());
         model.player.setBasedef(model.player.getDefense());
         model.player.setBaseatk(model.player.getAttack_point());
@@ -595,44 +572,44 @@ public class Controller {
         model.npc.reward2.EquipmentInit(model.player);
         model.npc.setReward();
         setOpsiName();
-        view.getAlur().run(model.enemy);
-        if (view.getAlur().isBattle() == true){
-            view.getStage().setSelectedIndex(2);
+        getView().getAlur().run(model.enemy);
+        if (getView().getAlur().isBattle() == true){
+            getView().getStage().setSelectedIndex(2);
         }else{
-            view.getStage().setSelectedIndex(5);
+            getView().getStage().setSelectedIndex(5);
         }
-        view.getAlur().setCurrentInteraction(view.getAlur().getCurrentInteraction() + 1);
+        getView().getAlur().setCurrentInteraction(getView().getAlur().getCurrentInteraction() + 1);
     }
     public void noclassbutton(){
-        view.getStage().setSelectedIndex(1);
+        getView().getStage().setSelectedIndex(1);
     }
     public void winorlosebox(){
         Timer();
     }
     public void statestagechange(){
-        if (view.getAlur().isBattle() == true){
-            view.getAttack_button().setVisible(true);
-            if(view.isWin()){
+        if (getView().getAlur().isBattle() == true){
+            getView().getAttack_button().setVisible(true);
+            if(getView().isWin()){
                 model.enemy = Stage.EnemyGoing();
             }
             if (model.enemy.getMusuh() != Enemy.Enemies.Dragoon) {
-                view.getEnemyLabel().setText(model.enemy.getMusuh().toString() + " (" + model.enemy.getType() + ")");
+                getView().getEnemyLabel().setText(model.enemy.getMusuh().toString() + " (" + model.enemy.getType() + ")");
             } else {
-                view.getEnemyLabel().setText(model.enemy.getMusuh().toString());
+                getView().getEnemyLabel().setText(model.enemy.getMusuh().toString());
             }
-            view.getHPMusuh().setMaximum(model.enemy.getHP());
-            view.getHPMusuh().setValue(model.enemy.getHP());
+            getView().getHPMusuh().setMaximum(model.enemy.getHP());
+            getView().getHPMusuh().setValue(model.enemy.getHP());
         }else{
-            view.getAttack_button().setVisible(false);
+            getView().getAttack_button().setVisible(false);
         }
 
         if(!view.isWin()){
-            view.getAttack_button().setVisible(false);
+            getView().getAttack_button().setVisible(false);
         }
     }
     public void hpmusuhstatechange(){
         
-        view.getHPMusuh().setValue(model.enemy.getHP());
+        getView().getHPMusuh().setValue(model.enemy.getHP());
 //        if(percentagehp <= 100 && percentagehp >=50){
 //            //do logic
 //            view.getHPMusuh().setBackground(Color.green);
@@ -646,12 +623,12 @@ public class Controller {
         GUI.absorbHP = 0;
         GUI.absorbdef = 0;
         GUI.absorbatk = 0;
-        view.getWinorlose().setVisible(false);
-        view.getAlur().setCurrentInteraction(0);
-        view.getStage().setSelectedIndex(0);
-        view.getGetNamePlayer().setText("");
-        view.getNamaPlayer().setText("Player");
-        view.model.clear();
+        getView().getWinorlose().setVisible(false);
+        getView().getAlur().setCurrentInteraction(0);
+        getView().getStage().setSelectedIndex(0);
+        getView().getGetNamePlayer().setText("");
+        getView().getNamaPlayer().setText("Player");
+        getView().model.clear();
         Model.setScores(0);
     }
     
@@ -660,69 +637,46 @@ public class Controller {
         GUI.absorbHP = 0;
         GUI.absorbdef = 0;
         GUI.absorbatk = 0;
-        view.getWinorlose().setVisible(false);
-        view.setWin(true);
-        view.getAlur().setCurrentInteraction(0);
-        view.getStage().setSelectedIndex(0);
-        view.getGetNamePlayer().setText("");
-        view.getNamaPlayer().setText("Player");
-        view.model.clear();
+        getView().getWinorlose().setVisible(false);
+        getView().setWin(true);
+        getView().getAlur().setCurrentInteraction(0);
+        getView().getStage().setSelectedIndex(0);
+        getView().getGetNamePlayer().setText("");
+        getView().getNamaPlayer().setText("Player");
+        getView().model.clear();
         Model.setScores(0);
     }
     
     // kembali ke menu di panel win
     public void MenuWin(){
-        view.getWinorlose().setVisible(false);
-        view.getAlur().setCurrentInteraction(0);
-        view.setVisible(false);
-        view.getStage().setSelectedIndex(0);
+        getView().getWinorlose().setVisible(false);
+        getView().getAlur().setCurrentInteraction(0);
+        getView().setVisible(false);
+        getView().getStage().setSelectedIndex(0);
         menu.setVisible(true);
-        view.getGetNamePlayer().setText("");
-        view.getNamaPlayer().setText("Player");
-        view.model.clear();
+        getView().getGetNamePlayer().setText("");
+        getView().getNamaPlayer().setText("Player");
+        getView().model.clear();
         Model.setScores(0);
     }
     
     // kembali ke menu di panel lose
     public void MenuLose(){
-        view.getWinorlose().setVisible(false);
-        view.getAlur().setCurrentInteraction(0);
-        view.setVisible(false);
-        view.setWin(true);
-        view.getStage().setSelectedIndex(0);
+        getView().getWinorlose().setVisible(false);
+        getView().getAlur().setCurrentInteraction(0);
+        getView().setVisible(false);
+        getView().setWin(true);
+        getView().getStage().setSelectedIndex(0);
         menu.setVisible(true);
-        view.getGetNamePlayer().setText("");
-        view.getNamaPlayer().setText("Player");
-        view.model.clear();
+        getView().getGetNamePlayer().setText("");
+        getView().getNamaPlayer().setText("Player");
+        getView().model.clear();
         Model.setScores(0);
     }
     
     // ------------- Bagian GUI Main Menu--------//
     
     // memasukan score player di database ke scoreboard
-    public void isitabelscore(){
-        ScoreBoard.model.setRowCount(0);
-        try{
-            Connection connect = DriverManager.getConnection(JDBC.url, JDBC.user, JDBC.pass);
-            Statement st = connect.createStatement();
-            ResultSet RS = st.executeQuery("select * from score");
-            int id;
-            String nama;
-            String equipment;
-            int score;
-            String enemy;
-            while(RS.next()){
-                id = RS.getInt("id");
-                nama = RS.getString("nama_user");
-                equipment = RS.getString("last_equipment");
-                score = RS.getInt("score");
-                enemy = RS.getString("last_enemies");
-                ScoreBoard.addscoredata(id, nama, equipment, score, enemy);
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(menu, e.getMessage());
-        }
-    }
     
     // pelengkap GUI
     public void mousePlayenter(){
@@ -746,9 +700,9 @@ public class Controller {
     
     // masuk ke game ketika klik play
     public void Playclicked(){
-        this.view = view;
+        this.view = getView();
         menu.setVisible(false);
-        view.setVisible(true);
+        getView().setVisible(true);
     }
     
     // menampilkan dialog scoreboard
@@ -758,7 +712,7 @@ public class Controller {
     
     // exit game di menu
     public void Exitclicked(){
-        int pilih = JOptionPane.showConfirmDialog(view, 
+        int pilih = JOptionPane.showConfirmDialog(getView(), 
                 "Apakah Anda Yakin ingin Keluar??", 
                 "Konfirmasi", 
                 JOptionPane.OK_CANCEL_OPTION, 
@@ -773,5 +727,9 @@ public class Controller {
     // tutup dialog scoreboard
     public void closeScore(){
         SCBD.dispose();
+    }
+
+    public static GUI getView() {
+        return view;
     }
 }
